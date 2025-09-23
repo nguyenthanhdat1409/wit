@@ -198,27 +198,6 @@
       <description></description>
     </item>
     <item>
-      <title>Chìa-Khoá</title>
-      <link>http://localhost:1313/categories/ch%C3%ACa-kho%C3%A1/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/ch%C3%ACa-kho%C3%A1/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Công-Cụ-Phương-Tiện</title>
-      <link>http://localhost:1313/categories/c%C3%B4ng-c%E1%BB%A5-ph%C6%B0%C6%A1ng-ti%E1%BB%87n/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/c%C3%B4ng-c%E1%BB%A5-ph%C6%B0%C6%A1ng-ti%E1%BB%87n/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Công-Thức</title>
-      <link>http://localhost:1313/categories/c%C3%B4ng-th%E1%BB%A9c/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/c%C3%B4ng-th%E1%BB%A9c/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Hệ-Quy-Chiếu</title>
       <link>http://localhost:1313/categories/h%E1%BB%87-quy-chi%E1%BA%BFu/</link>
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
@@ -268,13 +247,6 @@
       <description></description>
     </item>
     <item>
-      <title>Nguyên-Tắc</title>
-      <link>http://localhost:1313/categories/nguy%C3%AAn-t%E1%BA%AFc/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/nguy%C3%AAn-t%E1%BA%AFc/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>NOI-TAM</title>
       <link>http://localhost:1313/categories/noi-tam/</link>
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
@@ -289,20 +261,6 @@
       <description></description>
     </item>
     <item>
-      <title>Quan-Niệm</title>
-      <link>http://localhost:1313/categories/quan-ni%E1%BB%87m/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/quan-ni%E1%BB%87m/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Quy-Luật</title>
-      <link>http://localhost:1313/categories/quy-lu%E1%BA%ADt/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/quy-lu%E1%BA%ADt/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>SUC-KHOE</title>
       <link>http://localhost:1313/categories/suc-khoe/</link>
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
@@ -314,20 +272,6 @@
       <link>http://localhost:1313/categories/tai-chinh/</link>
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/tai-chinh/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Tâm-Thái</title>
-      <link>http://localhost:1313/categories/t%C3%A2m-th%C3%A1i/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/t%C3%A2m-th%C3%A1i/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Văn-Hoá-Nghi-Thức-Nghi-Lễ</title>
-      <link>http://localhost:1313/categories/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/</link>
-      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/categories/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/</guid>
       <description></description>
     </item>
   </channel>

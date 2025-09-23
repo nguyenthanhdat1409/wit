@@ -2,32 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/khai-niem-nguon/quy-lu%E1%BA%ADt/t%C3%A2m-th%E1%BB%A9c/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/hinh/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quy-lu%E1%BA%ADt/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/khai-niem-nguon/nguy%C3%AAn-l%C3%BD/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/ch%C3%ACa-kho%C3%A1/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/c%C3%B4ng-th%E1%BB%A9c/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -57,21 +37,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/nguy%C3%AAn-t%E1%BA%AFc/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quan-ni%E1%BB%87m/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/t%C3%A2m-th%C3%A1i/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/khai-niem-nguon/h%E1%BB%87-quy-chi%E1%BA%BFu/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -92,21 +57,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/c%C3%B4ng-c%E1%BB%A5-ph%C6%B0%C6%A1ng-ti%E1%BB%87n/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quy-lu%E1%BA%ADt/thu-h%C3%BAt/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/hinh/h%C6%B0%E1%BB%9Fng-th%E1%BB%A5-h%E1%BB%8Dc-t%E1%BA%ADp/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -117,22 +67,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quy-lu%E1%BA%ADt/%E1%BA%A3nh-h%C6%B0%E1%BB%9Fng/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quy-lu%E1%BA%ADt/gi%C3%A1-tr%E1%BB%8B/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/hinh/con-thuy%E1%BB%81n-su%C3%B4i-d%C3%B2ng/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quy-lu%E1%BA%ADt/chuy%E1%BB%83n-ho%C3%A1/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -177,7 +112,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/nguy%C3%AAn-l%C3%BD/nghi-v%E1%BA%A5n-thu%E1%BA%ADn-chi%E1%BB%81u-mong-mu%E1%BB%91n-h%E1%BB%8Fi-nghi-ng%C3%B4-hi%E1%BB%83u-chuy%E1%BB%83n-ho%C3%A1/</loc>
+    <loc>http://localhost:1313/khai-niem-nguon/nguy%C3%AAn-l%C3%BD/nghi-van/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -222,11 +157,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/ch%C3%ACa-kho%C3%A1/ghi-nh%E1%BA%ADn-bi%E1%BA%BFt-%C6%A1n/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/khoa-hoc/noi-tam/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -252,31 +182,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/ch%C3%ACa-kho%C3%A1/qu%E1%BA%A3ng-b%C3%A1-ph%E1%BB%95i-h%E1%BB%A3p-d%E1%BA%ABn-d%E1%BA%AFt/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/c%C3%B4ng-th%E1%BB%A9c/i-bu%C3%B4ng-%C4%91%E1%BB%8Bnh-th%C3%A2n-bu%C3%B4ng-%C4%91%E1%BB%8Bnh-th%C3%A2n/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/c%C3%B4ng-th%E1%BB%A9c/chuy%E1%BB%83n-bi%E1%BA%BFt-tin-hi%E1%BB%83u-ch%E1%BB%A7-%C4%91%E1%BB%83-%C4%91%E1%BB%8Bnh-ngh%C4%A9a-di%E1%BB%85n-gi%E1%BA%A3i-v%C3%AD-d%E1%BB%A5-t%E1%BB%95ng-k%E1%BA%BFt-th%E1%BA%A3o-lu%E1%BA%ADn-chia-s%E1%BA%BB-ph%C3%A1t-sinh-nghi-v%E1%BA%A5n-ch%E1%BB%A7-%C4%91%E1%BB%81-m%E1%BB%9Bi-tr%E1%BB%9F-l%E1%BA%A1i-c%C3%B4ng-th%E1%BB%A9c-tr%C3%AAn/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/c%C3%B4ng-th%E1%BB%A9c/4-b%C6%B0%E1%BB%9Bc-t%C6%B0-v%E1%BA%A5n-hu%E1%BA%A5n-luy%E1%BB%87n/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/c%C3%B4ng-th%E1%BB%A9c/nh%E1%BB%8Bp-%C4%91i%E1%BB%87u-trong-t%C6%B0-v%E1%BA%A5n-hu%E1%BA%A5n-luy%E1%BB%87n-n%E1%BB%99i-t%C3%A2m/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/khai-niem-nguon/ph%C6%B0%C6%A1ng-ph%C3%A1p/gia-t%E1%BB%91c/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -288,16 +193,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/khai-niem-nguon/ph%C6%B0%C6%A1ng-ph%C3%A1p/t%E1%BB%A5-ch%C3%BAng/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/nguy%C3%AAn-t%E1%BA%AFc/m%C6%B0a-l%C3%BAc-n%C3%A0o-c%C5%A9ng-c%C3%B3-c%C3%A2y-n%C3%A0o-c%C3%B3-r%E1%BB%85-th%C3%AC-t%E1%BB%B1-th%E1%BA%A5m-h%C3%BAt-ng%C6%B0%E1%BB%9Di-tham-gia-chuy%E1%BB%83n-ho%C3%A1-%C4%91%C6%B0%E1%BB%A3c-l%C3%A0-do-t%E1%BB%95ng-nghi%E1%BB%87p-v%C3%A0-c%C3%B4ng-%C4%91%E1%BB%A9c-ph%C6%B0%E1%BB%9Bc-%C4%91%E1%BB%A9c-c%E1%BB%A7a-h%E1%BB%8D-do-c%C3%B3-nh%C3%A2n-duy%C3%AAn-m%C3%A0-ch%C3%BAng-ta-t%C6%B0%C6%A1ng-tr%E1%BB%A3-n%E1%BA%BFu-kh%C3%B4ng-c%C3%B3-ch%C3%BAng-ta-c%C3%B3-th%E1%BB%83-s%E1%BA%BD-c%C3%B3-ng%C6%B0%E1%BB%9Di-kh%C3%A1c-gi%C3%BAp-h%E1%BB%8D-t%E1%BB%91t-h%C6%A1n-ch%C3%BAng-ta-g%E1%BA%A5p-v%E1%BA%A1n-l%E1%BA%A7n/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/nguy%C3%AAn-t%E1%BA%AFc/ng%C6%B0%E1%BB%9Di-tham-gia-chuy%E1%BB%83n-ho%C3%A1-ch%C3%ADnh-t%E1%BB%AB-b%C3%A0i-h%E1%BB%8Dc-t%C3%A2m-%C4%91%E1%BA%AFc-ng%E1%BB%99-ra-c%E1%BB%A7a-ng%C6%B0%E1%BB%9Di-tham-gia-kh%C3%A1c-n%C3%AAn-c%E1%BA%A7n-thi%E1%BA%BFt-l%E1%BA%ADp-b%E1%BB%91i-c%E1%BA%A3nh-%C4%91%E1%BB%83-h%E1%BB%8D-tr%E1%BA%A3i-nghi%E1%BB%87m/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -327,56 +222,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/nguy%C3%AAn-t%E1%BA%AFc/th%C3%A0nh-t%E1%BB%B1u-do-ng%C6%B0%E1%BB%9Di-cao-nh%C3%A2n-ch%E1%BB%89-%C4%91i%E1%BB%83m-qu%C3%BD-%C4%91%E1%BB%A1-t%C3%A0i-t%C6%B0%C6%A1ng-tr%E1%BB%A3-nh%C3%A2n-t%C3%A0i-g%C3%A1nh-v%C3%A1c-minh-s%C6%B0-d%E1%BA%ABn-d%E1%BA%AFt-%C4%91%E1%BA%A1o-l%C3%BD-do-th%E1%BA%A7y-c%C3%B4-t%C6%B0-duy-do-chuy%C3%AAn-gia-khai-m%E1%BB%9F-tr%C3%AD-tu%E1%BB%87-do-thi%E1%BB%87n-tri-th%E1%BB%A9c/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/nguy%C3%AAn-t%E1%BA%AFc/chia-s%E1%BA%BB-tri-th%E1%BB%A9c-nh%C3%A2n-sinh-quan/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quan-ni%E1%BB%87m/gi%E1%BA%A3ng-b%E1%BA%A3n-l%C4%A9nh-xu%E1%BA%A5t-hi%E1%BB%87n-gi%E1%BA%A3ng-th%E1%BB%8B-tr%C6%B0%E1%BB%9Dng-xu%E1%BA%A5t-hi%E1%BB%87n-gi%E1%BA%A3ng-t%C3%A0i-s%E1%BA%A3n-xu%E1%BA%A5t-hi%E1%BB%87n/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quan-ni%E1%BB%87m/kh%C3%B4ng-l%C3%A0-ai-n%C3%AAn-%C4%91%E1%BB%A7-t%C6%B0-c%C3%A1ch-d%E1%BA%ABn-d%E1%BA%AFt-con-ng%C6%B0%E1%BB%9Di-n%C3%A2ng-t%E1%BA%A7m-nh%E1%BA%ADn-th%E1%BB%A9c-n%E1%BB%99i-t%C3%A2m/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quan-ni%E1%BB%87m/c%C3%B3-c%C6%A1-h%E1%BB%99i-gi%C3%BAp-ng%C6%B0%E1%BB%9Di-kh%C3%A1c-n%C3%A2ng-t%E1%BA%A7m-nh%E1%BA%ADn-th%E1%BB%A9c-n%E1%BB%99i-t%C3%A2m-m%E1%BB%8Di-v%E1%BA%A5n-n%E1%BA%A1n-cu%E1%BB%99c-s%E1%BB%91ng-t%E1%BB%B1-tan-bi%E1%BA%BFn/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quan-ni%E1%BB%87m/m%E1%BB%8Di-%C6%B0%E1%BB%9Bc-mu%E1%BB%91n-%C4%91%E1%BB%81u-%C4%91%C6%B0%E1%BB%A3c-l%C3%A0m-r%C3%B5-khi-gi%C3%BAp-ng%C6%B0%E1%BB%9Di-kh%C3%A1c-th%E1%BA%A5u-su%E1%BB%91t-nh%C3%A2n-duy%C3%AAn-qu%E1%BA%A3/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quan-ni%E1%BB%87m/ng%C6%B0%E1%BB%9Di-tham-gia-l%C3%A0-ng%C6%B0%E1%BB%9Di-cho-ch%C3%BAng-ta-c%C6%A1-h%E1%BB%99i-t%C3%ADch-t%E1%BA%A1o-c%C3%B4ng-%C4%91%E1%BB%A9c-ph%C6%B0%E1%BB%9Bc-%C4%91%E1%BB%A9c/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quan-ni%E1%BB%87m/cho-m%C3%ACnh-c%C6%A1-h%E1%BB%99i-hi%E1%BB%83u-ng%C6%B0%E1%BB%9Di-ng%C6%B0%E1%BB%9Di-s%E1%BA%BD-hi%E1%BB%83u-m%C3%ACnh-gi%C3%BAp-ng%C6%B0%E1%BB%9Di-hi%E1%BB%83u-ch%C3%ADnh-h%E1%BB%8D-m%C3%ACnh-s%E1%BA%BD-hi%E1%BB%83u-m%C3%ACnh-h%C6%A1n/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quan-ni%E1%BB%87m/c%C3%A1ch-%C4%91%C6%A1n-gi%E1%BA%A3n-nh%E1%BA%A5t-%C4%91%E1%BB%83-gi%C3%A0u-to%C3%A0n-di%E1%BB%87n-l%C3%A0-qu%E1%BA%A3ng-b%C3%A1-v%C3%A0-chuy%E1%BB%83n-hi%E1%BB%87n-th%E1%BB%B1c-l%C3%A0m-ch%E1%BB%A7-n%E1%BB%99i-t%C3%A2m/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quan-ni%E1%BB%87m/qu%E1%BA%A3ng-b%C3%A1-v%C3%A0-chuy%E1%BB%83n-hi%E1%BB%87n-th%E1%BB%B1c-l%C3%A0m-ch%E1%BB%A7-n%E1%BB%99i-t%C3%A2m-gi%C3%BAp-n%C3%A2ng-cao-gi%C3%A1-tr%E1%BB%8B-c%C3%A1-nh%C3%A2n-v%C3%A0-n%C3%A2ng-c%E1%BA%A5p-m%E1%BB%91i-quan-h%E1%BB%87/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/khoa-hoc/tai-chinh/ftc1-12-buoc-thau-suot/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -392,11 +237,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/quan-ni%E1%BB%87m/t%C6%B0-v%E1%BA%A5n-v%C3%A0-hu%E1%BA%A5n-luy%E1%BB%87n-n%E1%BB%99i-t%C3%A2m-l%C3%A0-s%E1%BB%B1-nghi%E1%BB%87p-tr%C6%B0%E1%BB%9Dng-t%E1%BB%95n-qua-th%E1%BB%9Di-gian/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/khai-niem-nguon/nguy%C3%AAn-l%C3%BD/%C3%A1nh-s%C3%A1ng/trong-diem-nhan-thuc/</loc>
     <lastmod>2025-09-21T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -404,31 +244,6 @@
   </url><url>
     <loc>http://localhost:1313/khai-niem-nguon/nguy%C3%AAn-l%C3%BD/%C3%A1nh-s%C3%A1ng/trong-tam-tri-thuc/</loc>
     <lastmod>2025-09-21T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/t%C3%A2m-th%C3%A1i/an-vui/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/t%C3%A2m-th%C3%A1i/bao-dung/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/t%C3%A2m-th%C3%A1i/tr%C3%A2n-tr%E1%BB%8Dng-bi%E1%BA%BFt-%C6%A1n/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/t%C3%A2m-th%C3%A1i/thu%E1%BB%9F-ban-%C4%91%E1%BA%A7u/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/t%C3%A2m-th%C3%A1i/t%E1%BB%B1-nhi%C3%AAn-t%E1%BB%B1-tin-t%E1%BB%B1-ch%E1%BB%A7/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -1312,56 +1127,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/c%C3%B4ng-c%E1%BB%A5-ph%C6%B0%C6%A1ng-ti%E1%BB%87n/t%E1%BB%95ng-nghi%E1%BB%87p/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/c%C3%B4ng-c%E1%BB%A5-ph%C6%B0%C6%A1ng-ti%E1%BB%87n/h%E1%BB%97-tr%E1%BB%A3-gi%E1%BA%A3ng-d%E1%BA%A1y-gi%E1%BA%A5y-b%C3%BAt-b%E1%BA%A3ng-b%E1%BB%99-h%E1%BB%97-tr%E1%BB%A3-c%C3%B4ng-ngh%E1%BB%87/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/c%C3%B4ng-c%E1%BB%A5-ph%C6%B0%C6%A1ng-ti%E1%BB%87n/h%E1%BB%97-tr%E1%BB%A3-s%E1%BB%A9c-kho%E1%BA%BB-th%E1%BB%A9c-%C4%83n-th%E1%BB%A9c-u%E1%BB%91ng-dinh-d%C6%B0%E1%BB%A1ng/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/mc-giao-l%C6%B0u-%C4%91%E1%BA%A7u-bu%E1%BB%95i/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/di%E1%BB%85n-gi%E1%BA%A3-ghi-nh%E1%BA%ADn-v%C3%A0-bi%E1%BA%BFt-%C6%A1n-s%E1%BB%B1-c%C3%B3-m%E1%BA%B7t-c%E1%BB%A7a-ng%C6%B0%E1%BB%9Di-tham-gia-bi%E1%BA%BFt-%C6%A1n-ng%C6%B0%E1%BB%9Di-gi%E1%BB%9Bi-thi%E1%BB%87u-bi%E1%BA%BFt-%C6%A1n-ng%C6%B0%E1%BB%9Di-ph%E1%BB%A5ng-s%E1%BB%B1-bi%E1%BA%BFt-%C6%A1n-tri-th%E1%BB%A9c/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/gia-c%E1%BB%95-b%E1%BB%91i-c%E1%BA%A3nh-%C4%91%E1%BB%83-ng%C6%B0%E1%BB%9Di-tham-gia-r%C3%BAt-ra-b%C3%A0i-h%E1%BB%8Dc-t%C3%A2m-%C4%91%E1%BA%AFc-ng%E1%BB%99-ra/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/t%E1%BA%A1o-%C4%91i%E1%BB%81u-ki%E1%BB%87n-gi%E1%BA%A3i-%C4%91%C3%A1p-nghi-v%E1%BA%A5n-c%E1%BB%A7a-ng%C6%B0%E1%BB%9Di-tham-gia/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/c%E1%BA%A7u-th%E1%BB%8B-v%C3%A0-khi%C3%AAm-t%E1%BB%91n-khi-h%E1%BB%8Fi/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/gi%E1%BA%A3i-lao-cho-ng%C6%B0%E1%BB%9Di-tham-gia-l%E1%BA%AFng-nghe-nh%E1%BA%A1c-c%E1%BB%A7a-t%E1%BB%95-ch%E1%BB%A9c/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/khai-niem-nguon/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/ch%C3%A0o-t%E1%BA%A1m-bi%E1%BB%87t-cu%E1%BB%91i-bu%E1%BB%95i-v%C3%A0-nh%E1%BA%AFc-nh%E1%BB%9F-ng%C6%B0%E1%BB%9Di-tham-gia-h%C3%A0nh-%C4%91%E1%BB%99ng/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/categories/</loc>
     <lastmod>2025-09-23T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -1692,11 +1457,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/categories/ch%C3%ACa-kho%C3%A1/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/tags/cho-%C4%91i/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -1708,16 +1468,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/tags/con-ng%C6%B0%E1%BB%9Di/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/categories/c%C3%B4ng-c%E1%BB%A5-ph%C6%B0%C6%A1ng-ti%E1%BB%87n/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/categories/c%C3%B4ng-th%E1%BB%A9c/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -1762,22 +1512,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tags/i.-quy-lu%E1%BA%ADt/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/tags/ii.-nguy%C3%AAn-l%C3%BD/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tags/iii.-ch%C3%ACa-kho%C3%A1/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tags/iv.-c%C3%B4ng-th%E1%BB%A9c/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -1837,11 +1572,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/categories/nguy%C3%AAn-t%E1%BA%AFc/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/categories/noi-tam/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -1887,16 +1617,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/categories/quan-ni%E1%BB%87m/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/categories/quy-lu%E1%BA%ADt/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/tags/s%C3%A1ng-t%E1%BA%A1o/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -1928,11 +1648,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/tags/t%C3%A2m-l%C3%BD-h%E1%BB%8Dc/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/categories/t%C3%A2m-th%C3%A1i/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -2007,26 +1722,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/categories/v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tags/vi.-nguy%C3%AAn-t%E1%BA%AFc/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tags/vii.-quan-ni%E1%BB%87m/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tags/viii.-t%C3%A2m-th%C3%A1i/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/tags/x.-h%E1%BB%87-quy-chi%E1%BA%BFu/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -2043,16 +1738,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/tags/xiii.-m%C3%B4i-tr%C6%B0%E1%BB%9Dng/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tags/xiv.-c%C3%B4ng-c%E1%BB%A5-ph%C6%B0%C6%A1ng-ti%E1%BB%87n/</loc>
-    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tags/xv.-v%C4%83n-ho%C3%A1-nghi-th%E1%BB%A9c-nghi-l%E1%BB%85/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
