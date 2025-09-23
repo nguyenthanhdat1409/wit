@@ -1,0 +1,194 @@
+[
+  {
+    "id": "chuyen-hoa",
+    "title": "5. Chuyển Hoá",
+    "description": "Khái niệm NT0105 - 5. Chuyển Hoá",
+    "path": "/content/KHAI-NIEM-NGUON/quy-luật/chuyển-hoá.md",
+    "category": "quy-luật",
+    "tags": ["I. Quy luật", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "anh-huong",
+    "title": "1. Ảnh Hưởng",
+    "description": "Khái niệm NT0101 - 1. Ảnh Hưởng",
+    "path": "/content/KHAI-NIEM-NGUON/quy-luật/ảnh-hưởng.md",
+    "category": "quy-luật",
+    "tags": ["I. Quy luật", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "gia-tri",
+    "title": "3. Giá Trị",
+    "description": "Khái niệm NT0103 - 3. Giá Trị",
+    "path": "/content/KHAI-NIEM-NGUON/quy-luật/giá-trị.md",
+    "category": "quy-luật",
+    "tags": ["I. Quy luật", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "tam-thuc",
+    "title": "4. Tâm Thức",
+    "description": "Khái niệm NT0104 - 4. Tâm Thức",
+    "path": "/content/KHAI-NIEM-NGUON/quy-luật/tâm-thức.md",
+    "category": "quy-luật",
+    "tags": ["I. Quy luật", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "thu-hut",
+    "title": "2. Thu Hút",
+    "description": "Khái niệm NT0102 - 2. Thu Hút",
+    "path": "/content/KHAI-NIEM-NGUON/quy-luật/thu-hút.md",
+    "category": "quy-luật",
+    "tags": ["I. Quy luật", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "anh-sang",
+    "title": "1. Ánh Sáng",
+    "description": "Khái niệm NT0201 - 1. Ánh Sáng",
+    "path": "/content/KHAI-NIEM-NGUON/nguyên-lý/ánh-sáng.md",
+    "category": "nguyên-lý",
+    "tags": ["II. Nguyên lý", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "kich-hoat-nao",
+    "title": "2. Kích Hoạt Não",
+    "description": "Khái niệm NT0202 - 2. Kích Hoạt Não",
+    "path": "/content/KHAI-NIEM-NGUON/nguyên-lý/kích-hoạt-não.md",
+    "category": "nguyên-lý",
+    "tags": ["II. Nguyên lý", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "nghi-van-thuan-chieu-mong-muon",
+    "title": "3. Nghi Vấn Thuận Chiều Mong Muốn",
+    "description": "Khái niệm NT0203 - 3. Nghi Vấn Thuận Chiều Mong Muốn",
+    "path": "/content/KHAI-NIEM-NGUON/nguyên-lý/nghi-vấn-thuận-chiều-mong-muốn-hỏi-nghi-ngô-hiểu-chuyển-hoá.md",
+    "category": "nguyên-lý",
+    "tags": ["II. Nguyên lý", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "vong-tri-thuc",
+    "title": "4. Vòng Tri Thức",
+    "description": "Khái niệm NT0204 - 4. Vòng Tri Thức",
+    "path": "/content/KHAI-NIEM-NGUON/nguyên-lý/vòng-tri-thức.md",
+    "category": "nguyên-lý",
+    "tags": ["II. Nguyên lý", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "4-buoc-tu-van-huan-luyen",
+    "title": "4 Bước Tư Vấn Huấn Luyện",
+    "description": "Khái niệm NT0301 - 4 Bước Tư Vấn Huấn Luyện",
+    "path": "/content/KHAI-NIEM-NGUON/công-thức/4-bước-tư-vấn-huấn-luyện.md",
+    "category": "công-thức",
+    "tags": ["III. Công thức", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "chuyen-biet-tin-hieu",
+    "title": "Chuyển Biết Tin Hiểu",
+    "description": "Khái niệm NT0302 - Chuyển Biết Tin Hiểu",
+    "path": "/content/KHAI-NIEM-NGUON/công-thức/chuyển-biết-tin-hiểu-chủ-để-định-nghĩa-diễn-giải-ví-dụ-tổng-kết-thảo-luận-chia-sẻ-phát-sinh-nghi-vấn-chủ-đề-mới-trở-lại-công-thức-trên.md",
+    "category": "công-thức",
+    "tags": ["III. Công thức", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "buong-dinh-than",
+    "title": "Buông Định Thân",
+    "description": "Khái niệm NT0303 - Buông Định Thân",
+    "path": "/content/KHAI-NIEM-NGUON/công-thức/i-buông-định-thân-buông-định-thân.md",
+    "category": "công-thức",
+    "tags": ["III. Công thức", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "nhip-dieu-trong-tu-van",
+    "title": "Nhịp Điệu Trong Tư Vấn",
+    "description": "Khái niệm NT0304 - Nhịp Điệu Trong Tư Vấn",
+    "path": "/content/KHAI-NIEM-NGUON/công-thức/nhịp-điệu-trong-tư-vấn-huấn-luyện-nội-tâm.md",
+    "category": "công-thức",
+    "tags": ["III. Công thức", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "chat-giong",
+    "title": "Chất Giọng",
+    "description": "Khái niệm NT0401 - Chất Giọng",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/chất-giọng.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "chua-dung",
+    "title": "Chứa Đựng",
+    "description": "Khái niệm NT0402 - Chứa Đựng",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/chứa-đựng.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "cong-nghe",
+    "title": "Công Nghệ",
+    "description": "Khái niệm NT0403 - Công Nghệ",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/công-nghệ.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "lang-nghe",
+    "title": "Lắng Nghe",
+    "description": "Khái niệm NT0404 - Lắng Nghe",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/lắng-nghe.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "ngon-ngu-co-hinh-anh",
+    "title": "Ngôn Ngữ Có Hình Ảnh",
+    "description": "Khái niệm NT0405 - Ngôn Ngữ Có Hình Ảnh",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/ngôn-ngữ-có-hình-ảnh.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "ngon-ngu-dinh-huong-tuong-lai",
+    "title": "Ngôn Ngữ Định Hướng Tương Lai",
+    "description": "Khái niệm NT0406 - Ngôn Ngữ Định Hướng Tương Lai",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/ngôn-ngữ-định-hướng-tương-lai.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "noi-va-viet",
+    "title": "Nói Và Viết",
+    "description": "Khái niệm NT0407 - Nói Và Viết",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/nói-và-viết.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "phan-doan",
+    "title": "Phán Đoán",
+    "description": "Khái niệm NT0408 - Phán Đoán",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/phán-đoán.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "tra-loi-moi-loai-cau-hoi",
+    "title": "Trả Lời Mọi Loại Câu Hỏi",
+    "description": "Khái niệm NT0409 - Trả Lời Mọi Loại Câu Hỏi",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/trả-lời-mọi-loại-câu-hỏi.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "tu-duy",
+    "title": "Tư Duy",
+    "description": "Khái niệm NT0410 - Tư Duy",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/tuduy.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  },
+  {
+    "id": "xu-ly-tinh-huong",
+    "title": "Xử Lý Tình Huống",
+    "description": "Khái niệm NT0411 - Xử Lý Tình Huống",
+    "path": "/content/KHAI-NIEM-NGUON/năng-lực/xử-lý-tình-huống.md",
+    "category": "năng-lực",
+    "tags": ["IV. Năng lực", "khái-niệm-nguồn"]
+  }
+]

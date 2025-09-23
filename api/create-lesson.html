@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Lesson API</title>
+    <script>
+        // Simple API endpoint simulation
+        function handleCreateLesson() {
+            // This is a mock response for demonstration
+            // In a real implementation, this would be handled by a server
+            const response = {
+                success: true,
+                slug: 'bai-hoc-test-api-that',
+                url: '/bai-hoc/bai-hoc-test-api-that/',
+                message: 'Bài học đã được tạo thành công!'
+            };
+            
+            // Return JSON response
+            return JSON.stringify(response);
+        }
+        
+        // Handle POST request (this won't work in static HTML, but shows the structure)
+        if (window.location.search.includes('action=create')) {
+            const result = handleCreateLesson();
+            document.body.innerHTML = result;
+        }
+    </script>
+</head>
+<body>
+    <h1>Create Lesson API Endpoint</h1>
+    <p>This is a mock API endpoint for local development.</p>
+    <p>In production, this would be handled by Netlify Functions.</p>
+</body>
+</html>

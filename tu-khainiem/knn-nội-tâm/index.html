@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="vi-VN">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KNN NỘI TÂM - HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
+    <meta name="description" content="Các từ - khái niệm thuộc nhóm KNN NỘI TÂM">
+    
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    
+    <meta name="keywords" content="[phát triển nội tâm huấn luyện tư vấn phát triển bản thân nội tâm tâm lý học Việt Nam]">
+    <meta name="author" content="HappyMarket Team">
+    
+    
+    <meta property="og:title" content="KNN NỘI TÂM">
+    <meta property="og:description" content="Các từ - khái niệm thuộc nhóm KNN NỘI TÂM">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:1313/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/">
+    <meta property="og:image" content="/images/og-image.jpg">
+    
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KNN NỘI TÂM">
+    <meta name="twitter:description" content="Các từ - khái niệm thuộc nhóm KNN NỘI TÂM">
+    <meta name="twitter:image" content="/images/og-image.jpg">
+    
+    
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    
+    
+    
+</head>
+<body class="bg-white text-gray-900 font-sans">
+    
+    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">W</span>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">HappyMarketDocs</span>
+                    </a>
+                </div>
+                
+                
+                <nav class="hidden md:flex space-x-8">
+                    
+                    <a href="/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                        Trang chủ
+                    </a>
+                    
+                    <a href="/bai-hoc/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                        Bài học
+                    </a>
+                    
+                    <a href="/khoa-hoc/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                        Khóa học
+                    </a>
+                    
+                    <a href="/khai-niem-nguon/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                        Khái niệm nguồn
+                    </a>
+                    
+                    <a href="/tu-khainiem/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                        Từ - Khái niệm
+                    </a>
+                    
+                    <a href="/hinh/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                        Hình ảnh
+                    </a>
+                    
+                </nav>
+                
+                
+                <div class="md:hidden">
+                    <button type="button" class="mobile-menu-button text-gray-700 hover:text-orange-500 focus:outline-none focus:text-orange-500">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="mobile-menu hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                
+                <a href="/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                    Trang chủ
+                </a>
+                
+                <a href="/bai-hoc/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                    Bài học
+                </a>
+                
+                <a href="/khoa-hoc/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                    Khóa học
+                </a>
+                
+                <a href="/khai-niem-nguon/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                    Khái niệm nguồn
+                </a>
+                
+                <a href="/tu-khainiem/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                    Từ - Khái niệm
+                </a>
+                
+                <a href="/hinh/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                    Hình ảnh
+                </a>
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <div class="flex">
+        
+        <aside class="hidden lg:block w-64 bg-gray-50 border-r border-gray-200 min-h-screen sticky top-16">
+            <div class="p-6">
+                
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="text" placeholder="Tìm kiếm..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        <svg class="absolute right-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+                
+                
+                
+<div class="mb-6">
+    <h3 class="text-sm font-semibold text-gray-900 mb-3">📋 Mục lục</h3>
+    <div class="toc-container text-sm text-gray-700">
+        <nav id="TableOfContents"></nav>
+    </div>
+</div>
+
+
+<style>
+.toc-container ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-container li {
+    margin: 0;
+    padding: 0;
+}
+
+.toc-container a {
+    display: block;
+    padding: 4px 8px;
+    color: #374151;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.toc-container a:hover {
+    background-color: #f3f4f6;
+    color: #f97316;
+}
+
+ 
+.toc-container > ul > li > a {
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 2px;
+}
+
+ 
+.toc-container > ul > li > ul > li > a {
+    padding-left: 16px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 1px;
+}
+
+ 
+.toc-container > ul > li > ul > li > ul > li > a {
+    padding-left: 32px;
+    font-weight: 400;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+ 
+.toc-container > ul > li > ul > li > ul > li > ul > li > a {
+    padding-left: 48px;
+    font-weight: 400;
+    color: #9ca3af;
+    font-size: 0.8rem;
+}
+
+ 
+.toc-container > ul > li > ul > li > ul > li > ul > li > ul > li > a {
+    padding-left: 64px;
+    font-weight: 400;
+    color: #d1d5db;
+    font-size: 0.75rem;
+}
+
+ 
+.toc-container a.active {
+    background-color: #fef3c7;
+    color: #f97316;
+    font-weight: 600;
+}
+
+ 
+.toc-link {
+    display: block;
+    padding: 6px 12px;
+    color: #374151;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.toc-link:hover {
+    background-color: #f3f4f6;
+    color: #f97316;
+}
+
+.toc-child {
+    padding-left: 24px;
+    font-weight: 400;
+    color: #6b7280;
+    font-size: 0.875rem;
+    border-left: 2px solid #e5e7eb;
+    margin-left: 8px;
+}
+
+.toc-child:hover {
+    background-color: #f9fafb;
+    color: #f97316;
+    border-left-color: #f97316;
+}
+</style>
+
+                
+                
+                
+                
+                
+                
+            </div>
+        </aside>
+        
+        
+        <main class="flex-1 min-h-screen">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                
+                
+                
+                
+                <article class="prose prose-lg max-w-none">
+                    
+<div class="mb-8">
+    
+    <header class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">KNN NỘI TÂM</h1>
+        
+        <p class="text-xl text-gray-600 mb-4">Các từ - khái niệm thuộc nhóm KNN NỘI TÂM</p>
+        
+    </header>
+
+    
+    
+    <div class="prose prose-lg max-w-none mb-8">
+        <h1 id="knn-nội-tâm">KNN NỘI TÂM</h1>
+<p>Danh sách các từ - khái niệm thuộc nhóm KNN NỘI TÂM:</p>
+<ul>
+<li><a href="tuy%C3%AAn-b%E1%BB%91-master-mentor-wit">TUYÊN BỐ MASTER - MENTOR WiT</a></li>
+<li><a href="11-l%E1%BB%9Di-tuy%C3%AAn-th%E1%BB%87-master-mentor-wit">11 LỜI TUYÊN THỆ MASTER - MENTOR WiT</a></li>
+<li><a href="tuy%C3%AAn-b%E1%BB%91-s%E1%BB%A9-m%E1%BB%87nh-master-mentor-wit">TUYÊN BỐ SỨ MỆNH MASTER - MENTOR WiT</a></li>
+<li><a href="ch%C3%A2n-dung-master-mentor-wit">CHÂN DUNG MASTER - MENTOR WiT</a></li>
+<li><a href="tri%E1%BA%BFt-l%C3%BD-gi%C3%A1o-d%E1%BB%A5c-t%E1%BA%ADn-g%E1%BB%91c">TRIẾT LÝ GIÁO DỤC TẬN GỐC</a></li>
+<li><a href="t%E1%BB%95-ch%E1%BB%A9c-tr%C6%B0%E1%BB%9Dng-t%E1%BB%93n">TỔ CHỨC TRƯỜNG TỒN</a></li>
+<li><a href="6-nguy%C3%AAn-t%E1%BA%AFc-c%E1%BB%99ng-%C4%91%E1%BB%93ng">6 NGUYÊN TẮC CỘNG ĐỒNG</a></li>
+<li><a href="doanh-nh%C3%A2n-v%C4%83n-h%C3%B3a">DOANH NHÂN VĂN HÓA</a></li>
+<li><a href="%C4%91%E1%BB%83-l%E1%BA%A1i-di-s%E1%BA%A3n">ĐỂ LẠI DI SẢN</a></li>
+<li><a href="15-kh%C3%A1i-ni%E1%BB%87m-ngu%E1%BB%93n">15 KHÁI NIỆM NGUỒN</a></li>
+<li><a href="quy-lu%E1%BA%ADt">QUY LUẬT</a></li>
+<li><a href="quy-lu%E1%BA%ADt-t%C3%A2m-th%E1%BB%A9c">QUY LUẬT TÂM THỨC</a></li>
+<li><a href="quy-lu%E1%BA%ADt-thu-h%C3%BAt">QUY LUẬT THU HÚT</a></li>
+<li><a href="quy-lu%E1%BA%ADt-%E1%BA%A3nh-h%C6%B0%E1%BB%9Fng">QUY LUẬT ẢNH HƯỞNG</a></li>
+<li><a href="quy-lu%E1%BA%ADt-gi%C3%A1-tr%E1%BB%8B">QUY LUẬT GIÁ TRỊ</a></li>
+<li><a href="quy-lu%E1%BA%ADt-chuy%E1%BB%83n-h%C3%B3a">QUY LUẬT CHUYỂN HÓA</a></li>
+<li><a href="nguy%C3%AAn-l%C3%BD-%C3%A1nh-s%C3%A1ng">NGUYÊN LÝ ÁNH SÁNG</a></li>
+<li><a href="nguy%C3%AAn-l%C3%BD-k%C3%ADch-ho%E1%BA%A1t-n%C3%A3o">NGUYÊN LÝ KÍCH HOẠT NÃO</a></li>
+<li><a href="nghi-v%E1%BA%A5n-thu%E1%BA%ADn-chi%E1%BB%81u-mong-mu%E1%BB%91n">NGHI VẤN THUẬN CHIỀU MONG MUỐN</a></li>
+<li><a href="nguy%C3%AAn-l%C3%BD-v%C3%B2ng-tri-th%E1%BB%A9c">NGUYÊN LÝ VÒNG TRI THỨC</a></li>
+<li><a href="ch%C3%ACa-kh%C3%B3a-ghi-nh%E1%BA%ADn-bi%E1%BA%BFt-%C6%A1n">CHÌA KHÓA GHI NHẬN - BIẾT ƠN</a></li>
+<li><a href="ch%C3%ACa-kh%C3%B3a-qu%E1%BA%A3ng-b%C3%A1-ph%E1%BB%91i-h%E1%BB%A3p-d%E1%BA%ABn-d%E1%BA%AFt">CHÌA KHÓA QUẢNG BÁ - PHỐI HỢP - DẪN DẮT</a></li>
+<li><a href="c%C3%B4ng-th%E1%BB%A9c-bu%C3%B4ng-%C4%91%E1%BB%8Bnh-th%C3%A2n">CÔNG THỨC BUÔNG - ĐỊNH THÂN</a></li>
+<li><a href="c%C3%B4ng-th%E1%BB%A9c-chuy%E1%BB%83n-bi%E1%BA%BFt-tin-hi%E1%BB%83u">CÔNG THỨC CHUYỂN BIẾT-TIN-HIỂU</a></li>
+<li><a href="c%C3%B4ng-th%E1%BB%A9c-4-b%C6%B0%E1%BB%9Bc-t%C6%B0-v%E1%BA%A5n-hu%E1%BA%A5n-luy%E1%BB%87n">CÔNG THỨC 4 BƯỚC TƯ VẤN HUẤN LUYỆN</a></li>
+<li><a href="c%C3%B4ng-th%E1%BB%A9c-nh%E1%BB%8Bp-di%E1%BB%87u-trong-t%C6%B0-v%E1%BA%A5n-hu%E1%BA%A5n-luy%E1%BB%87n-n%E1%BB%99i-t%C3%A2m">CÔNG THỨC NHỊP DIỆU TRONG TƯ VẤN HUẤN LUYỆN NỘI TÂM</a></li>
+<li><a href="ph%C6%B0%C6%A1ng-ph%C3%A1p-gia-t%E1%BB%91c">PHƯƠNG PHÁP GIA TỐC</a></li>
+<li><a href="ph%C6%B0%C6%A1ng-ph%C3%A1p-th%E1%BB%A5-%C4%91%E1%BA%AFc">PHƯƠNG PHÁP THỤ ĐẮC</a></li>
+<li><a href="ph%C6%B0%C6%A1ng-ph%C3%A1p-t%E1%BB%A5-ch%C3%BAng">PHƯƠNG PHÁP TỤ CHÚNG</a></li>
+<li><a href="nguy%C3%AAn-t%E1%BA%AFc-1">NGUYÊN TẮC 1</a></li>
+<li><a href="nguy%C3%AAn-t%E1%BA%AFc-2">NGUYÊN TẮC 2</a></li>
+<li><a href="nguy%C3%AAn-t%E1%BA%AFc-3">NGUYÊN TẮC 3</a></li>
+<li><a href="nguy%C3%AAn-t%E1%BA%AFc-4">NGUYÊN TẮC 4</a></li>
+<li><a href="quan-ni%E1%BB%87m-1">QUAN NIỆM 1</a></li>
+<li><a href="quan-ni%E1%BB%87m-2">QUAN NIỆM 2</a></li>
+<li><a href="quan-ni%E1%BB%87m-3">QUAN NIỆM 3</a></li>
+<li><a href="quan-ni%E1%BB%87m-4">QUAN NIỆM 4</a></li>
+<li><a href="quan-ni%E1%BB%87m-5">QUAN NIỆM 5</a></li>
+<li><a href="quan-ni%E1%BB%87m-6">QUAN NIỆM 6</a></li>
+<li><a href="quan-ni%E1%BB%87m-7">QUAN NIỆM 7</a></li>
+<li><a href="quan-ni%E1%BB%87m-8">QUAN NIỆM 8</a></li>
+<li><a href="t%C3%A2m-th%C3%A1i-an-vui">TÂM THÁI AN VUI</a></li>
+<li><a href="t%C3%A2m-th%C3%A1i-bao-dung">TÂM THÁI BAO DUNG</a></li>
+<li><a href="t%C3%A2m-th%C3%A1i-tr%C3%A2n-tr%E1%BB%8Dng-bi%E1%BA%BFt-%C6%A1n">TÂM THÁI TRÂN TRỌNG-BIẾT ƠN</a></li>
+<li><a href="t%C3%A2m-th%C3%A1i-th%E1%BB%A7a-ban-%C4%91%E1%BA%A7u">TÂM THÁI THỦA BAN ĐẦU</a></li>
+<li><a href="t%C3%A2m-th%C3%A1i-t%E1%BB%B1-nhi%C3%AAn-t%E1%BB%B1-tin-t%E1%BB%B1-ch%E1%BB%A7">TÂM THÁI TỰ NHIÊN-TỰ TIN-TỰ CHỦ</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-l%E1%BA%AFng-nghe">NĂNG LỰC LẮNG NGHE</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-ph%C3%A1n-%C4%91o%C3%A1n">NĂNG LỰC PHÁN ĐOÁN</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-ch%E1%BB%A9a-%C4%91%E1%BB%B1ng">NĂNG LỰC CHỨA ĐỰNG</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-t%C6%B0-duy">NĂNG LỰC TƯ DUY</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-c%C3%B4ng-ngh%E1%BB%87">NĂNG LỰC CÔNG NGHỆ</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-ch%E1%BA%A5t-gi%E1%BB%8Dng">NĂNG LỰC CHẤT GIỌNG</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-ng%C3%B4n-ng%E1%BB%AF-c%C3%B3-h%C3%ACnh-%E1%BA%A3nh">NĂNG LỰC NGÔN NGỮ CÓ HÌNH ẢNH</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-ng%C3%B4n-ng%E1%BB%AF-%C4%91%E1%BB%8Bnh-h%C6%B0%E1%BB%9Bng-t%C6%B0%C6%A1ng-lai">NĂNG LỰC NGÔN NGỮ ĐỊNH HƯỚNG TƯƠNG LAI</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-n%C3%B3i-v%C3%A0-vi%E1%BA%BFt">NĂNG LỰC NÓI VÀ VIẾT</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-tr%E1%BA%A3-l%E1%BB%9Di-m%E1%BB%8Di-lo%E1%BA%A1i-c%C3%A2u-h%E1%BB%8Fi">NĂNG LỰC TRẢ LỜI MỌI LOẠI CÂU HỎI</a></li>
+<li><a href="n%C4%83ng-l%E1%BB%B1c-x%E1%BB%AD-l%C3%BD-t%C3%ACnh-hu%E1%BB%91ng">NĂNG LỰC XỬ LÝ TÌNH HUỐNG</a></li>
+<li><a href="3-h%E1%BB%87-quy-chi%E1%BA%BFu">3 HỆ QUY CHIẾU</a></li>
+<li><a href="tam-gi%C3%A1c-hi%E1%BB%87n-th%E1%BB%B1c">TAM GIÁC HIỆN THỰC</a></li>
+<li><a href="c%E1%BA%A5u-tr%C3%BAc-con-ng%C6%B0%E1%BB%9Di">CẤU TRÚC CON NGƯỜI</a></li>
+<li><a href="c%C3%B4ng-th%E1%BB%A9c-c%E1%BB%99i-ngu%E1%BB%93n">CÔNG THỨC CỘI NGUỒN</a></li>
+<li><a href="ni%E1%BB%81m-tin">NIỀM TIN</a></li>
+<li><a href="ng%C6%B0%E1%BB%9Di-c%C3%B3-ni%E1%BB%81m-tin-t%C3%ADch-c%E1%BB%B1c">NGƯỜI CÓ NIỀM TIN TÍCH CỰC</a></li>
+<li><a href="ng%C6%B0%E1%BB%9Di-c%C3%B3-ni%E1%BB%81m-tin-ti%C3%AAu-c%E1%BB%B1c">NGƯỜI CÓ NIỀM TIN TIÊU CỰC</a></li>
+<li><a href="mong-mu%E1%BB%91n-th%E1%BA%ADt-s%E1%BB%B1">MONG MUỐN THẬT SỰ</a></li>
+</ul>
+
+    </div>
+    
+
+    
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/tuy%C3%AAn-b%E1%BB%91-master-mentor-wit/" class="hover:text-orange-500">TUYÊN BỐ MASTER - MENTOR WiT</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0001 - TUYÊN BỐ MASTER - MENTOR WiT</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/tuy%C3%AAn-b%E1%BB%91-master-mentor-wit/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/11-l%E1%BB%9Di-tuy%C3%AAn-th%E1%BB%87-master-mentor-wit/" class="hover:text-orange-500">11 LỜI TUYÊN THỆ MASTER - MENTOR WiT</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0002 - 11 LỜI TUYÊN THỆ MASTER - MENTOR WiT</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/11-l%E1%BB%9Di-tuy%C3%AAn-th%E1%BB%87-master-mentor-wit/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/tuy%C3%AAn-b%E1%BB%91-s%E1%BB%A9-m%E1%BB%87nh-master-mentor-wit/" class="hover:text-orange-500">TUYÊN BỐ SỨ MỆNH MASTER - MENTOR WiT</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0003 - TUYÊN BỐ SỨ MỆNH MASTER - MENTOR WiT</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/tuy%C3%AAn-b%E1%BB%91-s%E1%BB%A9-m%E1%BB%87nh-master-mentor-wit/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ch%C3%A2n-dung-master-mentor-wit/" class="hover:text-orange-500">CHÂN DUNG MASTER - MENTOR WiT</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0004 - CHÂN DUNG MASTER - MENTOR WiT</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ch%C3%A2n-dung-master-mentor-wit/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/tri%E1%BA%BFt-l%C3%BD-gi%C3%A1o-d%E1%BB%A5c-t%E1%BA%ADn-g%E1%BB%91c/" class="hover:text-orange-500">TRIẾT LÝ GIÁO DỤC TẬN GỐC</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0005 - TRIẾT LÝ GIÁO DỤC TẬN GỐC</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/tri%E1%BA%BFt-l%C3%BD-gi%C3%A1o-d%E1%BB%A5c-t%E1%BA%ADn-g%E1%BB%91c/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%E1%BB%95-ch%E1%BB%A9c-tr%C6%B0%E1%BB%9Dng-t%E1%BB%93n/" class="hover:text-orange-500">TỔ CHỨC TRƯỜNG TỒN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0006 - TỔ CHỨC TRƯỜNG TỒN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%E1%BB%95-ch%E1%BB%A9c-tr%C6%B0%E1%BB%9Dng-t%E1%BB%93n/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/6-nguy%C3%AAn-t%E1%BA%AFc-c%E1%BB%99ng-%C4%91%E1%BB%93ng/" class="hover:text-orange-500">6 NGUYÊN TẮC CỘNG ĐỒNG</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0007 - 6 NGUYÊN TẮC CỘNG ĐỒNG</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/6-nguy%C3%AAn-t%E1%BA%AFc-c%E1%BB%99ng-%C4%91%E1%BB%93ng/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/doanh-nh%C3%A2n-v%C4%83n-h%C3%B3a/" class="hover:text-orange-500">DOANH NHÂN VĂN HÓA</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0008 - DOANH NHÂN VĂN HÓA</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/doanh-nh%C3%A2n-v%C4%83n-h%C3%B3a/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/%C4%91%E1%BB%83-l%E1%BA%A1i-di-s%E1%BA%A3n/" class="hover:text-orange-500">ĐỂ LẠI DI SẢN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0009 - ĐỂ LẠI DI SẢN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/%C4%91%E1%BB%83-l%E1%BA%A1i-di-s%E1%BA%A3n/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/15-kh%C3%A1i-ni%E1%BB%87m-ngu%E1%BB%93n/" class="hover:text-orange-500">15 KHÁI NIỆM NGUỒN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0010 - 15 KHÁI NIỆM NGUỒN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/15-kh%C3%A1i-ni%E1%BB%87m-ngu%E1%BB%93n/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt/" class="hover:text-orange-500">QUY LUẬT</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0011 - QUY LUẬT</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt-t%C3%A2m-th%E1%BB%A9c/" class="hover:text-orange-500">QUY LUẬT TÂM THỨC</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0012 - QUY LUẬT TÂM THỨC</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt-t%C3%A2m-th%E1%BB%A9c/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt-thu-h%C3%BAt/" class="hover:text-orange-500">QUY LUẬT THU HÚT</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0013 - QUY LUẬT THU HÚT</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt-thu-h%C3%BAt/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt-%E1%BA%A3nh-h%C6%B0%E1%BB%9Fng/" class="hover:text-orange-500">QUY LUẬT ẢNH HƯỞNG</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0014 - QUY LUẬT ẢNH HƯỞNG</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt-%E1%BA%A3nh-h%C6%B0%E1%BB%9Fng/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt-gi%C3%A1-tr%E1%BB%8B/" class="hover:text-orange-500">QUY LUẬT GIÁ TRỊ</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0015 - QUY LUẬT GIÁ TRỊ</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt-gi%C3%A1-tr%E1%BB%8B/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt-chuy%E1%BB%83n-h%C3%B3a/" class="hover:text-orange-500">QUY LUẬT CHUYỂN HÓA</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0016 - QUY LUẬT CHUYỂN HÓA</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quy-lu%E1%BA%ADt-chuy%E1%BB%83n-h%C3%B3a/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-l%C3%BD-%C3%A1nh-s%C3%A1ng/" class="hover:text-orange-500">NGUYÊN LÝ ÁNH SÁNG</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0018 - NGUYÊN LÝ ÁNH SÁNG</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-l%C3%BD-%C3%A1nh-s%C3%A1ng/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-l%C3%BD-k%C3%ADch-ho%E1%BA%A1t-n%C3%A3o/" class="hover:text-orange-500">NGUYÊN LÝ KÍCH HOẠT NÃO</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0019 - NGUYÊN LÝ KÍCH HOẠT NÃO</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-l%C3%BD-k%C3%ADch-ho%E1%BA%A1t-n%C3%A3o/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nghi-v%E1%BA%A5n-thu%E1%BA%ADn-chi%E1%BB%81u-mong-mu%E1%BB%91n/" class="hover:text-orange-500">NGHI VẤN THUẬN CHIỀU MONG MUỐN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0020 - NGHI VẤN THUẬN CHIỀU MONG MUỐN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nghi-v%E1%BA%A5n-thu%E1%BA%ADn-chi%E1%BB%81u-mong-mu%E1%BB%91n/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-l%C3%BD-v%C3%B2ng-tri-th%E1%BB%A9c/" class="hover:text-orange-500">NGUYÊN LÝ VÒNG TRI THỨC</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0021 - NGUYÊN LÝ VÒNG TRI THỨC</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-l%C3%BD-v%C3%B2ng-tri-th%E1%BB%A9c/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ch%C3%ACa-kh%C3%B3a-ghi-nh%E1%BA%ADn-bi%E1%BA%BFt-%C6%A1n/" class="hover:text-orange-500">CHÌA KHÓA GHI NHẬN - BIẾT ƠN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0022 - CHÌA KHÓA GHI NHẬN - BIẾT ƠN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ch%C3%ACa-kh%C3%B3a-ghi-nh%E1%BA%ADn-bi%E1%BA%BFt-%C6%A1n/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ch%C3%ACa-kh%C3%B3a-qu%E1%BA%A3ng-b%C3%A1-ph%E1%BB%91i-h%E1%BB%A3p-d%E1%BA%ABn-d%E1%BA%AFt/" class="hover:text-orange-500">CHÌA KHÓA QUẢNG BÁ - PHỐI HỢP - DẪN DẮT</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0023 - CHÌA KHÓA QUẢNG BÁ - PHỐI HỢP - DẪN DẮT</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ch%C3%ACa-kh%C3%B3a-qu%E1%BA%A3ng-b%C3%A1-ph%E1%BB%91i-h%E1%BB%A3p-d%E1%BA%ABn-d%E1%BA%AFt/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%C3%B4ng-th%E1%BB%A9c-bu%C3%B4ng-%C4%91%E1%BB%8Bnh-th%C3%A2n/" class="hover:text-orange-500">CÔNG THỨC BUÔNG - ĐỊNH THÂN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0024 - CÔNG THỨC BUÔNG - ĐỊNH THÂN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%C3%B4ng-th%E1%BB%A9c-bu%C3%B4ng-%C4%91%E1%BB%8Bnh-th%C3%A2n/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%C3%B4ng-th%E1%BB%A9c-chuy%E1%BB%83n-bi%E1%BA%BFt-tin-hi%E1%BB%83u/" class="hover:text-orange-500">CÔNG THỨC CHUYỂN BIẾT-TIN-HIỂU</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0025 - CÔNG THỨC CHUYỂN BIẾT-TIN-HIỂU</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%C3%B4ng-th%E1%BB%A9c-chuy%E1%BB%83n-bi%E1%BA%BFt-tin-hi%E1%BB%83u/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%C3%B4ng-th%E1%BB%A9c-4-b%C6%B0%E1%BB%9Bc-t%C6%B0-v%E1%BA%A5n-hu%E1%BA%A5n-luy%E1%BB%87n/" class="hover:text-orange-500">CÔNG THỨC 4 BƯỚC TƯ VẤN HUẤN LUYỆN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0026 - CÔNG THỨC 4 BƯỚC TƯ VẤN HUẤN LUYỆN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%C3%B4ng-th%E1%BB%A9c-4-b%C6%B0%E1%BB%9Bc-t%C6%B0-v%E1%BA%A5n-hu%E1%BA%A5n-luy%E1%BB%87n/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%C3%B4ng-th%E1%BB%A9c-nh%E1%BB%8Bp-di%E1%BB%87u-trong-t%C6%B0-v%E1%BA%A5n-hu%E1%BA%A5n-luy%E1%BB%87n-n%E1%BB%99i-t%C3%A2m/" class="hover:text-orange-500">CÔNG THỨC NHỊP DIỆU TRONG TƯ VẤN HUẤN LUYỆN NỘI TÂM</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0027 - CÔNG THỨC NHỊP DIỆU TRONG TƯ VẤN HUẤN LUYỆN NỘI TÂM</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%C3%B4ng-th%E1%BB%A9c-nh%E1%BB%8Bp-di%E1%BB%87u-trong-t%C6%B0-v%E1%BA%A5n-hu%E1%BA%A5n-luy%E1%BB%87n-n%E1%BB%99i-t%C3%A2m/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ph%C6%B0%C6%A1ng-ph%C3%A1p-gia-t%E1%BB%91c/" class="hover:text-orange-500">PHƯƠNG PHÁP GIA TỐC</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0028 - PHƯƠNG PHÁP GIA TỐC</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ph%C6%B0%C6%A1ng-ph%C3%A1p-gia-t%E1%BB%91c/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ph%C6%B0%C6%A1ng-ph%C3%A1p-th%E1%BB%A5-%C4%91%E1%BA%AFc/" class="hover:text-orange-500">PHƯƠNG PHÁP THỤ ĐẮC</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0029 - PHƯƠNG PHÁP THỤ ĐẮC</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ph%C6%B0%C6%A1ng-ph%C3%A1p-th%E1%BB%A5-%C4%91%E1%BA%AFc/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ph%C6%B0%C6%A1ng-ph%C3%A1p-t%E1%BB%A5-ch%C3%BAng/" class="hover:text-orange-500">PHƯƠNG PHÁP TỤ CHÚNG</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0030 - PHƯƠNG PHÁP TỤ CHÚNG</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ph%C6%B0%C6%A1ng-ph%C3%A1p-t%E1%BB%A5-ch%C3%BAng/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-t%E1%BA%AFc-1/" class="hover:text-orange-500">NGUYÊN TẮC 1</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0031 - NGUYÊN TẮC 1</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-t%E1%BA%AFc-1/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-t%E1%BA%AFc-2/" class="hover:text-orange-500">NGUYÊN TẮC 2</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0032 - NGUYÊN TẮC 2</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-t%E1%BA%AFc-2/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-t%E1%BA%AFc-3/" class="hover:text-orange-500">NGUYÊN TẮC 3</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0033 - NGUYÊN TẮC 3</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-t%E1%BA%AFc-3/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-t%E1%BA%AFc-4/" class="hover:text-orange-500">NGUYÊN TẮC 4</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0034 - NGUYÊN TẮC 4</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/nguy%C3%AAn-t%E1%BA%AFc-4/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-1/" class="hover:text-orange-500">QUAN NIỆM 1</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0035 - QUAN NIỆM 1</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-1/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-2/" class="hover:text-orange-500">QUAN NIỆM 2</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0036 - QUAN NIỆM 2</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-2/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-3/" class="hover:text-orange-500">QUAN NIỆM 3</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0037 - QUAN NIỆM 3</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-3/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-4/" class="hover:text-orange-500">QUAN NIỆM 4</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0038 - QUAN NIỆM 4</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-4/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-5/" class="hover:text-orange-500">QUAN NIỆM 5</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0039 - QUAN NIỆM 5</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-5/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-6/" class="hover:text-orange-500">QUAN NIỆM 6</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0040 - QUAN NIỆM 6</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-6/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-7/" class="hover:text-orange-500">QUAN NIỆM 7</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0041 - QUAN NIỆM 7</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-7/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-8/" class="hover:text-orange-500">QUAN NIỆM 8</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0042 - QUAN NIỆM 8</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/quan-ni%E1%BB%87m-8/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%C3%A2m-th%C3%A1i-an-vui/" class="hover:text-orange-500">TÂM THÁI AN VUI</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0043 - TÂM THÁI AN VUI</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%C3%A2m-th%C3%A1i-an-vui/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%C3%A2m-th%C3%A1i-bao-dung/" class="hover:text-orange-500">TÂM THÁI BAO DUNG</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0044 - TÂM THÁI BAO DUNG</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%C3%A2m-th%C3%A1i-bao-dung/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%C3%A2m-th%C3%A1i-tr%C3%A2n-tr%E1%BB%8Dng-bi%E1%BA%BFt-%C6%A1n/" class="hover:text-orange-500">TÂM THÁI TRÂN TRỌNG-BIẾT ƠN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0045 - TÂM THÁI TRÂN TRỌNG-BIẾT ƠN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%C3%A2m-th%C3%A1i-tr%C3%A2n-tr%E1%BB%8Dng-bi%E1%BA%BFt-%C6%A1n/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%C3%A2m-th%C3%A1i-th%E1%BB%A7a-ban-%C4%91%E1%BA%A7u/" class="hover:text-orange-500">TÂM THÁI THỦA BAN ĐẦU</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0046 - TÂM THÁI THỦA BAN ĐẦU</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%C3%A2m-th%C3%A1i-th%E1%BB%A7a-ban-%C4%91%E1%BA%A7u/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%C3%A2m-th%C3%A1i-t%E1%BB%B1-nhi%C3%AAn-t%E1%BB%B1-tin-t%E1%BB%B1-ch%E1%BB%A7/" class="hover:text-orange-500">TÂM THÁI TỰ NHIÊN-TỰ TIN-TỰ CHỦ</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0047 - TÂM THÁI TỰ NHIÊN-TỰ TIN-TỰ CHỦ</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/t%C3%A2m-th%C3%A1i-t%E1%BB%B1-nhi%C3%AAn-t%E1%BB%B1-tin-t%E1%BB%B1-ch%E1%BB%A7/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-l%E1%BA%AFng-nghe/" class="hover:text-orange-500">NĂNG LỰC LẮNG NGHE</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0048 - NĂNG LỰC LẮNG NGHE</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-l%E1%BA%AFng-nghe/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-ph%C3%A1n-%C4%91o%C3%A1n/" class="hover:text-orange-500">NĂNG LỰC PHÁN ĐOÁN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0049 - NĂNG LỰC PHÁN ĐOÁN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-ph%C3%A1n-%C4%91o%C3%A1n/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-ch%E1%BB%A9a-%C4%91%E1%BB%B1ng/" class="hover:text-orange-500">NĂNG LỰC CHỨA ĐỰNG</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0050 - NĂNG LỰC CHỨA ĐỰNG</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-ch%E1%BB%A9a-%C4%91%E1%BB%B1ng/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-t%C6%B0-duy/" class="hover:text-orange-500">NĂNG LỰC TƯ DUY</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0051 - NĂNG LỰC TƯ DUY</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-t%C6%B0-duy/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-c%C3%B4ng-ngh%E1%BB%87/" class="hover:text-orange-500">NĂNG LỰC CÔNG NGHỆ</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0052 - NĂNG LỰC CÔNG NGHỆ</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-c%C3%B4ng-ngh%E1%BB%87/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-ch%E1%BA%A5t-gi%E1%BB%8Dng/" class="hover:text-orange-500">NĂNG LỰC CHẤT GIỌNG</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0053 - NĂNG LỰC CHẤT GIỌNG</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-ch%E1%BA%A5t-gi%E1%BB%8Dng/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-ng%C3%B4n-ng%E1%BB%AF-c%C3%B3-h%C3%ACnh-%E1%BA%A3nh/" class="hover:text-orange-500">NĂNG LỰC NGÔN NGỮ CÓ HÌNH ẢNH</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0054 - NĂNG LỰC NGÔN NGỮ CÓ HÌNH ẢNH</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-ng%C3%B4n-ng%E1%BB%AF-c%C3%B3-h%C3%ACnh-%E1%BA%A3nh/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-ng%C3%B4n-ng%E1%BB%AF-%C4%91%E1%BB%8Bnh-h%C6%B0%E1%BB%9Bng-t%C6%B0%C6%A1ng-lai/" class="hover:text-orange-500">NĂNG LỰC NGÔN NGỮ ĐỊNH HƯỚNG TƯƠNG LAI</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0055 - NĂNG LỰC NGÔN NGỮ ĐỊNH HƯỚNG TƯƠNG LAI</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-ng%C3%B4n-ng%E1%BB%AF-%C4%91%E1%BB%8Bnh-h%C6%B0%E1%BB%9Bng-t%C6%B0%C6%A1ng-lai/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-n%C3%B3i-v%C3%A0-vi%E1%BA%BFt/" class="hover:text-orange-500">NĂNG LỰC NÓI VÀ VIẾT</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0056 - NĂNG LỰC NÓI VÀ VIẾT</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-n%C3%B3i-v%C3%A0-vi%E1%BA%BFt/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-tr%E1%BA%A3-l%E1%BB%9Di-m%E1%BB%8Di-lo%E1%BA%A1i-c%C3%A2u-h%E1%BB%8Fi/" class="hover:text-orange-500">NĂNG LỰC TRẢ LỜI MỌI LOẠI CÂU HỎI</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0057 - NĂNG LỰC TRẢ LỜI MỌI LOẠI CÂU HỎI</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-tr%E1%BA%A3-l%E1%BB%9Di-m%E1%BB%8Di-lo%E1%BA%A1i-c%C3%A2u-h%E1%BB%8Fi/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-x%E1%BB%AD-l%C3%BD-t%C3%ACnh-hu%E1%BB%91ng/" class="hover:text-orange-500">NĂNG LỰC XỬ LÝ TÌNH HUỐNG</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0058 - NĂNG LỰC XỬ LÝ TÌNH HUỐNG</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/n%C4%83ng-l%E1%BB%B1c-x%E1%BB%AD-l%C3%BD-t%C3%ACnh-hu%E1%BB%91ng/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/3-h%E1%BB%87-quy-chi%E1%BA%BFu/" class="hover:text-orange-500">3 HỆ QUY CHIẾU</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0059 - 3 HỆ QUY CHIẾU</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/3-h%E1%BB%87-quy-chi%E1%BA%BFu/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/tam-gi%C3%A1c-hi%E1%BB%87n-th%E1%BB%B1c/" class="hover:text-orange-500">TAM GIÁC HIỆN THỰC</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0060 - TAM GIÁC HIỆN THỰC</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/tam-gi%C3%A1c-hi%E1%BB%87n-th%E1%BB%B1c/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%E1%BA%A5u-tr%C3%BAc-con-ng%C6%B0%E1%BB%9Di/" class="hover:text-orange-500">CẤU TRÚC CON NGƯỜI</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0061 - CẤU TRÚC CON NGƯỜI</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%E1%BA%A5u-tr%C3%BAc-con-ng%C6%B0%E1%BB%9Di/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%C3%B4ng-th%E1%BB%A9c-c%E1%BB%99i-ngu%E1%BB%93n/" class="hover:text-orange-500">CÔNG THỨC CỘI NGUỒN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0062 - CÔNG THỨC CỘI NGUỒN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/c%C3%B4ng-th%E1%BB%A9c-c%E1%BB%99i-ngu%E1%BB%93n/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ni%E1%BB%81m-tin/" class="hover:text-orange-500">NIỀM TIN</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0086 - NIỀM TIN</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ni%E1%BB%81m-tin/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ng%C6%B0%E1%BB%9Di-c%C3%B3-ni%E1%BB%81m-tin-t%C3%ADch-c%E1%BB%B1c/" class="hover:text-orange-500">NGƯỜI CÓ NIỀM TIN TÍCH CỰC</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0087 - NGƯỜI CÓ NIỀM TIN TÍCH CỰC</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ng%C6%B0%E1%BB%9Di-c%C3%B3-ni%E1%BB%81m-tin-t%C3%ADch-c%E1%BB%B1c/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ng%C6%B0%E1%BB%9Di-c%C3%B3-ni%E1%BB%81m-tin-ti%C3%AAu-c%E1%BB%B1c/" class="hover:text-orange-500">NGƯỜI CÓ NIỀM TIN TIÊU CỰC</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0088 - NGƯỜI CÓ NIỀM TIN TIÊU CỰC</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/ng%C6%B0%E1%BB%9Di-c%C3%B3-ni%E1%BB%81m-tin-ti%C3%AAu-c%E1%BB%B1c/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/mong-mu%E1%BB%91n-th%E1%BA%ADt-s%E1%BB%B1/" class="hover:text-orange-500">MONG MUỐN THẬT SỰ</a>
+            </h3>
+            
+            <p class="text-gray-600 text-sm mb-4">Từ - khái niệm KNW-0089 - MONG MUỐN THẬT SỰ</p>
+            
+            <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">
+                    01/01/2024
+                </span>
+                <a href="/tu-khainiem/knn-n%E1%BB%99i-t%C3%A2m/mong-mu%E1%BB%91n-th%E1%BA%ADt-s%E1%BB%B1/" class="text-orange-600 hover:text-orange-700 text-sm font-medium">
+                    Đọc thêm →
+                </a>
+            </div>
+        </div>
+        
+    </div>
+    
+
+    
+    
+</div>
+
+                </article>
+                
+                
+                <footer class="mt-12 pt-8 border-t border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <div class="text-sm text-gray-500">
+                            
+                            Cập nhật lần cuối: 01/01/2024
+                            
+                        </div>
+                        <div class="flex space-x-4">
+                            <button class="text-sm text-gray-500 hover:text-orange-500">
+                                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                                </svg>
+                                Chia sẻ
+                            </button>
+                            <button class="text-sm text-gray-500 hover:text-orange-500">
+                                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                Chỉnh sửa
+                            </button>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">W</span>
+                        </div>
+                        <span class="text-xl font-bold">HappyMarketDocs</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Tài liệu toàn diện về phát triển nội tâm, huấn luyện tư vấn và phát triển bản thân.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold mb-4">Tài liệu</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="/khai-niem-nguon/" class="hover:text-white">Khái niệm nguồn</a></li>
+                        <li><a href="/khoa-hoc/" class="hover:text-white">Khóa học</a></li>
+                        <li><a href="/tu-khainiem/" class="hover:text-white">Từ - Khái niệm</a></li>
+                        <li><a href="/hinh/" class="hover:text-white">Hình ảnh</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold mb-4">Hỗ trợ</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="/contact/" class="hover:text-white">Liên hệ</a></li>
+                        <li><a href="/faq/" class="hover:text-white">Câu hỏi thường gặp</a></li>
+                        <li><a href="/contribute/" class="hover:text-white">Đóng góp</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold mb-4">Kết nối</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/happymarket/docs" class="text-gray-400 hover:text-white">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com/company/happymarket" class="text-gray-400 hover:text-white">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2025 HappyMarketDocs. Tất cả quyền được bảo lưu.</p>
+            </div>
+        </div>
+    </footer>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="/js/main.js"></script>
+    
+    
+</body>
+</html>
