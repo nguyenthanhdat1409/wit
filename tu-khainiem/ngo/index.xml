@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ngộ on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
-    <link>http://localhost:1313/tu-khainiem/ngo/</link>
+    <link>https://happymarketdocs.com/tu-khainiem/ngo/</link>
     <description>Recent content in Ngộ on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description>
     <generator>Hugo</generator>
     <language>vi-VN</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://localhost:1313/tu-khainiem/ngo/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://happymarketdocs.com/tu-khainiem/ngo/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
