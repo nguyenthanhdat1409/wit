@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Gíao dục nhận thức on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
-    <link>https://happymarketdocs.com/tu-khainiem/giao-duc-nhan-thuc/</link>
+    <link>http://localhost:1313/tu-khainiem/giao-duc-nhan-thuc/</link>
     <description>Recent content in Gíao dục nhận thức on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description>
     <generator>Hugo</generator>
     <language>vi-VN</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="https://happymarketdocs.com/tu-khainiem/giao-duc-nhan-thuc/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tu-khainiem/giao-duc-nhan-thuc/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
