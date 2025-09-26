@@ -334,6 +334,20 @@ button:focus {
     outline-offset: 2px;
 }
 
+/* Disable all popups on tu-khainiem pages */
+body[data-page*="tu-khainiem"] .search-container,
+body[data-page*="tu-khainiem"] .search-results,
+body[data-page*="tu-khainiem"] .mobile-menu,
+body[data-page*="tu-khainiem"] .toc-container,
+body[data-page*="tu-khainiem"] .copy-code-btn,
+body[data-page*="tu-khainiem"] .back-to-top,
+body[data-page*="tu-khainiem"] .reading-progress,
+body[data-page*="tu-khainiem"] .print-button,
+body[data-page*="tu-khainiem"] .share-button,
+body[data-page*="tu-khainiem"] .dark-mode-toggle {
+    display: none !important;
+}
+
 /* Skip to content link */
 .skip-link {
     position: absolute;
