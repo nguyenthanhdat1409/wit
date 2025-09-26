@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Search functionality
+    // Search functionality - Only on bai-hoc pages
     const searchInput = document.querySelector('input[type="text"][placeholder="Tìm kiếm..."]');
-    if (searchInput) {
+    if (searchInput && window.location.pathname.includes('/bai-hoc/')) {
         let searchTimeout;
         
         searchInput.addEventListener('input', function() {
@@ -38,26 +38,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Table of Contents smooth scrolling and highlighting
-    const tocLinks = document.querySelectorAll('.prose a[href^="#"]');
-    tocLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
-            
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+    // Table of Contents smooth scrolling and highlighting - Only on bai-hoc pages
+    if (window.location.pathname.includes('/bai-hoc/')) {
+        const tocLinks = document.querySelectorAll('.prose a[href^="#"]');
+        tocLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
-    });
-    
-    // TOC highlighting based on scroll position
-    const tocContainer = document.querySelector('.toc-container');
-    if (tocContainer) {
+        
+        // TOC highlighting based on scroll position
+        const tocContainer = document.querySelector('.toc-container');
+        if (tocContainer) {
         const tocLinks = tocContainer.querySelectorAll('a[href^="#"]');
         const headings = Array.from(tocLinks).map(link => {
             const id = link.getAttribute('href').substring(1);
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initial update
         updateTOCHighlight();
+        }
     }
     
     // Copy code blocks
@@ -329,26 +331,28 @@ function smoothScrollTo(target) {
     }
 }
 
-// Keyboard navigation
-document.addEventListener('keydown', function(e) {
-    // Escape key to close mobile menu
-    if (e.key === 'Escape') {
-        const mobileMenu = document.querySelector('.mobile-menu');
-        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.add('hidden');
+// Keyboard navigation - Only on bai-hoc pages
+if (window.location.pathname.includes('/bai-hoc/')) {
+    document.addEventListener('keydown', function(e) {
+        // Escape key to close mobile menu
+        if (e.key === 'Escape') {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+            hideSearchResults();
         }
-        hideSearchResults();
-    }
-    
-    // Ctrl/Cmd + K to focus search
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        const searchInput = document.querySelector('input[type="text"][placeholder="Tìm kiếm..."]');
-        if (searchInput) {
-            searchInput.focus();
+        
+        // Ctrl/Cmd + K to focus search
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            const searchInput = document.querySelector('input[type="text"][placeholder="Tìm kiếm..."]');
+            if (searchInput) {
+                searchInput.focus();
+            }
         }
-    }
-});
+    });
+}
 
 // Performance monitoring
 if ('performance' in window) {
