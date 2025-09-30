@@ -1,19 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Final on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
-    <link>http://localhost:62373/tags/final/</link>
-    <description>Recent content in Final on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description>
-    <generator>Hugo</generator>
-    <language>vi-VN</language>
-    <lastBuildDate>Mon, 29 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:62373/tags/final/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>test 1d</title>
-      <link>http://localhost:62373/tu-khainiem/test-1d/</link>
-      <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:62373/tu-khainiem/test-1d/</guid>
-      <description>&lt;h1 id=&#34;test-1d&#34;&gt;test 1d&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;bài test 1 d với script cuối cùng&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Final on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title><link>https://happymarketdocs.com/tags/final/</link><description>Recent content in Final on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description><generator>Hugo</generator><language>vi-VN</language><lastBuildDate>Mon, 29 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://happymarketdocs.com/tags/final/index.xml" rel="self" type="application/rss+xml"/><item><title>test 1d</title><link>https://happymarketdocs.com/tu-khainiem/test-1d/</link><pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate><guid>https://happymarketdocs.com/tu-khainiem/test-1d/</guid><description>&lt;h1 id="test-1d"&gt;test 1d&lt;/h1&gt;
+&lt;!-- **Mã:** 
+**Nhóm:** --&gt;
+&lt;h2 id="khái-niệm"&gt;Khái Niệm&lt;/h2&gt;
+&lt;p&gt;bài test 1 d với script cuối cùng&lt;/p&gt;</description></item></channel></rss>

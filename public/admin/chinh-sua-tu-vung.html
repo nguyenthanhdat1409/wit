@@ -25,6 +25,117 @@
         .loading.show {
             display: block;
         }
+        
+        /* Font size cho từ vựng - khái niệm */
+        .vocabulary-title {
+            font-size: 22px !important;
+            font-weight: 600;
+        }
+        
+        /* Rich text editor styles */
+        .rich-text-editor {
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background: white;
+        }
+        
+        .editor-toolbar {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.25rem;
+            flex-wrap: wrap;
+            background: #f9fafb;
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+        
+        .editor-btn {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #d1d5db;
+            background: white;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        
+        .editor-btn:hover {
+            background: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        
+        .editor-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .editor-content {
+            min-height: 200px;
+            padding: 1rem;
+            border: none;
+            outline: none;
+            font-family: inherit;
+            line-height: 1.6;
+        }
+        
+        .editor-content:focus {
+            outline: none;
+        }
+        
+        /* Markdown preview styles */
+        .markdown-preview {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            background: #fafafa;
+            min-height: 200px;
+            font-family: inherit;
+            line-height: 1.6;
+        }
+        
+        .markdown-preview h1, .markdown-preview h2, .markdown-preview h3 {
+            font-weight: 600;
+            margin: 1rem 0 0.5rem 0;
+        }
+        
+        .markdown-preview h1 { font-size: 1.5rem; }
+        .markdown-preview h2 { font-size: 1.25rem; }
+        .markdown-preview h3 { font-size: 1.125rem; }
+        
+        .markdown-preview p {
+            margin: 0.5rem 0;
+        }
+        
+        .markdown-preview ul, .markdown-preview ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .markdown-preview li {
+            margin: 0.25rem 0;
+        }
+        
+        .markdown-preview strong {
+            font-weight: 600;
+        }
+        
+        .markdown-preview em {
+            font-style: italic;
+        }
+        
+        .markdown-preview hr {
+            border: none;
+            border-top: 1px solid #d1d5db;
+            margin: 1rem 0;
+        }
+        
+        .markdown-preview blockquote {
+            border-left: 4px solid #3b82f6;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #6b7280;
+        }
     </style>
 </head>
 <body class="admin-container">
@@ -88,7 +199,7 @@
                                 Tên từ vựng - khái niệm *
                             </label>
                             <input type="text" id="vocabularyTitle" name="vocabularyTitle" required
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent vocabulary-title"
                                    placeholder="Nhập tên từ vựng - khái niệm...">
                         </div>
                         <div>
@@ -113,11 +224,65 @@
                     <div class="space-y-4">
                         <div>
                             <label for="conceptContent" class="block text-sm font-medium text-gray-700 mb-2">
-                                Nội dung của khái niệm *
+                                Nội dung của khái niệm * 
                             </label>
-                            <textarea id="conceptContent" name="conceptContent" required rows="8"
-                                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                      placeholder="Nhập nội dung chi tiết của khái niệm..."></textarea>
+                            
+                            <!-- Rich Text Editor -->
+                            <div class="rich-text-editor">
+                                <div class="editor-toolbar">
+                                    <button type="button" class="editor-btn" data-command="bold" title="Bold (Ctrl+B)">
+                                        <strong>B</strong>
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="italic" title="Italic (Ctrl+I)">
+                                        <em>I</em>
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="insertUnorderedList" title="Bullet List">
+                                        • List
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="insertOrderedList" title="Numbered List">
+                                        1. List
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="insertHorizontalRule" title="Horizontal Line">
+                                        ───
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="formatBlock" data-value="h2" title="Heading 2">
+                                        H2
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="formatBlock" data-value="h3" title="Heading 3">
+                                        H3
+                                    </button>
+                                    <button type="button" class="editor-btn" data-command="formatBlock" data-value="blockquote" title="Quote">
+                                        "
+                                    </button>
+                                    <button type="button" class="editor-btn" id="markdownHelpBtn" title="Markdown Help">
+                                        ?
+                                    </button>
+                                </div>
+                                <div id="conceptContent" class="editor-content" contenteditable="true" 
+                                     data-placeholder="Nhập nội dung chi tiết của khái niệm... (Hỗ trợ Markdown: **bold**, *italic*, - list, # heading)"></div>
+                            </div>
+                            
+                            <!-- Markdown Preview Toggle -->
+                            <div class="mt-2 flex justify-between items-center">
+                                <div class="flex space-x-2">
+                                    <button type="button" id="togglePreview" class="text-sm text-blue-600 hover:text-blue-800">
+                                        👁️ Xem trước Markdown
+                                    </button>
+                                    <button type="button" id="insertMarkdown" class="text-sm text-green-600 hover:text-green-800">
+                                        📝 Chèn Markdown
+                                    </button>
+                                </div>
+                                <span class="text-xs text-gray-500">Hỗ trợ: **bold**, *italic*, - list, # heading</span>
+                            </div>
+                            
+                            <!-- Markdown Preview -->
+                            <div id="markdownPreview" class="markdown-preview hidden mt-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-2">Xem trước:</h4>
+                                <div id="previewContent"></div>
+                            </div>
+                            
+                            <!-- Hidden textarea for form submission -->
+                            <textarea id="conceptContentHidden" name="conceptContent" required class="hidden"></textarea>
                         </div>
                     </div>
                 </div>
@@ -211,5 +376,180 @@
 
     <!-- Scripts -->
     <script src="/admin/js/vocabulary-edit.js"></script>
+    
+    <!-- Rich Text Editor Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editor = document.getElementById('conceptContent');
+            const hiddenTextarea = document.getElementById('conceptContentHidden');
+            const preview = document.getElementById('markdownPreview');
+            const previewContent = document.getElementById('previewContent');
+            const togglePreviewBtn = document.getElementById('togglePreview');
+            const insertMarkdownBtn = document.getElementById('insertMarkdown');
+            const markdownHelpBtn = document.getElementById('markdownHelpBtn');
+            
+            // Placeholder functionality
+            function updatePlaceholder() {
+                if (editor.textContent.trim() === '') {
+                    editor.classList.add('empty');
+                } else {
+                    editor.classList.remove('empty');
+                }
+            }
+            
+            // Add placeholder styles
+            const style = document.createElement('style');
+            style.textContent = `
+                .editor-content.empty:before {
+                    content: attr(data-placeholder);
+                    color: #9ca3af;
+                    pointer-events: none;
+                    position: absolute;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Rich text editor functionality
+            const toolbarButtons = document.querySelectorAll('.editor-btn[data-command]');
+            toolbarButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const command = this.dataset.command;
+                    const value = this.dataset.value;
+                    
+                    document.execCommand(command, false, value);
+                    editor.focus();
+                    updatePreview();
+                });
+            });
+            
+            // Keyboard shortcuts
+            editor.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'b':
+                            e.preventDefault();
+                            document.execCommand('bold');
+                            break;
+                        case 'i':
+                            e.preventDefault();
+                            document.execCommand('italic');
+                            break;
+                    }
+                }
+            });
+            
+            // Update content and preview
+            editor.addEventListener('input', function() {
+                updatePlaceholder();
+                updatePreview();
+                syncHiddenTextarea();
+            });
+            
+            // Sync with hidden textarea for form submission
+            function syncHiddenTextarea() {
+                hiddenTextarea.value = editor.innerHTML;
+            }
+            
+            // Markdown preview functionality
+            function updatePreview() {
+                const content = editor.innerHTML;
+                previewContent.innerHTML = content;
+            }
+            
+            // Toggle preview
+            togglePreviewBtn.addEventListener('click', function() {
+                if (preview.classList.contains('hidden')) {
+                    updatePreview();
+                    preview.classList.remove('hidden');
+                    this.textContent = '✏️ Chỉnh sửa';
+                } else {
+                    preview.classList.add('hidden');
+                    this.textContent = '👁️ Xem trước Markdown';
+                }
+            });
+            
+            // Insert markdown templates
+            insertMarkdownBtn.addEventListener('click', function() {
+                const templates = [
+                    { name: 'Bold Text', template: '**Văn bản in đậm**' },
+                    { name: 'Italic Text', template: '*Văn bản in nghiêng*' },
+                    { name: 'Heading 2', template: '## Tiêu đề 2' },
+                    { name: 'Heading 3', template: '### Tiêu đề 3' },
+                    { name: 'Bullet List', template: '- Mục 1\n- Mục 2\n- Mục 3' },
+                    { name: 'Numbered List', template: '1. Mục 1\n2. Mục 2\n3. Mục 3' },
+                    { name: 'Quote', template: '> Đây là trích dẫn' },
+                    { name: 'Horizontal Line', template: '---' }
+                ];
+                
+                const templateList = templates.map((t, i) => 
+                    `${i + 1}. ${t.name}: ${t.template}`
+                ).join('\n\n');
+                
+                const selection = window.getSelection();
+                if (selection.rangeCount > 0) {
+                    const range = selection.getRangeAt(0);
+                    range.deleteContents();
+                    range.insertNode(document.createTextNode(templateList));
+                } else {
+                    editor.innerHTML += '<br>' + templateList.replace(/\n/g, '<br>');
+                }
+                
+                editor.focus();
+                updatePreview();
+                syncHiddenTextarea();
+            });
+            
+            // Markdown help
+            markdownHelpBtn.addEventListener('click', function() {
+                const helpText = `
+Cú pháp Markdown được hỗ trợ:
+
+**Văn bản in đậm** hoặc __Văn bản in đậm__
+*Văn bản in nghiêng* hoặc _Văn bản in nghiêng_
+
+## Tiêu đề 2
+### Tiêu đề 3
+
+- Danh sách có dấu đầu dòng
+- Mục 2
+- Mục 3
+
+1. Danh sách có số
+2. Mục 2
+3. Mục 3
+
+> Đây là trích dẫn
+
+---
+
+Bạn có thể sử dụng các nút trên thanh công cụ hoặc gõ trực tiếp cú pháp Markdown.
+                `;
+                
+                const selection = window.getSelection();
+                if (selection.rangeCount > 0) {
+                    const range = selection.getRangeAt(0);
+                    range.deleteContents();
+                    range.insertNode(document.createTextNode(helpText));
+                } else {
+                    editor.innerHTML += '<br>' + helpText.replace(/\n/g, '<br>');
+                }
+                
+                editor.focus();
+                updatePreview();
+                syncHiddenTextarea();
+            });
+            
+            // Initialize
+            updatePlaceholder();
+            
+            // Load existing content if any
+            if (hiddenTextarea.value) {
+                editor.innerHTML = hiddenTextarea.value;
+                updatePlaceholder();
+                updatePreview();
+            }
+        });
+    </script>
 </body>
 </html>
