@@ -224,6 +224,29 @@ ${vocabData.content}`;
           await fs.writeFile(vocabPath, markdownContent, 'utf8');
           console.log('✅ Created vocabulary file:', vocabPath);
           
+          // Auto commit and push to Git
+          const { exec } = require('child_process');
+          const util = require('util');
+          const execPromise = util.promisify(exec);
+          
+          try {
+            // Add file to git
+            await execPromise(`git add "${vocabPath}"`);
+            console.log('✅ Git add:', vocabPath);
+            
+            // Commit
+            const commitMessage = `feat: add vocabulary "${vocabData.title}"`;
+            await execPromise(`git commit -m "${commitMessage}"`);
+            console.log('✅ Git commit:', commitMessage);
+            
+            // Push
+            await execPromise('git push');
+            console.log('✅ Git push: pushed to remote');
+          } catch (gitError) {
+            console.warn('⚠️ Git operation failed:', gitError.message);
+            // Continue even if git fails
+          }
+          
           res.writeHead(200);
           res.end(JSON.stringify({
             success: true,
@@ -233,7 +256,7 @@ ${vocabData.content}`;
               filePath: `content/TU-KHAINIEM/${slug}/_index.md`,
               url: `/tu-khainiem/${slug}/`
             },
-            message: 'Từ vựng đã được tạo thành công!'
+            message: 'Từ vựng đã được tạo và commit vào Git thành công!'
           }));
         } catch (error) {
           console.error('Error creating vocabulary:', error);
