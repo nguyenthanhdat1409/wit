@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Js-Call on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
-    <link>http://localhost:1313/tags/js-call/</link>
+    <link>http://localhost:62373/tags/js-call/</link>
     <description>Recent content in Js-Call on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description>
     <generator>Hugo</generator>
     <language>vi-VN</language>
     <lastBuildDate>Mon, 29 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/js-call/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:62373/tags/js-call/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>test 1e</title>
-      <link>http://localhost:1313/tu-khainiem/test-1e/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1e/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1e/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1e/</guid>
       <description>&lt;h1 id=&#34;test-1e&#34;&gt;test 1e&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;bài test 1 e với script js call&lt;/p&gt;</description>
     </item>
   </channel>

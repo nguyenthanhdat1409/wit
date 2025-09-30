@@ -2,122 +2,122 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Test on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
-    <link>http://localhost:1313/tags/test/</link>
+    <link>http://localhost:62373/tags/test/</link>
     <description>Recent content in Test on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description>
     <generator>Hugo</generator>
     <language>vi-VN</language>
     <lastBuildDate>Mon, 29 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/test/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:62373/tags/test/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Bai Hoc Test</title>
-      <link>http://localhost:1313/tu-khainiem/bai-hoc-test/</link>
+      <link>http://localhost:62373/tu-khainiem/bai-hoc-test/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/bai-hoc-test/</guid>
+      <guid>http://localhost:62373/tu-khainiem/bai-hoc-test/</guid>
       <description>&lt;h1 id=&#34;bai-hoc-test&#34;&gt;Bai Hoc Test&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xA;**Nhóm:**  --&gt;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là bài học test được tạo qua API. Nội dung này sẽ được lưu trong file _index.md và có thể truy cập qua URL.&lt;/p&gt;</description>
     </item>
     <item>
       <title>test 1a</title>
-      <link>http://localhost:1313/tu-khainiem/test-1a/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1a/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1a/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1a/</guid>
       <description>&lt;h1 id=&#34;test-1a&#34;&gt;test 1a&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;bài test 1 a&lt;/p&gt;</description>
     </item>
     <item>
       <title>test 1aa</title>
-      <link>http://localhost:1313/tu-khainiem/test-1aa/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1aa/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1aa/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1aa/</guid>
       <description>&lt;h1 id=&#34;test-1aa&#34;&gt;test 1aa&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Nội dung 1aa&lt;/p&gt;</description>
     </item>
     <item>
       <title>test 1b</title>
-      <link>http://localhost:1313/tu-khainiem/test-1b/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1b/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1b/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1b/</guid>
       <description>&lt;h1 id=&#34;test-1b&#34;&gt;test 1b&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;bài test 1 b với script mới&lt;/p&gt;</description>
     </item>
     <item>
       <title>test 1bb</title>
-      <link>http://localhost:1313/tu-khainiem/test-1bb/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1bb/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1bb/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1bb/</guid>
       <description>&lt;h1 id=&#34;test-1bb&#34;&gt;test 1bb&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Nội dung 1bb với script cuối cùng&lt;/p&gt;</description>
     </item>
     <item>
       <title>test 1c</title>
-      <link>http://localhost:1313/tu-khainiem/test-1c/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1c/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1c/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1c/</guid>
       <description>&lt;h1 id=&#34;test-1c&#34;&gt;test 1c&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;bài test 1 c với script đơn giản&lt;/p&gt;</description>
     </item>
     <item>
       <title>test 1cc</title>
-      <link>http://localhost:1313/tu-khainiem/test-1cc/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1cc/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1cc/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1cc/</guid>
       <description>&lt;h1 id=&#34;test-1cc&#34;&gt;test 1cc&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Nội dung 1cc với script ultimate&lt;/p&gt;</description>
     </item>
     <item>
       <title>test 1d</title>
-      <link>http://localhost:1313/tu-khainiem/test-1d/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1d/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1d/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1d/</guid>
       <description>&lt;h1 id=&#34;test-1d&#34;&gt;test 1d&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;bài test 1 d với script cuối cùng&lt;/p&gt;</description>
     </item>
     <item>
       <title>test 1dd</title>
-      <link>http://localhost:1313/tu-khainiem/test-1dd/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1dd/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1dd/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1dd/</guid>
       <description>&lt;h1 id=&#34;test-1dd&#34;&gt;test 1dd&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Nội dung 1dd với script ultimate final&lt;/p&gt;</description>
     </item>
     <item>
       <title>test 1e</title>
-      <link>http://localhost:1313/tu-khainiem/test-1e/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1e/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1e/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1e/</guid>
       <description>&lt;h1 id=&#34;test-1e&#34;&gt;test 1e&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;bài test 1 e với script js call&lt;/p&gt;</description>
     </item>
     <item>
       <title>test 1ee</title>
-      <link>http://localhost:1313/tu-khainiem/test-1ee/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1ee/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1ee/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1ee/</guid>
       <description>&lt;h1 id=&#34;test-1ee&#34;&gt;test 1ee&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Nội dung 1ee với script ultimate final working&lt;/p&gt;</description>
     </item>
     <item>
       <title>Test 2</title>
-      <link>http://localhost:1313/tu-khainiem/test-2/</link>
+      <link>http://localhost:62373/tu-khainiem/test-2/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-2/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-2/</guid>
       <description>&lt;h1 id=&#34;test-2&#34;&gt;Test 2&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là test 2 với tên có khoảng trắng. Slug sẽ được tạo thành &amp;rsquo;test-2&#39;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Test 3</title>
-      <link>http://localhost:1313/tu-khainiem/test-3/</link>
+      <link>http://localhost:62373/tu-khainiem/test-3/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-3/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-3/</guid>
       <description>&lt;h1 id=&#34;test-3&#34;&gt;Test 3&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là test 3 với loading chi tiết và log&lt;/p&gt;</description>
     </item>
     <item>
       <title>Test@#$%^&amp;*()</title>
-      <link>http://localhost:1313/tu-khainiem/test/</link>
+      <link>http://localhost:62373/tu-khainiem/test/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test/</guid>
       <description>&lt;h1 id=&#34;test&#34;&gt;Test@#$%^&amp;amp;*()&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là test với ký tự đặc biệt. Slug sẽ được làm sạch.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Test1</title>
-      <link>http://localhost:1313/tu-khainiem/test1/</link>
+      <link>http://localhost:62373/tu-khainiem/test1/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test1/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test1/</guid>
       <description>&lt;h1 id=&#34;test1&#34;&gt;Test1&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là nội dung test cho từ vựng - khái niệm test1. Nội dung này sẽ được lưu trong file _index.md và có thể truy cập qua URL &lt;code&gt;/tu-khainiem/test1/&lt;/code&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Từ Vựng Tiếng Việt</title>
-      <link>http://localhost:1313/tu-khainiem/tu-vung-tieng-viet/</link>
+      <link>http://localhost:62373/tu-khainiem/tu-vung-tieng-viet/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/tu-vung-tieng-viet/</guid>
+      <guid>http://localhost:62373/tu-khainiem/tu-vung-tieng-viet/</guid>
       <description>&lt;h1 id=&#34;từ-vựng-tiếng-việt&#34;&gt;Từ Vựng Tiếng Việt&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xA;**Nhóm:**  --&gt;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là test với dấu tiếng Việt. Slug sẽ được chuyển đổi.&lt;/p&gt;</description>
     </item>
   </channel>

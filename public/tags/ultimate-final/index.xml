@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ultimate-Final on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
-    <link>http://localhost:1313/tags/ultimate-final/</link>
+    <link>http://localhost:62373/tags/ultimate-final/</link>
     <description>Recent content in Ultimate-Final on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description>
     <generator>Hugo</generator>
     <language>vi-VN</language>
     <lastBuildDate>Mon, 29 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/ultimate-final/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:62373/tags/ultimate-final/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>test 1dd</title>
-      <link>http://localhost:1313/tu-khainiem/test-1dd/</link>
+      <link>http://localhost:62373/tu-khainiem/test-1dd/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tu-khainiem/test-1dd/</guid>
+      <guid>http://localhost:62373/tu-khainiem/test-1dd/</guid>
       <description>&lt;h1 id=&#34;test-1dd&#34;&gt;test 1dd&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Nội dung 1dd với script ultimate final&lt;/p&gt;</description>
     </item>
   </channel>
