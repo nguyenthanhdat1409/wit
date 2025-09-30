@@ -140,8 +140,123 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // Create vocabulary endpoint
+  if (parsedUrl.pathname === '/api/create-vocabulary' && req.method === 'POST') {
+    try {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      
+      req.on('end', async () => {
+        try {
+          const vocabData = JSON.parse(body);
+          
+          // Validate data
+          if (!vocabData.title || vocabData.title.trim().length === 0) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Tiêu đề không được để trống'
+            }));
+            return;
+          }
+          
+          if (!vocabData.content || vocabData.content.trim().length === 0) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Nội dung không được để trống'
+            }));
+            return;
+          }
+
+          // Generate slug
+          const slug = generateSlug(vocabData.title);
+          const date = new Date().toISOString().split('T')[0];
+          
+          // Check if vocabulary already exists
+          const vocabPath = path.join(process.cwd(), 'content', 'TU-KHAINIEM', slug, '_index.md');
+          try {
+            await fs.access(vocabPath);
+            res.writeHead(409);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Từ vựng đã tồn tại',
+              slug: slug
+            }));
+            return;
+          } catch (error) {
+            // File doesn't exist, continue
+          }
+          
+          // Create directory
+          const dirPath = path.join(process.cwd(), 'content', 'TU-KHAINIEM', slug);
+          await fs.mkdir(dirPath, { recursive: true });
+          console.log('✅ Created directory:', dirPath);
+          
+          // Generate markdown content
+          const tags = vocabData.tags || [];
+          const categories = vocabData.categories || [];
+          const tagsYaml = tags.length > 0 ? `tags: [${tags.map(tag => `"${tag}"`).join(', ')}]` : 'tags: [""]';
+          const categoriesYaml = categories.length > 0 ? `categories: [${categories.map(cat => `"${cat}"`).join(', ')}]` : 'categories: [""]';
+          
+          const markdownContent = `---
+title: "${vocabData.title}"
+description: ""
+date: ${date}
+draft: false
+weight: 59
+${tagsYaml}
+${categoriesYaml}
+---
+
+# ${vocabData.title}
+
+<!-- **Mã:** 
+**Nhóm:**  -->
+
+## Khái Niệm
+
+${vocabData.content}`;
+          
+          // Write file
+          await fs.writeFile(vocabPath, markdownContent, 'utf8');
+          console.log('✅ Created vocabulary file:', vocabPath);
+          
+          res.writeHead(200);
+          res.end(JSON.stringify({
+            success: true,
+            data: {
+              title: vocabData.title,
+              slug: slug,
+              filePath: `content/TU-KHAINIEM/${slug}/_index.md`,
+              url: `/tu-khainiem/${slug}/`
+            },
+            message: 'Từ vựng đã được tạo thành công!'
+          }));
+        } catch (error) {
+          console.error('Error creating vocabulary:', error);
+          res.writeHead(500);
+          res.end(JSON.stringify({ 
+            success: false,
+            error: 'Lỗi server',
+            message: error.message
+          }));
+        }
+      });
+    } catch (error) {
+      console.error('Error handling request:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ 
+        success: false,
+        error: 'Lỗi server',
+        message: error.message
+      }));
+    }
+  }
   // Create lesson endpoint
-  if (parsedUrl.pathname === '/api/create-lesson' && req.method === 'POST') {
+  else if (parsedUrl.pathname === '/api/create-lesson' && req.method === 'POST') {
     try {
       let body = '';
       req.on('data', chunk => {

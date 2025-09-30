@@ -264,51 +264,44 @@ ${data.content}`;
                 categories: vocabularyData.categories
             };
             
-            // Try to call the API endpoint first
-            console.log('🌐 Attempting API call to /api/create-vocabulary-ultimate-final.html...');
+            // Call the real API endpoint
+            console.log('🌐 Calling API endpoint: http://localhost:3001/api/create-vocabulary');
             
-            // Create URL with parameters
-            const params = new URLSearchParams({
-                title: apiData.title,
-                content: apiData.content,
-                tags: apiData.tags.join(','),
-                categories: apiData.categories.join(',')
-            });
-            
-            fetch(`/api/create-vocabulary-ultimate-final.html?${params}`)
+            fetch('http://localhost:3001/api/create-vocabulary', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(apiData)
+            })
             .then(response => {
                 console.log('📡 API Response received:', response.status);
-                return response.text();
+                return response.json();
             })
-            .then(html => {
-                console.log('📄 HTML Response received');
-                // For now, simulate success since we can't easily parse HTML response
-                // In a real implementation, this would be a proper API endpoint
-                const result = {
-                    success: true,
-                    data: {
-                        title: apiData.title,
-                        slug: generateSlugFromTitle(apiData.title),
-                        filePath: `content/TU-KHAINIEM/${generateSlugFromTitle(apiData.title)}/_index.md`,
-                        url: `/tu-khainiem/${generateSlugFromTitle(apiData.title)}/`
-                    }
-                };
-                console.log('✅ API Success - Vocabulary created:', result.data);
-                resolve(result.data);
+            .then(result => {
+                console.log('📄 API Response:', result);
+                
+                if (result.success) {
+                    console.log('✅ Vocabulary created successfully:', result.data);
+                    resolve(result.data);
+                } else {
+                    console.error('❌ API Error:', result.error);
+                    reject(new Error(result.error || 'Không thể tạo từ vựng'));
+                }
             })
             .catch(error => {
-                console.error('❌ API Failed:', error);
-                console.log('🔄 Falling back to direct file creation...');
+                console.error('❌ API Request Failed:', error);
                 
-                // Fallback: Create file directly using Node.js script
+                // Fallback: Try the simulation method
+                console.log('🔄 Falling back to simulation mode...');
                 createVocabularyDirectly(vocabularyData, markdownContent)
                     .then(result => {
-                        console.log('✅ Direct creation successful:', result);
+                        console.log('✅ Simulation successful:', result);
                         resolve(result);
                     })
                     .catch(err => {
-                        console.error('❌ Direct creation failed:', err);
-                        reject(err);
+                        console.error('❌ Simulation failed:', err);
+                        reject(new Error('Không thể tạo từ vựng. Vui lòng đảm bảo API server đang chạy trên port 3001.'));
                     });
             });
         });
