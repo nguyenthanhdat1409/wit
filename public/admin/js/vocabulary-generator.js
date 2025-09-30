@@ -222,7 +222,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 loading.classList.add('hidden');
                 createBtn.disabled = false;
                 addLoadingLog('❌ Lỗi: ' + error.message);
-                alert('Có lỗi xảy ra khi tạo từ vựng - khái niệm. Vui lòng thử lại!');
+                
+                // Error already shown in createVocabularyFile, so no need to alert again here
+                // Just log for debugging
             });
     }
 
@@ -286,6 +288,14 @@ ${data.content}`;
                     resolve(result.data);
                 } else {
                     console.error('❌ API Error:', result.error);
+                    
+                    // Show user-friendly error message
+                    if (result.error === 'Từ vựng đã tồn tại') {
+                        alert('⚠️ Từ vựng này đã tồn tại!\n\nVui lòng đặt tên Từ vựng - Khái niệm khác hoặc xóa từ vựng cũ trước.');
+                    } else {
+                        alert('❌ Lỗi: ' + result.error);
+                    }
+                    
                     reject(new Error(result.error || 'Không thể tạo từ vựng'));
                 }
             })
