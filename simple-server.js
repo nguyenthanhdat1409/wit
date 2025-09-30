@@ -213,15 +213,12 @@ ${categoriesYaml}
 
 # ${vocabData.title}
 
-<!-- **Mã:** 
-**Nhóm:**  -->
-
 ## Khái Niệm
 
 ${vocabData.content}`;
           
-          // Write file
-          await fs.writeFile(vocabPath, markdownContent, 'utf8');
+          // Write file with UTF-8 encoding (no BOM)
+          await fs.writeFile(vocabPath, markdownContent, { encoding: 'utf8' });
           console.log('✅ Created vocabulary file:', vocabPath);
           
           // Auto commit and push to Git
