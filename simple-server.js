@@ -140,8 +140,224 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // Get vocabulary data endpoint
+  if (parsedUrl.pathname.startsWith('/api/get-vocabulary/') && req.method === 'GET') {
+    try {
+      const slug = parsedUrl.pathname.split('/').pop();
+      
+      if (!slug) {
+        res.writeHead(400);
+        res.end(JSON.stringify({ success: false, error: 'Slug is required' }));
+        return;
+      }
+      
+      // Read vocabulary file
+      const vocabPath = path.join(process.cwd(), 'content', 'TU-KHAINIEM', slug, '_index.md');
+      
+      try {
+        const fileContent = await fs.readFile(vocabPath, 'utf8');
+        
+        // Parse frontmatter and content
+        const frontmatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
+        const match = fileContent.match(frontmatterRegex);
+        
+        if (!match) {
+          throw new Error('Invalid file format');
+        }
+        
+        const frontmatter = match[1];
+        const content = match[2];
+        
+        // Extract fields from frontmatter
+        const titleMatch = frontmatter.match(/title:\s*"(.*)"/);
+        const tagsMatch = frontmatter.match(/tags:\s*\[(.*)\]/);
+        const categoriesMatch = frontmatter.match(/categories:\s*\[(.*)\]/);
+        
+        // Extract content (skip heading and ## Khái Niệm)
+        const contentLines = content.trim().split('\n');
+        let actualContent = '';
+        let foundKhaiNiem = false;
+        
+        for (let i = 0; i < contentLines.length; i++) {
+          if (contentLines[i].includes('## Khái Niệm')) {
+            foundKhaiNiem = true;
+            continue;
+          }
+          if (foundKhaiNiem && contentLines[i].trim()) {
+            actualContent = contentLines.slice(i).join('\n').trim();
+            break;
+          }
+        }
+        
+        const vocabularyData = {
+          slug: slug,
+          title: titleMatch ? titleMatch[1] : slug,
+          content: actualContent || content.replace(/^#.*\n/, '').replace(/##\s*Khái Niệm\n/, '').trim(),
+          tags: tagsMatch ? tagsMatch[1].split(',').map(t => t.trim().replace(/"/g, '')).filter(t => t) : [],
+          categories: categoriesMatch ? categoriesMatch[1].split(',').map(c => c.trim().replace(/"/g, '')).filter(c => c) : []
+        };
+        
+        res.writeHead(200);
+        res.end(JSON.stringify({
+          success: true,
+          data: vocabularyData
+        }));
+      } catch (error) {
+        console.error('Error reading vocabulary file:', error);
+        res.writeHead(404);
+        res.end(JSON.stringify({
+          success: false,
+          error: 'Vocabulary not found'
+        }));
+      }
+    } catch (error) {
+      console.error('Error handling request:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({
+        success: false,
+        error: 'Internal server error',
+        message: error.message
+      }));
+    }
+  }
+  // Update vocabulary endpoint
+  else if (parsedUrl.pathname === '/api/update-vocabulary' && req.method === 'POST') {
+    try {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      
+      req.on('end', async () => {
+        try {
+          const vocabData = JSON.parse(body);
+          
+          // Validate data
+          if (!vocabData.slug) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Slug is required'
+            }));
+            return;
+          }
+          
+          if (!vocabData.title || vocabData.title.trim().length === 0) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Tiêu đề không được để trống'
+            }));
+            return;
+          }
+          
+          if (!vocabData.content || vocabData.content.trim().length === 0) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Nội dung không được để trống'
+            }));
+            return;
+          }
+          
+          const slug = vocabData.slug;
+          const date = new Date().toISOString().split('T')[0];
+          
+          // Check if vocabulary exists
+          const vocabPath = path.join(process.cwd(), 'content', 'TU-KHAINIEM', slug, '_index.md');
+          try {
+            await fs.access(vocabPath);
+          } catch (error) {
+            res.writeHead(404);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Vocabulary not found'
+            }));
+            return;
+          }
+          
+          // Generate markdown content
+          const tags = vocabData.tags || [];
+          const categories = vocabData.categories || [];
+          const tagsYaml = tags.length > 0 ? `tags: [${tags.map(tag => `"${tag}"`).join(', ')}]` : 'tags: [""]';
+          const categoriesYaml = categories.length > 0 ? `categories: [${categories.map(cat => `"${cat}"`).join(', ')}]` : 'categories: [""]';
+          
+          const markdownContent = `---
+title: "${vocabData.title}"
+description: ""
+date: ${date}
+draft: false
+weight: 59
+${tagsYaml}
+${categoriesYaml}
+---
+
+# ${vocabData.title}
+
+## Khái Niệm
+
+${vocabData.content}`;
+          
+          // Write file
+          await fs.writeFile(vocabPath, markdownContent, { encoding: 'utf8' });
+          console.log('✅ Updated vocabulary file:', vocabPath);
+          
+          // Auto commit and push to Git
+          const { exec } = require('child_process');
+          const util = require('util');
+          const execPromise = util.promisify(exec);
+          
+          try {
+            // Add file to git
+            await execPromise(`git add "${vocabPath}"`);
+            console.log('✅ Git add:', vocabPath);
+            
+            // Commit
+            const commitMessage = `feat: update vocabulary "${vocabData.title}"`;
+            await execPromise(`git commit -m "${commitMessage}"`);
+            console.log('✅ Git commit:', commitMessage);
+            
+            // Push
+            await execPromise('git push');
+            console.log('✅ Git push: pushed to remote');
+          } catch (gitError) {
+            console.warn('⚠️ Git operation failed:', gitError.message);
+            // Continue even if git fails
+          }
+          
+          res.writeHead(200);
+          res.end(JSON.stringify({
+            success: true,
+            data: {
+              title: vocabData.title,
+              slug: slug,
+              filePath: `content/TU-KHAINIEM/${slug}/_index.md`,
+              url: `/tu-khainiem/${slug}/`
+            },
+            message: 'Từ vựng đã được cập nhật thành công!'
+          }));
+        } catch (error) {
+          console.error('Error updating vocabulary:', error);
+          res.writeHead(500);
+          res.end(JSON.stringify({ 
+            success: false,
+            error: 'Lỗi server',
+            message: error.message
+          }));
+        }
+      });
+    } catch (error) {
+      console.error('Error handling request:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ 
+        success: false,
+        error: 'Lỗi server',
+        message: error.message
+      }));
+    }
+  }
   // Create vocabulary endpoint
-  if (parsedUrl.pathname === '/api/create-vocabulary' && req.method === 'POST') {
+  else if (parsedUrl.pathname === '/api/create-vocabulary' && req.method === 'POST') {
     try {
       let body = '';
       req.on('data', chunk => {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi-VN">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=62373&amp;path=livereload" data-no-instant defer></script>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>9 Dạng người cần nhận dạng trong 1 - HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
@@ -24,7 +24,7 @@
     <meta property="og:title" content="9 Dạng người cần nhận dạng trong 1">
     <meta property="og:description" content="Tài liệu toàn diện về phát triển nội tâm, huấn luyện tư vấn và phát triển bản thân. Kiến thức chuyên sâu từ A-Z để phát triển toàn diện và thành công trong cuộc sống.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://localhost:62373/tu-khainiem/9-dang-nguoi-can-nhan-dang-trong-1/">
+    <meta property="og:url" content="http://localhost:1313/tu-khainiem/9-dang-nguoi-can-nhan-dang-trong-1/">
     <meta property="og:image" content="/images/og-image.jpg">
     
     
@@ -169,13 +169,16 @@ THIỆN TRI THỨC</p>
                         
                     </div>
                     <div class="flex space-x-4">
-                        <button class="text-sm text-gray-500 hover:text-orange-500">
+                        
+                        <button id="shareBtn" class="text-sm text-gray-500 hover:text-orange-500 transition-colors">
                             <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
                             </svg>
-                            Chia sẻ
+                            <span id="shareBtnText">Chia sẻ</span>
                         </button>
-                        <button class="text-sm text-gray-500 hover:text-orange-500">
+                        
+                        
+                        <button id="editBtn" class="text-sm text-gray-500 hover:text-orange-500 transition-colors" data-slug="_index" data-title="9 Dạng người cần nhận dạng trong 1">
                             <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
@@ -255,6 +258,52 @@ THIỆN TRI THỨC</p>
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', function() {
                     mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            
+            const shareBtn = document.getElementById('shareBtn');
+            const shareBtnText = document.getElementById('shareBtnText');
+            
+            if (shareBtn) {
+                shareBtn.addEventListener('click', function() {
+                    const currentURL = window.location.href;
+                    
+                    
+                    navigator.clipboard.writeText(currentURL).then(function() {
+                        
+                        const originalText = shareBtnText.textContent;
+                        shareBtnText.textContent = '✓ Đã copy!';
+                        shareBtn.classList.add('text-green-600');
+                        shareBtn.classList.remove('text-gray-500');
+                        
+                        
+                        setTimeout(function() {
+                            shareBtnText.textContent = originalText;
+                            shareBtn.classList.remove('text-green-600');
+                            shareBtn.classList.add('text-gray-500');
+                        }, 2000);
+                    }).catch(function(err) {
+                        console.error('Failed to copy:', err);
+                        alert('Không thể copy link. Vui lòng thử lại!');
+                    });
+                });
+            }
+            
+            
+            const editBtn = document.getElementById('editBtn');
+            
+            if (editBtn) {
+                editBtn.addEventListener('click', function() {
+                    const slug = this.getAttribute('data-slug');
+                    const title = this.getAttribute('data-title');
+                    
+                    if (slug) {
+                        
+                        window.location.href = `/admin/chinh-sua-tu-vung.html?slug=${encodeURIComponent(slug)}&title=${encodeURIComponent(title)}`;
+                    } else {
+                        alert('Không thể chỉnh sửa trang này!');
+                    }
                 });
             }
         });

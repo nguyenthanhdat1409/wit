@@ -119,13 +119,16 @@
                         {{ end }}
                     </div>
                     <div class="flex space-x-4">
-                        <button class="text-sm text-gray-500 hover:text-orange-500">
+                        <!-- Share Button -->
+                        <button id="shareBtn" class="text-sm text-gray-500 hover:text-orange-500 transition-colors">
                             <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
                             </svg>
-                            Chia sẻ
+                            <span id="shareBtnText">Chia sẻ</span>
                         </button>
-                        <button class="text-sm text-gray-500 hover:text-orange-500">
+                        
+                        <!-- Edit Button -->
+                        <button id="editBtn" class="text-sm text-gray-500 hover:text-orange-500 transition-colors" data-slug="{{ .File.BaseFileName }}" data-title="{{ .Title }}">
                             <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
@@ -205,6 +208,52 @@
             if (mobileMenuButton && mobileMenu) {
                 mobileMenuButton.addEventListener('click', function() {
                     mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Share Button - Copy current page URL
+            const shareBtn = document.getElementById('shareBtn');
+            const shareBtnText = document.getElementById('shareBtnText');
+            
+            if (shareBtn) {
+                shareBtn.addEventListener('click', function() {
+                    const currentURL = window.location.href;
+                    
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(currentURL).then(function() {
+                        // Change button text temporarily
+                        const originalText = shareBtnText.textContent;
+                        shareBtnText.textContent = '✓ Đã copy!';
+                        shareBtn.classList.add('text-green-600');
+                        shareBtn.classList.remove('text-gray-500');
+                        
+                        // Reset after 2 seconds
+                        setTimeout(function() {
+                            shareBtnText.textContent = originalText;
+                            shareBtn.classList.remove('text-green-600');
+                            shareBtn.classList.add('text-gray-500');
+                        }, 2000);
+                    }).catch(function(err) {
+                        console.error('Failed to copy:', err);
+                        alert('Không thể copy link. Vui lòng thử lại!');
+                    });
+                });
+            }
+            
+            // Edit Button - Redirect to edit page
+            const editBtn = document.getElementById('editBtn');
+            
+            if (editBtn) {
+                editBtn.addEventListener('click', function() {
+                    const slug = this.getAttribute('data-slug');
+                    const title = this.getAttribute('data-title');
+                    
+                    if (slug) {
+                        // Redirect to edit page with slug parameter
+                        window.location.href = `/admin/chinh-sua-tu-vung.html?slug=${encodeURIComponent(slug)}&title=${encodeURIComponent(title)}`;
+                    } else {
+                        alert('Không thể chỉnh sửa trang này!');
+                    }
                 });
             }
         });
