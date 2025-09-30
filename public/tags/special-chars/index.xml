@@ -13,7 +13,7 @@
       <link>http://localhost:1313/tu-khainiem/test/</link>
       <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tu-khainiem/test/</guid>
-      <description>&lt;h1 id=&#34;test&#34;&gt;Test@#$%^&amp;amp;*()&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xA;**Nhóm:**  --&gt;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là test với ký tự đặc biệt. Slug sẽ được làm sạch.&lt;/p&gt;</description>
+      <description>&lt;h1 id=&#34;test&#34;&gt;Test@#$%^&amp;amp;*()&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là test với ký tự đặc biệt. Slug sẽ được làm sạch.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
