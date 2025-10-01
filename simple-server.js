@@ -1123,6 +1123,203 @@ tableOfContents: true
         message: error.message
       }));
     }
+  } else if (pathname === '/api/delete-diagram' && method === 'POST') {
+    // Delete diagram endpoint
+    try {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      
+      req.on('end', async () => {
+        try {
+          const { id } = JSON.parse(body);
+          
+          if (!id) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Thiếu ID đồ hình'
+            }));
+            return;
+          }
+
+          // Find and delete diagram file
+          const diagramPath = `content/HINH/${id}.md`;
+          const fullPath = path.join(__dirname, diagramPath);
+          
+          if (fs.existsSync(fullPath)) {
+            fs.unlinkSync(fullPath);
+            console.log(`✅ Deleted diagram file: ${fullPath}`);
+            
+            // Trigger Hugo rebuild
+            console.log('🔄 [DEBUG] Triggering Hugo rebuild...');
+            try {
+              const { exec } = require('child_process');
+              exec('hugo', { cwd: __dirname }, (error, stdout, stderr) => {
+                if (error) {
+                  console.error('❌ Hugo rebuild failed:', error);
+                } else {
+                  console.log('✅ [DEBUG] Hugo rebuild completed successfully');
+                }
+              });
+            } catch (hugoError) {
+              console.error('❌ Hugo rebuild error:', hugoError);
+            }
+
+            // Git operations
+            try {
+              const { exec } = require('child_process');
+              exec(`git add ${diagramPath}`, { cwd: __dirname }, (error, stdout, stderr) => {
+                if (error) {
+                  console.error('⚠️ Git add failed:', error);
+                } else {
+                  console.log(`✅ Git add: ${fullPath}`);
+                }
+              });
+              
+              exec(`git commit -m "feat: delete diagram \\"${id}\\""`, { cwd: __dirname }, (error, stdout, stderr) => {
+                if (error) {
+                  console.error('⚠️ Git commit failed:', error);
+                } else {
+                  console.log('✅ Git commit successful');
+                }
+              });
+            } catch (gitError) {
+              console.error('⚠️ Git operation failed:', gitError);
+            }
+
+            res.writeHead(200);
+            res.end(JSON.stringify({ 
+              success: true,
+              message: 'Đồ hình đã được xóa thành công!',
+              deleted: id
+            }));
+          } else {
+            res.writeHead(404);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Không tìm thấy đồ hình'
+            }));
+          }
+        } catch (error) {
+          console.error('Error deleting diagram:', error);
+          res.writeHead(500);
+          res.end(JSON.stringify({ 
+            success: false,
+            error: 'Lỗi server',
+            message: error.message
+          }));
+        }
+      });
+    } catch (error) {
+      console.error('Error handling delete diagram request:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ 
+        success: false,
+        error: 'Lỗi server',
+        message: error.message
+      }));
+    }
+  } else if (pathname === '/api/delete-lesson' && method === 'POST') {
+    // Delete lesson endpoint
+    try {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      
+      req.on('end', async () => {
+        try {
+          const { id } = JSON.parse(body);
+          
+          if (!id) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Thiếu ID bài học'
+            }));
+            return;
+          }
+
+          // Find and delete lesson directory
+          const lessonPath = `content/BAI-HOC/${id}`;
+          const fullPath = path.join(__dirname, lessonPath);
+          
+          if (fs.existsSync(fullPath)) {
+            // Remove directory recursively
+            fs.rmSync(fullPath, { recursive: true, force: true });
+            console.log(`✅ Deleted lesson directory: ${fullPath}`);
+            
+            // Trigger Hugo rebuild
+            console.log('🔄 [DEBUG] Triggering Hugo rebuild...');
+            try {
+              const { exec } = require('child_process');
+              exec('hugo', { cwd: __dirname }, (error, stdout, stderr) => {
+                if (error) {
+                  console.error('❌ Hugo rebuild failed:', error);
+                } else {
+                  console.log('✅ [DEBUG] Hugo rebuild completed successfully');
+                }
+              });
+            } catch (hugoError) {
+              console.error('❌ Hugo rebuild error:', hugoError);
+            }
+
+            // Git operations
+            try {
+              const { exec } = require('child_process');
+              exec(`git add ${lessonPath}`, { cwd: __dirname }, (error, stdout, stderr) => {
+                if (error) {
+                  console.error('⚠️ Git add failed:', error);
+                } else {
+                  console.log(`✅ Git add: ${fullPath}`);
+                }
+              });
+              
+              exec(`git commit -m "feat: delete lesson \\"${id}\\""`, { cwd: __dirname }, (error, stdout, stderr) => {
+                if (error) {
+                  console.error('⚠️ Git commit failed:', error);
+                } else {
+                  console.log('✅ Git commit successful');
+                }
+              });
+            } catch (gitError) {
+              console.error('⚠️ Git operation failed:', gitError);
+            }
+
+            res.writeHead(200);
+            res.end(JSON.stringify({ 
+              success: true,
+              message: 'Bài học đã được xóa thành công!',
+              deleted: id
+            }));
+          } else {
+            res.writeHead(404);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Không tìm thấy bài học'
+            }));
+          }
+        } catch (error) {
+          console.error('Error deleting lesson:', error);
+          res.writeHead(500);
+          res.end(JSON.stringify({ 
+            success: false,
+            error: 'Lỗi server',
+            message: error.message
+          }));
+        }
+      });
+    } catch (error) {
+      console.error('Error handling delete lesson request:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ 
+        success: false,
+        error: 'Lỗi server',
+        message: error.message
+      }));
+    }
   } else {
     res.writeHead(404);
     res.end(JSON.stringify({ error: 'Not Found' }));
