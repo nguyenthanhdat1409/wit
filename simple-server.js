@@ -1,5 +1,6 @@
 const http = require('http');
-const fs = require('fs').promises;
+const fs = require('fs');
+const fsPromises = require('fs').promises;
 const path = require('path');
 const url = require('url');
 
@@ -40,7 +41,7 @@ async function updateHinhIndex(diagramData) {
     console.log('📁 [DEBUG] HINH Index file path:', indexPath);
     
     // Read current index file
-    let indexContent = await fs.readFile(indexPath, 'utf8');
+    let indexContent = await fsPromises.readFile(indexPath, 'utf8');
     console.log('📄 [DEBUG] Index file size:', indexContent.length, 'characters');
     
     // Generate new image card HTML
@@ -72,7 +73,7 @@ async function updateHinhIndex(diagramData) {
     }
     
     // Write updated content
-    await fs.writeFile(indexPath, indexContent, 'utf8');
+    await fsPromises.writeFile(indexPath, indexContent, 'utf8');
     console.log('✅ Updated HINH index with new diagram:', diagramData.title);
   } catch (error) {
     console.warn('⚠️ Failed to update HINH index:', error.message);
@@ -90,7 +91,7 @@ async function updateTuKhaiNiemIndex(vocabData) {
     console.log('📁 [DEBUG] Index file path:', indexPath);
     
     // Read current index file
-    let indexContent = await fs.readFile(indexPath, 'utf8');
+    let indexContent = await fsPromises.readFile(indexPath, 'utf8');
     console.log('📄 [DEBUG] Index file size:', indexContent.length, 'characters');
     
     // Extract content preview (first 50 characters)
