@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="vi-VN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Nội Dung - HappyMarketDocs Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .content-item {
+            transition: all 0.3s ease;
+        }
+        .content-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="admin-container">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/admin/" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">W</span>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Quản Lý Nội Dung</span>
+                    </a>
+                </div>
+                <nav class="flex space-x-4">
+                    <a href="/admin/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                        ← Quay lại Admin
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-white mb-4">📚 Quản Lý Nội Dung</h1>
+            <p class="text-white text-lg opacity-90">Xem, chỉnh sửa và xóa nội dung hiện có</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="card rounded-2xl shadow-2xl p-6 mb-6">
+            <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-6">
+                <button onclick="showTab('lessons')" id="lessonsTab" 
+                        class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors bg-white text-gray-900 shadow-sm">
+                    📖 Bài Học
+                </button>
+                <button onclick="showTab('diagrams')" id="diagramsTab" 
+                        class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors text-gray-500 hover:text-gray-700">
+                    🖼️ Đồ Hình
+                </button>
+                <button onclick="showTab('concepts')" id="conceptsTab" 
+                        class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors text-gray-500 hover:text-gray-700">
+                    💡 Khái Niệm
+                </button>
+            </div>
+
+            <!-- Bài Học Tab -->
+            <div id="lessonsContent" class="tab-content">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-gray-900">Danh sách Bài Học</h2>
+                    <button onclick="refreshContent('lessons')" 
+                            class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                        🔄 Làm mới
+                    </button>
+                </div>
+                <div id="lessonsList" class="space-y-4">
+                    <!-- Bài học sẽ được load động -->
+                    <div class="text-center py-8 text-gray-500">
+                        <div class="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                        Đang tải danh sách bài học...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Đồ Hình Tab -->
+            <div id="diagramsContent" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-gray-900">Danh sách Đồ Hình</h2>
+                    <button onclick="refreshContent('diagrams')" 
+                            class="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors">
+                        🔄 Làm mới
+                    </button>
+                </div>
+                <div id="diagramsList" class="space-y-4">
+                    <!-- Đồ hình sẽ được load động -->
+                    <div class="text-center py-8 text-gray-500">
+                        <div class="animate-spin w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                        Đang tải danh sách đồ hình...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Khái Niệm Tab -->
+            <div id="conceptsContent" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-gray-900">Danh sách Khái Niệm</h2>
+                    <button onclick="refreshContent('concepts')" 
+                            class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+                        🔄 Làm mới
+                    </button>
+                </div>
+                <div id="conceptsList" class="space-y-4">
+                    <!-- Khái niệm sẽ được load động -->
+                    <div class="text-center py-8 text-gray-500">
+                        <div class="animate-spin w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                        Đang tải danh sách khái niệm...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Popup Xóa Đồ Hình -->
+    <div id="deleteDiagramPopup" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Xóa Đồ Hình</h3>
+                    <p class="text-gray-600 mb-6">Bạn có chắc muốn xóa đồ hình <span id="diagramName" class="font-semibold text-red-600"></span>?</p>
+                    <div class="flex gap-3">
+                        <button onclick="closeDeleteDiagramPopup()" 
+                                class="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors">
+                            Hủy
+                        </button>
+                        <button onclick="confirmDeleteDiagram()" 
+                                class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                            Xóa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Xóa Bài Học -->
+    <div id="deleteLessonPopup" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Xóa Bài Học</h3>
+                    <p class="text-gray-600 mb-2">Bạn có chắc muốn xóa bài học <span id="lessonName" class="font-semibold text-red-600"></span>?</p>
+                    <p class="text-sm text-red-600 font-medium mb-6">⚠️ Hành động này không thể hoàn tác!</p>
+                    <div class="flex gap-3">
+                        <button onclick="closeDeleteLessonPopup()" 
+                                class="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors">
+                            Hủy
+                        </button>
+                        <button onclick="confirmDeleteLesson()" 
+                                class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                            Xóa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State for delete operations
+        let currentDeleteItem = null;
+        let currentDeleteType = null; // 'diagram' or 'lesson'
+
+        // Tab management
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('[id$="Tab"]').forEach(tab => {
+                tab.classList.remove('bg-white', 'text-gray-900', 'shadow-sm');
+                tab.classList.add('text-gray-500', 'hover:text-gray-700');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName + 'Content').classList.remove('hidden');
+            
+            // Add active class to selected tab
+            const activeTab = document.getElementById(tabName + 'Tab');
+            activeTab.classList.add('bg-white', 'text-gray-900', 'shadow-sm');
+            activeTab.classList.remove('text-gray-500', 'hover:text-gray-700');
+            
+            // Load content for the tab
+            loadContent(tabName);
+        }
+
+        // Load content based on tab
+        async function loadContent(type) {
+            const container = document.getElementById(type + 'List');
+            
+            try {
+                if (type === 'lessons') {
+                    await loadLessons(container);
+                } else if (type === 'diagrams') {
+                    await loadDiagrams(container);
+                } else if (type === 'concepts') {
+                    await loadConcepts(container);
+                }
+            } catch (error) {
+                console.error('Error loading content:', error);
+                container.innerHTML = `
+                    <div class="text-center py-8 text-red-500">
+                        <p>❌ Lỗi khi tải dữ liệu: ${error.message}</p>
+                        <button onclick="loadContent('${type}')" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                            Thử lại
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Load lessons
+        async function loadLessons(container) {
+            container.innerHTML = `
+                <div class="text-center py-8 text-gray-500">
+                    <div class="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                    Đang tải danh sách bài học...
+                </div>
+            `;
+
+            // Simulate API call - replace with actual API
+            setTimeout(() => {
+                const lessons = [
+                    { id: 'bai-hoc-a', title: 'Bài Học A', date: '2025-01-15', status: 'published' },
+                    { id: 'bai-hoc-test-a', title: 'Bài Học Test A', date: '2025-01-15', status: 'published' }
+                ];
+
+                if (lessons.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-8 text-gray-500">
+                            <p>📝 Chưa có bài học nào</p>
+                            <a href="/admin/tao-bai-hoc.html" class="mt-2 inline-block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                                Tạo bài học đầu tiên
+                            </a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = lessons.map(lesson => `
+                    <div class="content-item bg-white border border-gray-200 rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">${lesson.title}</h3>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span>📅 ${lesson.date}</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">${lesson.status}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <a href="/bai-hoc/${lesson.id}/" target="_blank" 
+                                   class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm">
+                                    👁️ Xem
+                                </a>
+                                <button onclick="showDeleteLessonPopup('${lesson.title}', '${lesson.id}')" 
+                                        class="px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm">
+                                    🗑️ Xóa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }, 1000);
+        }
+
+        // Load diagrams
+        async function loadDiagrams(container) {
+            container.innerHTML = `
+                <div class="text-center py-8 text-gray-500">
+                    <div class="animate-spin w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                    Đang tải danh sách đồ hình...
+                </div>
+            `;
+
+            // Simulate API call - replace with actual API
+            setTimeout(() => {
+                const diagrams = [
+                    { id: '3-goc-nhin-cua-con-nguoi', title: '3 Góc Nhìn Của Con Người', date: '2025-01-10' },
+                    { id: 'bay-su-giau-toan-dien', title: 'Bảy Sự Giàu Toàn Diện', date: '2025-01-10' }
+                ];
+
+                if (diagrams.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-8 text-gray-500">
+                            <p>🖼️ Chưa có đồ hình nào</p>
+                            <a href="/admin/tao-do-hinh.html" class="mt-2 inline-block px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600">
+                                Tạo đồ hình đầu tiên
+                            </a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = diagrams.map(diagram => `
+                    <div class="content-item bg-white border border-gray-200 rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">${diagram.title}</h3>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span>📅 ${diagram.date}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <a href="/hinh/${diagram.id}/" target="_blank" 
+                                   class="px-3 py-1 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm">
+                                    👁️ Xem
+                                </a>
+                                <button onclick="showDeleteDiagramPopup('${diagram.title}', '${diagram.id}')" 
+                                        class="px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm">
+                                    🗑️ Xóa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }, 1000);
+        }
+
+        // Load concepts
+        async function loadConcepts(container) {
+            container.innerHTML = `
+                <div class="text-center py-8 text-gray-500">
+                    <div class="animate-spin w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                    Đang tải danh sách khái niệm...
+                </div>
+            `;
+
+            // Simulate API call - replace with actual API
+            setTimeout(() => {
+                const concepts = [
+                    { id: '7-su-giau-toan-dien', title: '7 Sự Giàu Toàn Diện', category: 'khai-niem-nguon' },
+                    { id: 'bai-hoc-tam-dac-ngo-ra', title: 'Bài Học Tâm Đắc Ngộ Ra', category: 'khai-niem-nguon' }
+                ];
+
+                if (concepts.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-8 text-gray-500">
+                            <p>💡 Chưa có khái niệm nào</p>
+                            <a href="/admin/tao-tu-vung-khai-niem.html" class="mt-2 inline-block px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                                Tạo khái niệm đầu tiên
+                            </a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = concepts.map(concept => `
+                    <div class="content-item bg-white border border-gray-200 rounded-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">${concept.title}</h3>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span>📁 ${concept.category}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <a href="/khai-niem-nguon/${concept.id}/" target="_blank" 
+                                   class="px-3 py-1 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors text-sm">
+                                    👁️ Xem
+                                </a>
+                                <button onclick="alert('Chức năng xóa khái niệm chưa được implement')" 
+                                        class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+                                    🗑️ Xóa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }, 1000);
+        }
+
+        // Refresh content
+        function refreshContent(type) {
+            loadContent(type);
+        }
+
+        // Show delete diagram popup
+        function showDeleteDiagramPopup(itemName, itemId) {
+            currentDeleteItem = itemId;
+            currentDeleteType = 'diagram';
+            document.getElementById('diagramName').textContent = itemName;
+            document.getElementById('deleteDiagramPopup').classList.remove('hidden');
+        }
+
+        // Show delete lesson popup
+        function showDeleteLessonPopup(itemName, itemId) {
+            currentDeleteItem = itemId;
+            currentDeleteType = 'lesson';
+            document.getElementById('lessonName').textContent = itemName;
+            document.getElementById('deleteLessonPopup').classList.remove('hidden');
+        }
+
+        // Close delete diagram popup
+        function closeDeleteDiagramPopup() {
+            document.getElementById('deleteDiagramPopup').classList.add('hidden');
+            currentDeleteItem = null;
+            currentDeleteType = null;
+        }
+
+        // Close delete lesson popup
+        function closeDeleteLessonPopup() {
+            document.getElementById('deleteLessonPopup').classList.add('hidden');
+            currentDeleteItem = null;
+            currentDeleteType = null;
+        }
+
+        // Confirm delete diagram
+        async function confirmDeleteDiagram() {
+            if (!currentDeleteItem) return;
+            
+            try {
+                const apiUrl = getApiEndpoint('/delete-diagram');
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: currentDeleteItem })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('✅ Xóa đồ hình thành công!');
+                    // Refresh diagrams list
+                    loadContent('diagrams');
+                } else {
+                    alert('❌ Lỗi: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error deleting diagram:', error);
+                alert('❌ Không thể kết nối API');
+            }
+            
+            closeDeleteDiagramPopup();
+        }
+
+        // Confirm delete lesson
+        async function confirmDeleteLesson() {
+            if (!currentDeleteItem) return;
+            
+            try {
+                const apiUrl = getApiEndpoint('/delete-lesson');
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: currentDeleteItem })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('✅ Xóa bài học thành công!');
+                    // Refresh lessons list
+                    loadContent('lessons');
+                } else {
+                    alert('❌ Lỗi: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error deleting lesson:', error);
+                alert('❌ Không thể kết nối API');
+            }
+            
+            closeDeleteLessonPopup();
+        }
+
+        // Get API endpoint (same logic as other admin pages)
+        function getApiEndpoint(path) {
+            const hostname = window.location.hostname;
+            
+            if (hostname.includes('netlify.app') || hostname.includes('happymarketdocs.com')) {
+                return `/.netlify/functions${path}`;
+            } else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+                const port = window.location.port;
+                
+                if (port === '8888') {
+                    return `/.netlify/functions${path}`;
+                } else {
+                    return `http://localhost:3001/api${path}`;
+                }
+            }
+            
+            return `/.netlify/functions${path}`;
+        }
+
+        // Close popups when clicking outside
+        document.getElementById('deleteDiagramPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDeleteDiagramPopup();
+            }
+        });
+
+        document.getElementById('deleteLessonPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDeleteLessonPopup();
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load lessons by default
+            loadContent('lessons');
+        });
+    </script>
+</body>
+</html>
