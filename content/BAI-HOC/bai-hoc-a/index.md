@@ -52,9 +52,7 @@ khai niem a b
 </h2>
 
 <table style="border-collapse: collapse; width: 100%; text-align: center; font-family: Arial, sans-serif;">
-  <tr>    <td style="border: 1px solid black; padding: 8px;">
-      <a href="http://convoi.com.vn/wp-content/uploads/2025/09/hinh119a.png" style="text-decoration: none; color: blue; font-weight: bold;">http://convoi.com.vn/wp-content/uploads/2025/09/hinh119a.png</a>
-    </td>  </tr>
+  <tr>  </tr>
 </table>
 
 
