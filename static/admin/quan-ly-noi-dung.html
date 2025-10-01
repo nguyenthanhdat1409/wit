@@ -214,7 +214,7 @@
                             Hủy
                         </button>
                         <button type="submit" 
-                                class="flex-1 px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                                class="flex-1 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
                             💾 Lưu thay đổi
                         </button>
                     </div>
@@ -511,11 +511,16 @@
 
         async function loadLessonForEdit(lessonId) {
             try {
-                // Load lesson content from file system
-                const response = await fetch(`/bai-hoc/${lessonId}/index.md`);
+                // Load lesson content from API server
+                const apiEndpoint = getApiEndpoint();
+                const response = await fetch(`${apiEndpoint}/api/get-lesson/${lessonId}`);
                 if (response.ok) {
-                    const content = await response.text();
-                    parseLessonContent(content);
+                    const data = await response.json();
+                    if (data.success) {
+                        parseLessonContent(data.content);
+                    } else {
+                        alert('❌ Không thể tải nội dung bài học: ' + data.error);
+                    }
                 } else {
                     alert('❌ Không thể tải nội dung bài học');
                 }

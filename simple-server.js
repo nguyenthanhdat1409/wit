@@ -970,7 +970,7 @@ tableOfContents: true
           }
 
           markdown += `  </p>
-  </div>
+</div>
 
 </div>
 
@@ -1184,8 +1184,8 @@ tableOfContents: true
               message: 'Đồ hình đã được xóa thành công!',
               deleted: id
             }));
-          } else {
-            res.writeHead(404);
+  } else {
+    res.writeHead(404);
             res.end(JSON.stringify({ 
               success: false,
               error: 'Không tìm thấy đồ hình'
@@ -1523,6 +1523,45 @@ ${htmlContent}`;
       console.error('Error listing diagrams:', error);
       res.writeHead(500);
       res.end(JSON.stringify({ success: false, error: error.message }));
+    }
+  } else if (parsedUrl.pathname.startsWith('/api/get-lesson/') && req.method === 'GET') {
+    // Get lesson content endpoint
+    try {
+      const lessonId = parsedUrl.pathname.split('/')[3];
+      if (!lessonId) {
+        res.writeHead(400);
+        res.end(JSON.stringify({ success: false, error: 'Thiếu ID bài học' }));
+        return;
+      }
+
+      const lessonDir = path.join(__dirname, 'content/BAI-HOC', lessonId);
+      const indexPath = path.join(lessonDir, 'index.md');
+
+      // Check if lesson exists
+      if (!fs.existsSync(lessonDir)) {
+        res.writeHead(404);
+        res.end(JSON.stringify({ success: false, error: 'Không tìm thấy bài học' }));
+        return;
+      }
+
+      // Read lesson content
+      const content = await fsPromises.readFile(indexPath, 'utf8');
+      
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ 
+        success: true, 
+        content: content,
+        lessonId: lessonId
+      }));
+
+    } catch (error) {
+      console.error('Error getting lesson:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ 
+        success: false,
+        error: 'Lỗi server',
+        message: error.message
+      }));
     }
   } else {
     res.writeHead(404);
