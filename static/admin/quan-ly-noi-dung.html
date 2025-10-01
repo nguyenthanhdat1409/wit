@@ -153,6 +153,76 @@
         </div>
     </div>
 
+    <!-- Popup Chỉnh Sửa Bài Học -->
+    <div id="editLessonPopup" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full p-6 max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900">✏️ Chỉnh Sửa Bài Học</h3>
+                    <button onclick="closeEditLessonPopup()" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="editLessonForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tiêu đề bài học</label>
+                            <input type="text" id="editLessonTitle" name="title" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">URL hình ảnh</label>
+                            <input type="url" id="editLessonImage" name="image" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nội dung khái niệm</label>
+                        <textarea id="editLessonContent" name="content" rows="6" required
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Bài học liên quan (mỗi dòng một bài)</label>
+                        <div id="editRelatedLessons">
+                            <!-- Sẽ được populate bởi JavaScript -->
+                        </div>
+                        <button type="button" onclick="addEditRelatedLesson()" 
+                                class="mt-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors">
+                            ➕ Thêm bài học liên quan
+                        </button>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Khái niệm liên quan (mỗi dòng một khái niệm)</label>
+                        <div id="editRelatedConcepts">
+                            <!-- Sẽ được populate bởi JavaScript -->
+                        </div>
+                        <button type="button" onclick="addEditRelatedConcept()" 
+                                class="mt-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors">
+                            ➕ Thêm khái niệm liên quan
+                        </button>
+                    </div>
+                    
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="closeEditLessonPopup()" 
+                                class="flex-1 px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors">
+                            Hủy
+                        </button>
+                        <button type="submit" 
+                                class="flex-1 px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                            💾 Lưu thay đổi
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Popup Xóa Bài Học -->
     <div id="deleteLessonPopup" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
         <div class="flex items-center justify-center min-h-screen p-4">
@@ -266,6 +336,10 @@
                                        class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm">
                                         👁️ Xem
                                     </a>
+                                    <button onclick="editLesson('${lesson.id}')" 
+                                            class="px-3 py-1 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors text-sm">
+                                        ✏️ Sửa
+                                    </button>
                                     <button onclick="showDeleteLessonPopup('${lesson.title}', '${lesson.id}')" 
                                             class="px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm">
                                         🗑️ Xóa
@@ -422,6 +496,195 @@
             document.getElementById('diagramName').textContent = itemName;
             document.getElementById('deleteDiagramPopup').classList.remove('hidden');
         }
+
+        // Edit lesson functions
+        let currentEditLessonId = null;
+        let editRelatedLessons = [];
+        let editRelatedConcepts = [];
+
+        function editLesson(lessonId) {
+            currentEditLessonId = lessonId;
+            // Load lesson data and populate form
+            loadLessonForEdit(lessonId);
+            document.getElementById('editLessonPopup').classList.remove('hidden');
+        }
+
+        async function loadLessonForEdit(lessonId) {
+            try {
+                // Load lesson content from file system
+                const response = await fetch(`/bai-hoc/${lessonId}/index.md`);
+                if (response.ok) {
+                    const content = await response.text();
+                    parseLessonContent(content);
+                } else {
+                    alert('❌ Không thể tải nội dung bài học');
+                }
+            } catch (error) {
+                console.error('Error loading lesson:', error);
+                alert('❌ Lỗi khi tải bài học');
+            }
+        }
+
+        function parseLessonContent(content) {
+            // Parse frontmatter
+            const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+            if (frontmatterMatch) {
+                const frontmatter = frontmatterMatch[1];
+                const titleMatch = frontmatter.match(/^title:\s*["']?([^"'\n]+)["']?/m);
+                if (titleMatch) {
+                    document.getElementById('editLessonTitle').value = titleMatch[1];
+                }
+            }
+
+            // Parse image URL
+            const imageMatch = content.match(/src="([^"]+)"/);
+            if (imageMatch) {
+                document.getElementById('editLessonImage').value = imageMatch[1];
+            }
+
+            // Parse content
+            const contentMatch = content.match(/<p[^>]*>([\s\S]*?)<\/p>/);
+            if (contentMatch) {
+                document.getElementById('editLessonContent').value = contentMatch[1].trim();
+            }
+
+            // Parse related lessons
+            editRelatedLessons = [];
+            const relatedLessonsMatch = content.match(/<a href="([^"]+)"[^>]*>[\s\S]*?<img src="([^"]+)"/g);
+            if (relatedLessonsMatch) {
+                relatedLessonsMatch.forEach(match => {
+                    const urlMatch = match.match(/href="([^"]+)"/);
+                    const imgMatch = match.match(/src="([^"]+)"/);
+                    if (urlMatch && imgMatch) {
+                        editRelatedLessons.push({
+                            url: urlMatch[1],
+                            image: imgMatch[1]
+                        });
+                    }
+                });
+            }
+            renderEditRelatedLessons();
+
+            // Parse related concepts
+            editRelatedConcepts = [];
+            const conceptMatch = content.match(/<a href="([^"]+)"[^>]*>([^<]+)<\/a>/g);
+            if (conceptMatch) {
+                conceptMatch.forEach(match => {
+                    const urlMatch = match.match(/href="([^"]+)"/);
+                    const textMatch = match.match(/>([^<]+)</);
+                    if (urlMatch && textMatch) {
+                        editRelatedConcepts.push({
+                            url: urlMatch[1],
+                            text: textMatch[1]
+                        });
+                    }
+                });
+            }
+            renderEditRelatedConcepts();
+        }
+
+        function renderEditRelatedLessons() {
+            const container = document.getElementById('editRelatedLessons');
+            container.innerHTML = editRelatedLessons.map((lesson, index) => `
+                <div class="flex gap-2 mb-2">
+                    <input type="url" placeholder="URL bài học" value="${lesson.url}" 
+                           onchange="editRelatedLessons[${index}].url = this.value"
+                           class="flex-1 px-3 py-2 border border-gray-300 rounded-lg">
+                    <input type="url" placeholder="URL hình ảnh" value="${lesson.image}" 
+                           onchange="editRelatedLessons[${index}].image = this.value"
+                           class="flex-1 px-3 py-2 border border-gray-300 rounded-lg">
+                    <button type="button" onclick="removeEditRelatedLesson(${index})" 
+                            class="px-3 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200">
+                        🗑️
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function renderEditRelatedConcepts() {
+            const container = document.getElementById('editRelatedConcepts');
+            container.innerHTML = editRelatedConcepts.map((concept, index) => `
+                <div class="flex gap-2 mb-2">
+                    <input type="url" placeholder="URL khái niệm" value="${concept.url}" 
+                           onchange="editRelatedConcepts[${index}].url = this.value"
+                           class="flex-1 px-3 py-2 border border-gray-300 rounded-lg">
+                    <input type="text" placeholder="Tên khái niệm" value="${concept.text}" 
+                           onchange="editRelatedConcepts[${index}].text = this.value"
+                           class="flex-1 px-3 py-2 border border-gray-300 rounded-lg">
+                    <button type="button" onclick="removeEditRelatedConcept(${index})" 
+                            class="px-3 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200">
+                        🗑️
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function addEditRelatedLesson() {
+            editRelatedLessons.push({ url: '', image: '' });
+            renderEditRelatedLessons();
+        }
+
+        function addEditRelatedConcept() {
+            editRelatedConcepts.push({ url: '', text: '' });
+            renderEditRelatedConcepts();
+        }
+
+        function removeEditRelatedLesson(index) {
+            editRelatedLessons.splice(index, 1);
+            renderEditRelatedLessons();
+        }
+
+        function removeEditRelatedConcept(index) {
+            editRelatedConcepts.splice(index, 1);
+            renderEditRelatedConcepts();
+        }
+
+        function closeEditLessonPopup() {
+            document.getElementById('editLessonPopup').classList.add('hidden');
+            currentEditLessonId = null;
+            editRelatedLessons = [];
+            editRelatedConcepts = [];
+        }
+
+        // Handle edit lesson form submission
+        document.getElementById('editLessonForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!currentEditLessonId) return;
+
+            const formData = {
+                id: currentEditLessonId,
+                title: document.getElementById('editLessonTitle').value,
+                image: document.getElementById('editLessonImage').value,
+                content: document.getElementById('editLessonContent').value,
+                relatedLessons: editRelatedLessons.filter(l => l.url && l.image),
+                relatedConcepts: editRelatedConcepts.filter(c => c.url && c.text)
+            };
+
+            try {
+                const apiUrl = getApiEndpoint('/update-lesson');
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('✅ Cập nhật bài học thành công!');
+                    closeEditLessonPopup();
+                    loadContent('lessons'); // Refresh lessons list
+                } else {
+                    alert('❌ Lỗi: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error updating lesson:', error);
+                alert('❌ Không thể kết nối API');
+            }
+        });
 
         // Show delete lesson popup
         function showDeleteLessonPopup(itemName, itemId) {

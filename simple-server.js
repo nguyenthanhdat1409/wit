@@ -1356,6 +1356,167 @@ tableOfContents: true
       res.writeHead(500);
       res.end(JSON.stringify({ success: false, error: error.message }));
     }
+  } else if (parsedUrl.pathname === '/api/update-lesson' && req.method === 'POST') {
+    // Update lesson endpoint
+    try {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      
+      req.on('end', async () => {
+        try {
+          const lessonData = JSON.parse(body);
+          const { id, title, image, content, relatedLessons, relatedConcepts } = lessonData;
+          
+          if (!id || !title || !image || !content) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ success: false, error: 'Thiếu thông tin bắt buộc' }));
+            return;
+          }
+
+          // Generate slug from title
+          const slug = generateSlug(title);
+          const lessonDir = path.join(__dirname, 'content/BAI-HOC', id);
+          const indexPath = path.join(lessonDir, 'index.md');
+
+          // Check if lesson exists
+          if (!fs.existsSync(lessonDir)) {
+            res.writeHead(404);
+            res.end(JSON.stringify({ success: false, error: 'Không tìm thấy bài học' }));
+            return;
+          }
+
+          // Generate HTML content with inline CSS
+          let htmlContent = `<div style="display: flex; gap: 16px;">
+
+  <div style="flex: 1; max-width: 50%;">
+    <h2 style="text-align: center; font-weight: bold; font-size: 22px; margin-bottom: 12px;">
+      Hình Bài Học
+    </h2>
+    <a href="\\" style="display: block; text-align: center;">
+      <div style="border: 1px solid #fff; border-radius: 8px; padding: 8px; background: #fff;">
+        <img src="${image}" alt="${title}"
+             style="width: 100%; height: 200px; object-fit: contain; border-radius: 4px; padding:10px;">
+      </div>
+    </a>
+  </div>
+
+  <div style="flex: 1; max-width: 50%;">
+    <h2 style="text-align: center; font-weight: bold; font-size: 22px; margin-bottom: 12px;">
+      Khái Niệm
+    </h2>
+  <p style="text-align: left;">
+
+${content}
+  </p>
+  </div>
+
+</div>
+
+
+<h2 style="text-align: center; font-weight: bold; font-size: 22px; margin-bottom: 12px;">
+       Bài Học Liên Quan
+    </h2>
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-start;">`;
+
+          // Add related lessons
+          if (relatedLessons && relatedLessons.length > 0) {
+            relatedLessons.forEach(lesson => {
+              htmlContent += `  <a href="${lesson.url}" style="flex: 1 1 calc(25% - 12px); max-width: calc(25% - 12px); text-align: center;">
+    <div style="border: 1px solid #fff; border-radius: 8px; padding: 8px; background: #fff;">
+      <img src="${lesson.image}" alt="Bài học liên quan"
+           style="width: 100%; height: 200px; object-fit: contain; border-radius: 4px; padding:10px;">
+    </div>
+  </a>`;
+            });
+          }
+
+          htmlContent += `</div>
+
+<h2 style="text-align: center; font-weight: bold; font-size: 22px; margin-bottom: 12px;">
+       Khái Niệm Liên Quan
+</h2>
+
+<table style="border-collapse: collapse; width: 100%; text-align: center; font-family: Arial, sans-serif;">
+  <tr>`;
+
+          // Add related concepts
+          if (relatedConcepts && relatedConcepts.length > 0) {
+            relatedConcepts.forEach(concept => {
+              htmlContent += `    <td style="border: 1px solid black; padding: 8px;">
+      <a href="${concept.url}" style="text-decoration: none; color: blue; font-weight: bold;">${concept.text}</a>
+    </td>`;
+            });
+          }
+
+          htmlContent += `  </tr>
+</table>
+
+
+- [1.Trọng Điểm Tri Thức](https://convoi.com.vn/)`;
+
+          // Create frontmatter
+          const frontmatter = `---
+title: "${title}"
+description: ""
+date: ${new Date().toISOString().split('T')[0]}
+draft: false
+weight: 100
+tags: ["bài-học"]
+categories: ["bai-hoc"]
+tableOfContents: true
+---
+
+${htmlContent}`;
+
+          // Write updated content
+          await fsPromises.writeFile(indexPath, frontmatter, 'utf8');
+          console.log(`✅ Updated lesson: ${title}`);
+
+          // Trigger Hugo rebuild
+          await triggerHugoRebuild();
+
+          // Git operations
+          try {
+            const { exec } = require('child_process');
+            const util = require('util');
+            const execAsync = util.promisify(exec);
+            
+            await execAsync('git add .', { cwd: __dirname });
+            await execAsync(`git commit -m "update: ${title}"`, { cwd: __dirname });
+            console.log('✅ Git commit successful');
+          } catch (gitError) {
+            console.log('⚠️ Git commit failed:', gitError.message);
+          }
+
+          res.writeHead(200);
+          res.end(JSON.stringify({ 
+            success: true, 
+            message: 'Bài học đã được cập nhật thành công!',
+            slug: slug
+          }));
+
+        } catch (error) {
+          console.error('Error updating lesson:', error);
+          res.writeHead(500);
+          res.end(JSON.stringify({ 
+            success: false,
+            error: 'Lỗi server',
+            message: error.message
+          }));
+        }
+      });
+    } catch (error) {
+      console.error('Error in update-lesson endpoint:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ 
+        success: false,
+        error: 'Lỗi server',
+        message: error.message
+      }));
+    }
   } else if (parsedUrl.pathname === '/api/list-diagrams' && req.method === 'GET') {
     // List all diagrams
     try {
