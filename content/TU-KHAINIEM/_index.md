@@ -159,6 +159,9 @@ weight: 1
 | [Nhân cách niềm tin](nhan-cach-niem-tin/) | |
 | [Bai Hoc Test](bai-hoc-test/) | Đây là bài học test được tạo qua API. Nội dung này sẽ được lưu trong file _index.md và có thể truy cập qua URL. |
 | [Test1](test1/) | Đây là nội dung test cho từ vựng - khái niệm test1. Nội dung này sẽ được lưu trong file _index.md và có thể truy cập qua URL. |
+| [test nha 22](test-nha-22/) | Chào bạn... |
+| [Test Markdown](test-markdown/) | Đây là test markdown formatting... |
+| [test 9](test-9/) | 1. a 2. b **ac**... |
 
 
 </div>
@@ -237,10 +240,13 @@ document.addEventListener("DOMContentLoaded", function () {
     slice.forEach(r => html += "<tr>" + r.innerHTML + "</tr>");
     html += "</table>";
 
+    const totalPages = Math.ceil(rows.length / perPage);
     html += `<div class="pagination">
+           <button onclick="jumpToPage(1)" title="Tua lên trang 1">⏮ Đầu</button>
            <button onclick="changePage(-1)">« Trước</button>
-           <span>Trang ${page} / ${Math.ceil(rows.length / perPage)}</span>
+           <span>Trang ${page} / ${totalPages}</span>
            <button onclick="changePage(1)">Sau »</button>
+           <button onclick="jumpToPage(${totalPages})" title="Tua đến cuối trang">⏭ Cuối</button>
          </div>`;
          
     // Commented out test content:
@@ -269,6 +275,12 @@ document.addEventListener("DOMContentLoaded", function () {
   window.changePage = function (delta) {
     const total = Math.ceil(rows.length / perPage);
     currentPage = Math.min(Math.max(1, currentPage + delta), total);
+    renderTable(currentPage);
+  };
+
+  window.jumpToPage = function (page) {
+    const total = Math.ceil(rows.length / perPage);
+    currentPage = Math.min(Math.max(1, page), total);
     renderTable(currentPage);
   };
 

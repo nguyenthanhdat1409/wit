@@ -1,5 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Special-Chars on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title><link>https://happymarketdocs.com/tags/special-chars/</link><description>Recent content in Special-Chars on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description><generator>Hugo</generator><language>vi-VN</language><lastBuildDate>Mon, 29 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://happymarketdocs.com/tags/special-chars/index.xml" rel="self" type="application/rss+xml"/><item><title>Test@#$%^&amp;*()</title><link>https://happymarketdocs.com/tu-khainiem/test/</link><pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate><guid>https://happymarketdocs.com/tu-khainiem/test/</guid><description>&lt;h1 id="test"&gt;Test@#$%^&amp;amp;*()&lt;/h1&gt;
-&lt;!-- **Mã:** 
-**Nhóm:** --&gt;
-&lt;h2 id="khái-niệm"&gt;Khái Niệm&lt;/h2&gt;
-&lt;p&gt;Đây là test với ký tự đặc biệt. Slug sẽ được làm sạch.&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Special-Chars on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
+    <link>https://happymarketdocs.com/tags/special-chars/</link>
+    <description>Recent content in Special-Chars on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description>
+    <generator>Hugo</generator>
+    <language>vi-VN</language>
+    <lastBuildDate>Mon, 29 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://happymarketdocs.com/tags/special-chars/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Test@#$%^&amp;*()</title>
+      <link>https://happymarketdocs.com/tu-khainiem/test/</link>
+      <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>https://happymarketdocs.com/tu-khainiem/test/</guid>
+      <description>&lt;h1 id=&#34;test&#34;&gt;Test@#$%^&amp;amp;*()&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là test với ký tự đặc biệt. Slug sẽ được làm sạch.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

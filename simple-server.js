@@ -15,6 +15,181 @@ function generateSlug(title) {
     .trim('-'); // Remove leading/trailing hyphens
 }
 
+// Trigger Hugo rebuild
+async function triggerHugoRebuild() {
+  try {
+    console.log('🔄 [DEBUG] Triggering Hugo rebuild...');
+    const { exec } = require('child_process');
+    const util = require('util');
+    const execPromise = util.promisify(exec);
+    
+    // Run Hugo build command
+    await execPromise('hugo --quiet');
+    console.log('✅ [DEBUG] Hugo rebuild completed successfully');
+  } catch (error) {
+    console.warn('⚠️ [DEBUG] Hugo rebuild failed:', error.message);
+    // Don't throw error, just log warning
+  }
+}
+
+// Update HINH index
+async function updateHinhIndex(diagramData) {
+  try {
+    console.log('🔍 [DEBUG] Starting updateHinhIndex for:', diagramData.title);
+    const indexPath = path.join(process.cwd(), 'content', 'HINH', '_index.md');
+    console.log('📁 [DEBUG] HINH Index file path:', indexPath);
+    
+    // Read current index file
+    let indexContent = await fs.readFile(indexPath, 'utf8');
+    console.log('📄 [DEBUG] Index file size:', indexContent.length, 'characters');
+    
+    // Generate new image card HTML
+    const newImageCard = `
+  <div class="image-card">
+    <img src="${diagramData.imageUrl}" alt="${diagramData.title}">
+    <p>${diagramData.title}</p>
+    <div class="buttons">
+      <a href="${diagramData.conceptLink || '/'}">Khái Niệm</a>
+      <a href="${diagramData.lessonLink || '/'}">Bài Học</a>
+    </div>
+  </div>`;
+    
+    // Find the closing div tag and add new card before it
+    const closingDivPattern = /<\/div>\s*$/;
+    if (closingDivPattern.test(indexContent)) {
+      indexContent = indexContent.replace(closingDivPattern, `${newImageCard}\n</div>`);
+    } else {
+      // If no closing div found, add before the last </div>
+      const lastDivIndex = indexContent.lastIndexOf('</div>');
+      if (lastDivIndex !== -1) {
+        indexContent = indexContent.substring(0, lastDivIndex) + 
+                      newImageCard + '\n' + 
+                      indexContent.substring(lastDivIndex);
+      } else {
+        // Fallback: add at the end
+        indexContent += newImageCard;
+      }
+    }
+    
+    // Write updated content
+    await fs.writeFile(indexPath, indexContent, 'utf8');
+    console.log('✅ Updated HINH index with new diagram:', diagramData.title);
+  } catch (error) {
+    console.warn('⚠️ Failed to update HINH index:', error.message);
+    console.error('❌ [DEBUG] Full error:', error);
+    // Don't throw error, just log warning
+  }
+}
+
+// Update main tu-khainiem index
+async function updateTuKhaiNiemIndex(vocabData) {
+  try {
+    console.log('🔍 [DEBUG] Starting updateTuKhaiNiemIndex for:', vocabData.title);
+    console.log('🔍 [DEBUG] Full vocabData:', JSON.stringify(vocabData, null, 2));
+    const indexPath = path.join(process.cwd(), 'content', 'TU-KHAINIEM', '_index.md');
+    console.log('📁 [DEBUG] Index file path:', indexPath);
+    
+    // Read current index file
+    let indexContent = await fs.readFile(indexPath, 'utf8');
+    console.log('📄 [DEBUG] Index file size:', indexContent.length, 'characters');
+    
+    // Extract content preview (first 50 characters)
+    const contentPreview = vocabData.content.trim().substring(0, 50);
+    const previewText = contentPreview ? contentPreview + '...' : '';
+    console.log('📝 [DEBUG] Content preview:', previewText);
+    
+    // Generate slug if not provided
+    const slug = vocabData.slug || generateSlug(vocabData.title);
+    console.log('🔗 [DEBUG] Using slug:', slug);
+    
+    // Create new entry
+    const newEntry = `|| [${vocabData.title}](${slug}/) | ${previewText} |`;
+    console.log('➕ [DEBUG] New entry to add:', newEntry);
+    
+    // Find the last table row and add new entry
+    // Look for the pattern: || [Some Title](some-slug/) | Some content... |
+    // Try multiple patterns to find the right location
+    let match = null;
+    
+    // Pattern 1: Find the very last table row (most flexible)
+    const pattern1 = /(\|\| \[.*?\]\(.*?\/\) \| .*? \|)(\s*\n\s*<\/div>)/;
+    match = indexContent.match(pattern1);
+    
+    // Pattern 2: Find last table row before <script>
+    if (!match) {
+      const pattern2 = /(\|\| \[.*?\]\(.*?\/\) \| .*? \|)(\s*\n\s*<script>)/;
+      match = indexContent.match(pattern2);
+    }
+    
+    // Pattern 3: Find last table row before </div> or <script>
+    if (!match) {
+      const pattern3 = /(\|\| \[.*?\]\(.*?\/\) \| .*? \|)(\s*\n\s*(<\/div>|<script>))/;
+      match = indexContent.match(pattern3);
+    }
+    
+    // Pattern 4: Find the very last table row (no matter what comes after)
+    if (!match) {
+      const allTableRows = indexContent.match(/\|\| \[.*?\]\(.*?\/\) \| .*? \|/g);
+      if (allTableRows && allTableRows.length > 0) {
+        const lastRow = allTableRows[allTableRows.length - 1];
+        const lastRowIndex = indexContent.lastIndexOf(lastRow);
+        const afterLastRow = indexContent.substring(lastRowIndex + lastRow.length);
+        console.log('🔍 [DEBUG] After last table row:', afterLastRow.substring(0, 100));
+        
+        // Create a simple replacement pattern
+        const simplePattern = new RegExp(`(${lastRow.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})(.*)$`);
+        match = indexContent.match(simplePattern);
+        console.log('🔍 [DEBUG] Simple pattern match:', match ? 'FOUND' : 'NOT FOUND');
+      }
+    }
+    console.log('🔍 [DEBUG] Regex match result:', match ? 'FOUND' : 'NOT FOUND');
+    
+    if (match) {
+      console.log('✅ [DEBUG] Found matching pattern, updating file...');
+      // Add new entry after the last row
+      const updatedContent = indexContent.replace(lastRowRegex, `$1\n${newEntry}$2`);
+      
+      // Write updated content
+      await fs.writeFile(indexPath, updatedContent, 'utf8');
+      console.log('✅ Updated tu-khainiem index:', newEntry);
+    } else {
+      console.warn('⚠️ Could not find table pattern in tu-khainiem index');
+      console.log('🔍 [DEBUG] Last 200 characters of file:');
+      console.log(indexContent.substring(indexContent.length - 200));
+      console.log('🔍 [DEBUG] Looking for pattern: || [Title](slug/) | content |');
+      
+      // Find all table rows to understand the structure
+      const allTableRows = indexContent.match(/\|\| \[.*?\]\(.*?\/\) \| .*? \|/g);
+      console.log('🔍 [DEBUG] Found table rows:', allTableRows ? allTableRows.length : 0);
+      if (allTableRows && allTableRows.length > 0) {
+        console.log('🔍 [DEBUG] Last 3 table rows:');
+        allTableRows.slice(-3).forEach((row, index) => {
+          console.log(`  ${allTableRows.length - 3 + index + 1}: ${row}`);
+        });
+      }
+      
+      // Try to find where the table ends
+      const tableEndPatterns = [
+        /<\/div>/g,
+        /<script>/g,
+        /<style>/g
+      ];
+      
+      tableEndPatterns.forEach((pattern, index) => {
+        const matches = [...indexContent.matchAll(pattern)];
+        console.log(`🔍 [DEBUG] Pattern ${index + 1} matches:`, matches.length);
+        if (matches.length > 0) {
+          console.log(`🔍 [DEBUG] Last match position:`, matches[matches.length - 1].index);
+        }
+      });
+    }
+  } catch (error) {
+    console.warn('⚠️ Failed to update tu-khainiem index:', error.message);
+    console.error('❌ [DEBUG] Full error:', error);
+    // Don't throw error, just log warning
+  }
+}
+
 // Generate frontmatter cho Hugo
 function generateFrontmatter(lessonData) {
   const now = new Date();
@@ -292,8 +467,6 @@ ${tagsYaml}
 ${categoriesYaml}
 ---
 
-# ${vocabData.title}
-
 ## Khái Niệm
 
 ${vocabData.content}`;
@@ -427,8 +600,6 @@ ${tagsYaml}
 ${categoriesYaml}
 ---
 
-# ${vocabData.title}
-
 ## Khái Niệm
 
 ${vocabData.content}`;
@@ -436,6 +607,14 @@ ${vocabData.content}`;
           // Write file with UTF-8 encoding (no BOM)
           await fs.writeFile(vocabPath, markdownContent, { encoding: 'utf8' });
           console.log('✅ Created vocabulary file:', vocabPath);
+          
+          // Update main tu-khainiem index
+          console.log('🔄 [DEBUG] About to call updateTuKhaiNiemIndex...');
+          await updateTuKhaiNiemIndex(vocabData);
+          console.log('✅ [DEBUG] updateTuKhaiNiemIndex completed');
+          
+          // Trigger Hugo rebuild
+          await triggerHugoRebuild();
           
           // Auto commit and push to Git
           const { exec } = require('child_process');
@@ -558,6 +737,155 @@ ${vocabData.content}`;
         message: error.message
       }));
     }
+  }
+  // Create diagram endpoint
+  else if (parsedUrl.pathname === '/api/create-diagram' && req.method === 'POST') {
+    try {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      
+      req.on('end', async () => {
+        try {
+          console.log('🔍 [DEBUG] Raw body:', body);
+          
+          // Parse JSON data (simplified version without formidable)
+          const diagramData = JSON.parse(body);
+          console.log('🔍 [DEBUG] Parsed data:', diagramData);
+          
+          const imageTitle = diagramData.imageTitle;
+          const conceptLink = diagramData.conceptLink || '';
+          const lessonLink = diagramData.lessonLink || '';
+          const imageUrl = diagramData.imageUrl || '';
+          
+          // Validate required fields
+          if (!imageTitle || imageTitle.trim().length === 0) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Tên hình không được để trống'
+            }));
+            return;
+          }
+          
+          if (!imageUrl || imageUrl.trim().length === 0) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'URL hình ảnh không được để trống'
+            }));
+            return;
+          }
+          
+          // Generate slug for the diagram
+          const slug = generateSlug(imageTitle);
+          const date = new Date().toISOString().split('T')[0];
+          
+          console.log('🔍 [DEBUG] Creating diagram with slug:', slug);
+          
+          // Create diagram markdown content
+          const markdownContent = `---
+title: "${imageTitle}"
+description: ""
+date: ${date}
+draft: false
+weight: 100
+tags: ["hình-ảnh", "đồ-hình"]
+categories: ["hinh"]
+diagram:
+  imageUrl: "${imageUrl}"
+  conceptLink: "${conceptLink}"
+  lessonLink: "${lessonLink}"
+---
+
+![${imageTitle}](${imageUrl})
+
+${imageTitle}`;
+          
+          // Create diagram file
+          const diagramPath = path.join(process.cwd(), 'content', 'HINH', `${slug}.md`);
+          console.log('📝 [DEBUG] Creating file at:', diagramPath);
+          await fs.writeFile(diagramPath, markdownContent, { encoding: 'utf8' });
+          console.log('✅ [SUCCESS] Created diagram file:', diagramPath);
+          
+          // Update HINH index
+          console.log('🔄 [DEBUG] Updating HINH index...');
+          await updateHinhIndex({
+            title: imageTitle,
+            slug: slug,
+            imageUrl: imageUrl,
+            conceptLink: conceptLink,
+            lessonLink: lessonLink
+          });
+          console.log('✅ [SUCCESS] Updated HINH index');
+          
+          // Trigger Hugo rebuild
+          console.log('🔨 [DEBUG] Triggering Hugo rebuild...');
+          await triggerHugoRebuild();
+          console.log('✅ [SUCCESS] Hugo rebuild completed');
+          
+          // Auto commit and push to Git
+          const { exec } = require('child_process');
+          const util = require('util');
+          const execPromise = util.promisify(exec);
+          
+          try {
+            await execPromise(`git add "${diagramPath}"`);
+            console.log('✅ Git add: added diagram file');
+            
+            // Commit
+            const commitMessage = `feat: add diagram "${imageTitle}"`;
+            await execPromise(`git commit -m "${commitMessage}"`);
+            console.log('✅ Git commit:', commitMessage);
+            
+            // Push
+            await execPromise('git push');
+            console.log('✅ Git push: pushed to remote');
+          } catch (gitError) {
+            console.warn('⚠️ Git operation failed:', gitError.message);
+            // Continue even if git fails
+          }
+          
+          const responseData = {
+            success: true,
+            data: {
+              title: imageTitle,
+              slug: slug,
+              imageUrl: imageUrl,
+              conceptLink: conceptLink,
+              lessonLink: lessonLink,
+              filePath: `content/HINH/${slug}.md`,
+              url: `/hinh/`,
+              created: true,
+              indexed: true,
+              rebuilt: true
+            },
+            message: 'Đồ hình đã được tạo thành công!'
+          };
+          
+          console.log('📤 [DEBUG] Sending response:', responseData);
+          res.writeHead(200);
+          res.end(JSON.stringify(responseData));
+        } catch (error) {
+          console.error('Error creating diagram:', error);
+          res.writeHead(500);
+          res.end(JSON.stringify({ 
+            success: false,
+            error: 'Lỗi server',
+            message: error.message
+          }));
+        }
+      });
+    } catch (error) {
+      console.error('Error handling request:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ 
+        success: false,
+        error: 'Lỗi server',
+        message: error.message
+      }));
+    }
   } else {
     res.writeHead(404);
     res.end(JSON.stringify({ error: 'Not Found' }));
@@ -566,6 +894,8 @@ ${vocabData.content}`;
 
 const PORT = 3001;
 server.listen(PORT, () => {
-  console.log(`API server running on http://localhost:${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/api/health`);
+  console.log(`✅ API server running on http://localhost:${PORT}`);
+  console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+  console.log(`📝 Create diagram: http://localhost:${PORT}/api/create-diagram`);
+  console.log(`\nServer is ready to receive requests!\n`);
 });

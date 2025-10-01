@@ -7,6 +7,19 @@
   HUGO_ENV = "production"
   HUGO_ENABLEGITINFO = "true"
 
+# Dev server configuration for netlify dev
+[dev]
+  command = "hugo server -D --disableFastRender --bind 0.0.0.0 --baseURL http://localhost:8888"
+  port = 8888
+  targetPort = 1313
+  publish = "public"
+  autoLaunch = false
+  
+# Functions configuration
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 # Sitemap
 [[redirects]]
   from = "/sitemap.xml"

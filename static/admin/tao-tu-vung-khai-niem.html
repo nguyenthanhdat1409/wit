@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi-VN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Từ Vựng - Khái Niệm</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            background: #f8fafc;
+            min-height: 100vh;
+        }
+        .form-card {
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid #e2e8f0;
+        }
+        .preview-area {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .loading {
+            display: none;
+        }
+        .loading.show {
+            display: block;
+        }
+        
+        /* Enhanced disabled button styles */
+        button:disabled {
+            position: relative;
+        }
+        
+        button:disabled:hover {
+            transform: none !important;
+        }
+        
+        /* Active button styles */
+        #createBtn:active {
+            background-color: #16a34a !important;
+            color: #000000 !important;
+            transform: scale(0.98);
+        }
+        
+        #createBtn:active svg {
+            color: #000000 !important;
+        }
+        
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #374151;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tooltip:hover::before {
+            opacity: 1;
+        }
+        
+        /* Status indicator animations */
+        .status-complete {
+            animation: checkmark 0.5s ease-in-out;
+        }
+        
+        @keyframes checkmark {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="admin-container">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">W</span>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">HappyMarketDocs Admin</span>
+                    </a>
+                </div>
+                <nav class="flex space-x-4">
+                    <a href="/admin/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                        ← Về Admin Panel
+                    </a>
+                    <a href="/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                        Về trang chủ
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="form-card rounded-2xl shadow-2xl p-8">
+            <!-- Title -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Tạo Từ Vựng - Khái Niệm</h1>
+                <p class="text-gray-600">Tạo từ vựng và khái niệm mới cho hệ thống</p>
+            </div>
+
+            <!-- Form -->
+            <form id="vocabularyForm" class="space-y-8">
+                <!-- Basic Info -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Thông tin cơ bản</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="vocabularyTitle" class="block text-sm font-medium text-gray-700 mb-2">
+                                Tên từ vựng - khái niệm *
+                            </label>
+                            <input type="text" id="vocabularyTitle" name="vocabularyTitle" required
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                   placeholder="Nhập tên từ vựng - khái niệm...">
+                        </div>
+                        <div>
+                            <label for="vocabularySlug" class="block text-sm font-medium text-gray-700 mb-2">
+                                URL slug (tự động tạo)
+                            </label>
+                            <input type="text" id="vocabularySlug" name="vocabularySlug" readonly
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100"
+                                   placeholder="Sẽ được tạo tự động...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="bg-blue-50 rounded-lg p-6 border border-blue-100">
+                    <h2 class="text-xl font-semibold text-blue-800 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Nội dung khái niệm
+                    </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="conceptContent" class="block text-sm font-medium text-gray-700 mb-2">
+                                Nội dung của khái niệm *
+                            </label>
+                            <textarea id="conceptContent" name="conceptContent" required rows="8"
+                                      class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                      placeholder="Nhập nội dung chi tiết của khái niệm..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metadata -->
+                <div class="bg-green-50 rounded-lg p-6 border border-green-100">
+                    <h2 class="text-xl font-semibold text-green-800 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                        </svg>
+                        Thông tin bổ sung
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="tags" class="block text-sm font-medium text-gray-700 mb-2">
+                                Tags (phân cách bằng dấu phẩy)
+                            </label>
+                            <input type="text" id="tags" name="tags"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                   placeholder="Ví dụ: TVHL Giàu Trí tuệ, Nội tâm">
+                        </div>
+                        <div>
+                            <label for="categories" class="block text-sm font-medium text-gray-700 mb-2">
+                                Categories (phân cách bằng dấu phẩy)
+                            </label>
+                            <input type="text" id="categories" name="categories"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                                   placeholder="Ví dụ: TVHL Giàu Trí tuệ, Khái niệm nguồn">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Preview Nội dung</h2>
+                    <div class="preview-area bg-white border border-gray-200 rounded-lg p-4">
+                        <div id="previewContent" class="prose max-w-none">
+                            <p class="text-gray-500 italic">Nhập thông tin để xem preview...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex justify-center space-x-4">
+                    <button type="button" id="previewBtn" 
+                            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                        Preview
+                    </button>
+                    <button type="submit" id="createBtn"
+                            class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                        Tạo Từ Vựng - Khái Niệm
+                    </button>
+                </div>
+                
+                <!-- Status Message -->
+                <div id="formStatus" class="text-center mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                    <div class="flex items-center justify-center">
+                        <svg class="w-5 h-5 text-amber-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                        </svg>
+                        <span class="text-amber-900 font-medium">Để tạo từ vựng - khái niệm, vui lòng:</span>
+                    </div>
+                    <div class="mt-2 text-sm text-amber-800">
+                        <span id="titleStatus" class="inline-block mr-4">• Nhập tên từ vựng - khái niệm</span>
+                        <span id="contentStatus" class="inline-block">• Nhập nội dung khái niệm</span>
+                    </div>
+                </div>
+
+                <!-- Loading -->
+                <div id="loading" class="loading text-center py-8 hidden">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <div class="flex items-center justify-center mb-4">
+                            <svg class="animate-spin -ml-1 mr-3 h-6 w-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span class="text-lg font-semibold text-blue-900">Đang tạo từ vựng - khái niệm...</span>
+                        </div>
+                        
+                        <div id="loadingSteps" class="text-left space-y-2">
+                            <div id="step1" class="flex items-center text-sm">
+                                <div class="w-4 h-4 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+                                </div>
+                                <span class="text-gray-600">Bước 1: Xác thực dữ liệu...</span>
+                            </div>
+                            <div id="step2" class="flex items-center text-sm">
+                                <div class="w-4 h-4 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+                                </div>
+                                <span class="text-gray-600">Bước 2: Tạo cấu trúc thư mục...</span>
+                            </div>
+                            <div id="step3" class="flex items-center text-sm">
+                                <div class="w-4 h-4 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+                                </div>
+                                <span class="text-gray-600">Bước 3: Ghi file _index.md...</span>
+                            </div>
+                            <div id="step4" class="flex items-center text-sm">
+                                <div class="w-4 h-4 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+                                </div>
+                                <span class="text-gray-600">Bước 4: Cập nhật danh sách chính...</span>
+                            </div>
+                            <div id="step5" class="flex items-center text-sm">
+                                <div class="w-4 h-4 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center">
+                                    <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+                                </div>
+                                <span class="text-gray-600">Bước 5: Chờ Hugo rebuild...</span>
+                            </div>
+                        </div>
+                        
+                        <div id="loadingLog" class="mt-4 p-3 bg-gray-100 rounded text-xs text-left font-mono max-h-32 overflow-y-auto">
+                            <div class="text-gray-500">Đang khởi tạo quá trình tạo từ vựng...</div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg p-6 max-w-md w-full">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Tạo từ vựng - khái niệm thành công!</h3>
+                    <p class="text-gray-600 mb-4">Từ vựng - khái niệm đã được tạo và lưu vào hệ thống.</p>
+                    <div id="vocabularyInfo" class="bg-gray-50 rounded-lg p-3 mb-4 text-left">
+                        <div class="text-sm text-gray-600">
+                            <div class="mb-1"><strong>Tên:</strong> <span id="vocabTitle">-</span></div>
+                            <div class="mb-1"><strong>URL:</strong> <span id="vocabUrl">-</span></div>
+                            <div class="mb-1"><strong>File:</strong> <span id="vocabFile">-</span></div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button id="viewVocabularyBtn" class="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                            Xem từ vựng
+                        </button>
+                        <button id="closeModalBtn" class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors">
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/admin/js/vocabulary-generator.js"></script>
+</body>
+</html>

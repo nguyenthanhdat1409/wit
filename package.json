@@ -4,13 +4,12 @@
   "description": "Tài liệu toàn diện về phát triển nội tâm, huấn luyện tư vấn và phát triển bản thân",
   "main": "index.js",
   "scripts": {
-    "start": "./start.sh",
-    "stop": "./stop.sh",
-    "status": "./status.sh",
-    "dev": "concurrently \"npm run api\" \"npm run dev:hugo\"",
+    "start": "netlify dev",
+    "dev": "netlify dev",
+    "dev:old": "concurrently \"npm run api\" \"npm run dev:hugo\"",
     "dev:hugo": "hugo server -D --disableFastRender --bind 0.0.0.0 --baseURL http://localhost:1313",
+    "dev:simple": "concurrently \"node simple-server.js\" \"hugo server -D\"",
     "api": "node simple-server.js",
-    "dev:netlify": "netlify dev",
     "build": "hugo --gc --minify",
     "build:production": "hugo --gc --minify --environment production",
     "clean": "rm -rf public resources",
@@ -46,9 +45,10 @@
     "tailwindcss": "^3.3.2"
   },
   "dependencies": {
-    "fuse.js": "^6.6.2",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
-    "cors": "^2.8.5"
+    "formidable": "^3.5.1",
+    "fuse.js": "^6.6.2"
   },
   "repository": {
     "type": "git",

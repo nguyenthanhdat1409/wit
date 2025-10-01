@@ -143,21 +143,51 @@ sudo apt-get install hugo
 1. **Clone repository**
 ```bash
 git clone <repository-url>
-cd Wiki
+cd HappyMarketDocs-main
 ```
 
 2. **Cài đặt dependencies**
 ```bash
 npm install
+
+# Cài đặt Netlify CLI (global)
+npm install -g netlify-cli
 ```
 
-3. **Chạy development server**
+3. **Chạy development server** (Khuyến nghị: Netlify Dev)
 ```bash
-hugo server -D
+# Cách 1: Sử dụng Netlify Dev (Tự động chạy cả Hugo & Functions)
+npm start
+# hoặc
+npm run dev
+# hoặc
+netlify dev
+
+# Cách 2: Chỉ chạy Hugo server (không có Functions)
+npm run dev:hugo
+
+# Cách 3: Chạy với simple-server (backup)
+npm run dev:simple
 ```
 
 4. **Truy cập trang web**
-Mở trình duyệt và truy cập: `http://localhost:1313`
+- **Main site**: `http://localhost:8888` (Netlify Dev)
+- **Admin Panel**: `http://localhost:8888/admin/`
+- **Hugo server** (internal): `http://localhost:1313`
+
+### 🎯 Tính Năng Mới: Auto-Deploy với Netlify
+
+**Local Development:**
+- ✅ Tự động commit & push khi tạo vocabulary/diagram
+- ✅ Netlify Functions hoạt động như production
+- ✅ KHÔNG cần start server thủ công
+
+**Production:**
+- ✅ Auto-deploy khi push code
+- ✅ Netlify Functions tự động chạy
+- ✅ CDN caching & performance optimization
+
+📖 **Chi tiết xem:** [DEPLOYMENT.md](DEPLOYMENT.md)
 
 ## 📝 Nội dung tài liệu
 
