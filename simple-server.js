@@ -1320,6 +1320,72 @@ tableOfContents: true
         message: error.message
       }));
     }
+  } else if (pathname === '/api/list-lessons' && method === 'GET') {
+    // List all lessons
+    try {
+      const lessonsDir = path.join(__dirname, 'content/BAI-HOC');
+      const lessons = [];
+      
+      if (fs.existsSync(lessonsDir)) {
+        const dirs = fs.readdirSync(lessonsDir, { withFileTypes: true })
+          .filter(dirent => dirent.isDirectory())
+          .map(dirent => dirent.name);
+        
+        for (const dir of dirs) {
+          const indexPath = path.join(lessonsDir, dir, '_index.md');
+          if (fs.existsSync(indexPath)) {
+            const content = fs.readFileSync(indexPath, 'utf8');
+            const titleMatch = content.match(/title:\s*["']([^"']+)["']/);
+            const dateMatch = content.match(/date:\s*([^\n]+)/);
+            
+            lessons.push({
+              id: dir,
+              title: titleMatch ? titleMatch[1] : dir,
+              date: dateMatch ? dateMatch[1].trim() : new Date().toISOString().split('T')[0],
+              status: 'published'
+            });
+          }
+        }
+      }
+      
+      res.writeHead(200);
+      res.end(JSON.stringify({ success: true, lessons }));
+    } catch (error) {
+      console.error('Error listing lessons:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ success: false, error: error.message }));
+    }
+  } else if (pathname === '/api/list-diagrams' && method === 'GET') {
+    // List all diagrams
+    try {
+      const diagramsDir = path.join(__dirname, 'content/HINH');
+      const diagrams = [];
+      
+      if (fs.existsSync(diagramsDir)) {
+        const files = fs.readdirSync(diagramsDir)
+          .filter(file => file.endsWith('.md') && file !== '_index.md');
+        
+        for (const file of files) {
+          const filePath = path.join(diagramsDir, file);
+          const content = fs.readFileSync(filePath, 'utf8');
+          const titleMatch = content.match(/title:\s*["']([^"']+)["']/);
+          const dateMatch = content.match(/date:\s*([^\n]+)/);
+          
+          diagrams.push({
+            id: file.replace('.md', ''),
+            title: titleMatch ? titleMatch[1] : file.replace('.md', ''),
+            date: dateMatch ? dateMatch[1].trim() : new Date().toISOString().split('T')[0]
+          });
+        }
+      }
+      
+      res.writeHead(200);
+      res.end(JSON.stringify({ success: true, diagrams }));
+    } catch (error) {
+      console.error('Error listing diagrams:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ success: false, error: error.message }));
+    }
   } else {
     res.writeHead(404);
     res.end(JSON.stringify({ error: 'Not Found' }));

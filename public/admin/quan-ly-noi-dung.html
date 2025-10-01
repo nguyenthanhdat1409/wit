@@ -245,14 +245,36 @@
                 </div>
             `;
 
-            // Simulate API call - replace with actual API
-            setTimeout(() => {
-                const lessons = [
-                    { id: 'bai-hoc-a', title: 'Bài Học A', date: '2025-01-15', status: 'published' },
-                    { id: 'bai-hoc-test-a', title: 'Bài Học Test A', date: '2025-01-15', status: 'published' }
-                ];
+            try {
+                const apiUrl = getApiEndpoint('/list-lessons');
+                const response = await fetch(apiUrl);
+                const result = await response.json();
 
-                if (lessons.length === 0) {
+                if (result.success && result.lessons.length > 0) {
+                    container.innerHTML = result.lessons.map(lesson => `
+                        <div class="content-item bg-white border border-gray-200 rounded-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">${lesson.title}</h3>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span>📅 ${lesson.date}</span>
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">${lesson.status}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <a href="/bai-hoc/${lesson.id}/" target="_blank" 
+                                       class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm">
+                                        👁️ Xem
+                                    </a>
+                                    <button onclick="showDeleteLessonPopup('${lesson.title}', '${lesson.id}')" 
+                                            class="px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm">
+                                        🗑️ Xóa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
                     container.innerHTML = `
                         <div class="text-center py-8 text-gray-500">
                             <p>📝 Chưa có bài học nào</p>
@@ -261,33 +283,18 @@
                             </a>
                         </div>
                     `;
-                    return;
                 }
-
-                container.innerHTML = lessons.map(lesson => `
-                    <div class="content-item bg-white border border-gray-200 rounded-lg p-6">
-                        <div class="flex items-center justify-between">
-                            <div class="flex-1">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2">${lesson.title}</h3>
-                                <div class="flex items-center space-x-4 text-sm text-gray-500">
-                                    <span>📅 ${lesson.date}</span>
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">${lesson.status}</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <a href="/bai-hoc/${lesson.id}/" target="_blank" 
-                                   class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm">
-                                    👁️ Xem
-                                </a>
-                                <button onclick="showDeleteLessonPopup('${lesson.title}', '${lesson.id}')" 
-                                        class="px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm">
-                                    🗑️ Xóa
-                                </button>
-                            </div>
-                        </div>
+            } catch (error) {
+                console.error('Error loading lessons:', error);
+                container.innerHTML = `
+                    <div class="text-center py-8 text-red-500">
+                        <p>❌ Lỗi khi tải danh sách bài học: ${error.message}</p>
+                        <button onclick="loadLessons(document.getElementById('lessonsList'))" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+                            Thử lại
+                        </button>
                     </div>
-                `).join('');
-            }, 1000);
+                `;
+            }
         }
 
         // Load diagrams
@@ -299,14 +306,35 @@
                 </div>
             `;
 
-            // Simulate API call - replace with actual API
-            setTimeout(() => {
-                const diagrams = [
-                    { id: '3-goc-nhin-cua-con-nguoi', title: '3 Góc Nhìn Của Con Người', date: '2025-01-10' },
-                    { id: 'bay-su-giau-toan-dien', title: 'Bảy Sự Giàu Toàn Diện', date: '2025-01-10' }
-                ];
+            try {
+                const apiUrl = getApiEndpoint('/list-diagrams');
+                const response = await fetch(apiUrl);
+                const result = await response.json();
 
-                if (diagrams.length === 0) {
+                if (result.success && result.diagrams.length > 0) {
+                    container.innerHTML = result.diagrams.map(diagram => `
+                        <div class="content-item bg-white border border-gray-200 rounded-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">${diagram.title}</h3>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                        <span>📅 ${diagram.date}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <a href="/hinh/${diagram.id}/" target="_blank" 
+                                       class="px-3 py-1 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm">
+                                        👁️ Xem
+                                    </a>
+                                    <button onclick="showDeleteDiagramPopup('${diagram.title}', '${diagram.id}')" 
+                                            class="px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm">
+                                        🗑️ Xóa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
                     container.innerHTML = `
                         <div class="text-center py-8 text-gray-500">
                             <p>🖼️ Chưa có đồ hình nào</p>
@@ -315,32 +343,18 @@
                             </a>
                         </div>
                     `;
-                    return;
                 }
-
-                container.innerHTML = diagrams.map(diagram => `
-                    <div class="content-item bg-white border border-gray-200 rounded-lg p-6">
-                        <div class="flex items-center justify-between">
-                            <div class="flex-1">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2">${diagram.title}</h3>
-                                <div class="flex items-center space-x-4 text-sm text-gray-500">
-                                    <span>📅 ${diagram.date}</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <a href="/hinh/${diagram.id}/" target="_blank" 
-                                   class="px-3 py-1 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors text-sm">
-                                    👁️ Xem
-                                </a>
-                                <button onclick="showDeleteDiagramPopup('${diagram.title}', '${diagram.id}')" 
-                                        class="px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm">
-                                    🗑️ Xóa
-                                </button>
-                            </div>
-                        </div>
+            } catch (error) {
+                console.error('Error loading diagrams:', error);
+                container.innerHTML = `
+                    <div class="text-center py-8 text-red-500">
+                        <p>❌ Lỗi khi tải danh sách đồ hình: ${error.message}</p>
+                        <button onclick="loadDiagrams(document.getElementById('diagramsList'))" class="mt-2 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600">
+                            Thử lại
+                        </button>
                     </div>
-                `).join('');
-            }, 1000);
+                `;
+            }
         }
 
         // Load concepts
