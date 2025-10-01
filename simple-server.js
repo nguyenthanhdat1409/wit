@@ -993,18 +993,6 @@ tableOfContents: true
   </a>`;
               }
             });
-          } else {
-            // Add placeholder related lessons
-            for (let i = 0; i < 4; i++) {
-              markdown += `
-  <a href="\\" style="flex: 1 1 calc(25% - 12px); max-width: calc(25% - 12px); text-align: center;">
-    <div style="border: 1px solid #fff; border-radius: 8px; padding: 8px; background: #fff;">
-      <div style="width: 100%; height: 200px; background: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #666;">
-        Bài học ${i + 1}
-      </div>
-    </div>
-  </a>`;
-            }
           }
 
           markdown += `
