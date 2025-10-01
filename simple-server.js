@@ -913,7 +913,7 @@ ${imageTitle}`;
           const slug = generateSlug(lessonData.title);
           const date = new Date().toISOString().split('T')[0];
           
-          // Generate markdown content
+          // Generate markdown content with proper HTML structure
           let markdown = `---
 title: "${lessonData.title}"
 description: ""
@@ -922,94 +922,157 @@ draft: false
 weight: 100
 tags: ["bài-học"]
 categories: ["bai-hoc"]
+tableOfContents: true
 ---
 
-# ${lessonData.title}
+<div style="display: flex; gap: 16px;">
 
-`;
-
-          // Section 1: Hình & Khái Niệm (2 columns)
-          markdown += `<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <div>
-    <h2>Hình Bài Học</h2>
+  <div style="flex: 1; max-width: 50%;">
+    <h2 style="text-align: center; font-weight: bold; font-size: 22px; margin-bottom: 12px;">
+      Hình Bài Học
+    </h2>
+    <a href="\\" style="display: block; text-align: center;">
+      <div style="border: 1px solid #fff; border-radius: 8px; padding: 8px; background: #fff;">
 `;
 
           if (lessonData.image) {
-            markdown += `    ![${lessonData.title}](${lessonData.image})\n`;
+            // Convert base64 to proper image URL if needed
+            let imageUrl = lessonData.image;
+            if (lessonData.image.startsWith('data:image/')) {
+              // For now, use a placeholder - in real implementation, save the image file
+              imageUrl = '/images/placeholder.png';
+            }
+            markdown += `        <img src="${imageUrl}" alt="${lessonData.title}"
+             style="width: 100%; height: 200px; object-fit: contain; border-radius: 4px; padding:10px;">`;
           } else {
-            markdown += `    <p class="text-gray-500 italic">Đang trong quá trình xây dựng!</p>\n`;
+            markdown += `        <div style="width: 100%; height: 200px; background: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #666;">
+          Đang trong quá trình xây dựng!
+        </div>`;
           }
 
-          markdown += `  </div>
-  <div>
-    <h2>Khái Niệm</h2>
+          markdown += `
+      </div>
+    </a>
+  </div>
+
+  <div style="flex: 1; max-width: 50%;">
+    <h2 style="text-align: center; font-weight: bold; font-size: 22px; margin-bottom: 12px;">
+      Khái Niệm
+    </h2>
+  <p style="text-align: left;">
 `;
 
           if (lessonData.concept) {
-            markdown += `    <div class="bg-gray-50 p-4 rounded-lg">\n${lessonData.concept}\n    </div>\n`;
+            markdown += `\n${lessonData.concept}\n`;
           } else {
-            markdown += `    <p class="text-gray-500 italic">Đang trong quá trình xây dựng!</p>\n`;
+            markdown += `\nĐang trong quá trình xây dựng!\n`;
           }
 
-          markdown += `  </div>
+          markdown += `  </p>
+  </div>
+
 </div>
 
-`;
+
+<h2 style="text-align: center; font-weight: bold; font-size: 22px; margin-bottom: 12px;">
+       Bài Học Liên Quan
+    </h2>
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-start;">`;
 
           // Section 2: Bài Học Liên Quan
           if (lessonData.relatedLessons && lessonData.relatedLessons.length > 0) {
-            markdown += `## Bài Học Liên Quan
-
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-`;
             lessonData.relatedLessons.forEach(lesson => {
               if (lesson.image && lesson.link) {
-                markdown += `  <a href="${lesson.link}" class="block hover:opacity-80">
-    <img src="${lesson.image}" alt="Bài học liên quan" class="w-full rounded-lg shadow-md">
-  </a>
-`;
+                markdown += `
+  <a href="${lesson.link}" style="flex: 1 1 calc(25% - 12px); max-width: calc(25% - 12px); text-align: center;">
+    <div style="border: 1px solid #fff; border-radius: 8px; padding: 8px; background: #fff;">
+      <img src="${lesson.image}" alt="Bài học liên quan"
+           style="width: 100%; height: 200px; object-fit: contain; border-radius: 4px; padding:10px;">
+    </div>
+  </a>`;
               }
             });
-            markdown += `</div>
-
-`;
+          } else {
+            // Add placeholder related lessons
+            for (let i = 0; i < 4; i++) {
+              markdown += `
+  <a href="\\" style="flex: 1 1 calc(25% - 12px); max-width: calc(25% - 12px); text-align: center;">
+    <div style="border: 1px solid #fff; border-radius: 8px; padding: 8px; background: #fff;">
+      <div style="width: 100%; height: 200px; background: #f0f0f0; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #666;">
+        Bài học ${i + 1}
+      </div>
+    </div>
+  </a>`;
+            }
           }
+
+          markdown += `
+</div>
+
+<h2 style="text-align: center; font-weight: bold; font-size: 22px; margin-bottom: 12px;">
+       Khái Niệm Liên Quan
+</h2>
+
+<table style="border-collapse: collapse; width: 100%; text-align: center; font-family: Arial, sans-serif;">
+  <tr>`;
 
           // Section 3: Khái Niệm Liên Quan
           if (lessonData.relatedConcepts && lessonData.relatedConcepts.length > 0) {
-            markdown += `## Khái Niệm Liên Quan
-
-| Từ Khóa | Link |
-|---------|------|
-`;
-            lessonData.relatedConcepts.forEach(concept => {
+            lessonData.relatedConcepts.forEach((concept, index) => {
               if (concept.key && concept.link) {
-                markdown += `| ${concept.key} | [${concept.link}](${concept.link}) |\n`;
+                if (index % 5 === 0 && index > 0) {
+                  markdown += `  </tr>
+  <tr>`;
+                }
+                markdown += `
+    <td style="border: 1px solid black; padding: 8px;">
+      <a href="${concept.link}" style="text-decoration: none; color: blue; font-weight: bold;">${concept.key.toUpperCase()}</a>
+    </td>`;
               }
             });
-            markdown += `\n`;
+          } else {
+            // Add placeholder concepts
+            const placeholderConcepts = ['KHÁI NIỆM 1', 'KHÁI NIỆM 2', 'KHÁI NIỆM 3', 'KHÁI NIỆM 4', 'KHÁI NIỆM 5'];
+            placeholderConcepts.forEach((concept, index) => {
+              if (index % 5 === 0 && index > 0) {
+                markdown += `  </tr>
+  <tr>`;
+              }
+              markdown += `
+    <td style="border: 1px solid black; padding: 8px;">
+      <a href="\\" style="text-decoration: none; color: blue; font-weight: bold;">${concept}</a>
+    </td>`;
+            });
           }
+
+          // Fill remaining cells if needed
+          const totalCells = lessonData.relatedConcepts ? lessonData.relatedConcepts.length : 5;
+          const remainingCells = 10 - totalCells;
+          for (let i = 0; i < remainingCells; i++) {
+            markdown += `
+    <td style="border: 1px solid black; padding: 8px;"></td>`;
+          }
+
+          markdown += `
+  </tr>
+</table>
+
+
+`;
 
           // Section 4: Mục (Trọng Điểm)
-          const hasTrongDiem = lessonData.triThuc || lessonData.nhanThuc;
-          if (hasTrongDiem) {
-            markdown += `## Mục
-
-`;
+          if (lessonData.triThuc || lessonData.nhanThuc) {
             if (lessonData.triThuc) {
-              markdown += `1. [Trọng Điểm Tri Thức](${lessonData.triThuc})\n`;
+              markdown += `- [1.Trọng Điểm Tri Thức](${lessonData.triThuc})\n`;
             }
             if (lessonData.nhanThuc) {
-              markdown += `2. [Trọng Điểm Nhận Thức](${lessonData.nhanThuc})\n`;
+              markdown += `- [2.Trọng Điểm Nhận Thức](${lessonData.nhanThuc})\n`;
             }
-            markdown += `\n`;
+          } else {
+            markdown += `- [1.Trọng Điểm Tri Thức](#)
+- [2.Trọng Điểm Nhận Thức](#)`;
           }
-
-          // Footer
-          markdown += `---
-
-*Bài học được tạo tự động từ HappyMarketDocs Admin*
-`;
 
           // Create file
           const lessonPath = path.join(process.cwd(), 'content', 'BAI-HOC', slug, '_index.md');

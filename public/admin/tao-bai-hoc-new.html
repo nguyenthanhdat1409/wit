@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Bài Học - HappyMarketDocs Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .loading { display: none; }
+        .loading.active { display: block; }
+        .related-lesson-item, .related-concept-item {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen p-8">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">📚 Tạo Bài Học Mới</h1>
+            <p class="text-gray-600">Tạo bài học với cấu trúc hoàn chỉnh</p>
+            <a href="/admin/" class="inline-block mt-2 text-blue-600 hover:text-blue-800">← Quay lại Admin</a>
+        </div>
+
+        <!-- Form -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+            <form id="lessonForm">
+                <!-- Tên Bài Học -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        Tên Bài Học <span class="text-red-500">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="lessonTitle"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="VD: Nguyên lý Kích hoạt Não"
+                        required
+                    >
+                </div>
+
+                <!-- Hình & Khái Niệm (2 cột) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Bên trái: Hình Bài Học -->
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">🖼️ Hình Bài Học</h3>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            Link Hình Ảnh
+                        </label>
+                        <input 
+                            type="url" 
+                            id="lessonImage"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                            placeholder="https://example.com/image.png"
+                        >
+                        <div id="imagePreview" class="mt-4 hidden">
+                            <p class="text-sm text-gray-600 mb-2">Preview:</p>
+                            <img id="previewImg" src="" alt="Preview" class="w-full rounded-lg shadow-md">
+                        </div>
+                    </div>
+
+                    <!-- Bên phải: Khái Niệm -->
+                    <div class="bg-orange-50 p-6 rounded-lg">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">💡 Khái Niệm</h3>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            Nội dung Khái Niệm
+                        </label>
+                        <textarea 
+                            id="lessonConcept"
+                            rows="8"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            placeholder="Nhập nội dung khái niệm..."
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Bài Học Liên Quan -->
+                <div class="mb-6 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">🔗 Bài Học Liên Quan</h3>
+                    <div id="relatedLessonsContainer"></div>
+                    <button 
+                        type="button" 
+                        id="addRelatedLesson"
+                        class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                    >
+                        ➕ Thêm Bài Học Liên Quan
+                    </button>
+                </div>
+
+                <!-- Khái Niệm Liên Quan -->
+                <div class="mb-6 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">📖 Khái Niệm Liên Quan</h3>
+                    <div id="relatedConceptsContainer"></div>
+                    <button 
+                        type="button" 
+                        id="addRelatedConcept"
+                        class="mt-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600"
+                    >
+                        ➕ Thêm Khái Niệm Liên Quan
+                    </button>
+                </div>
+
+                <!-- Mục (Optional) -->
+                <div class="mb-6 bg-gray-50 p-6 rounded-lg">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">📝 Trọng Điểm</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">
+                                <input type="checkbox" id="hasTriThuc" class="mr-2">
+                                Trọng Điểm Tri Thức
+                            </label>
+                            <input 
+                                type="url" 
+                                id="triThucLink"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                placeholder="Link đến Trọng Điểm Tri Thức"
+                                disabled
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">
+                                <input type="checkbox" id="hasNhanThuc" class="mr-2">
+                                Trọng Điểm Nhận Thức
+                            </label>
+                            <input 
+                                type="url" 
+                                id="nhanThucLink"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                placeholder="Link đến Trọng Điểm Nhận Thức"
+                                disabled
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-4">
+                    <button 
+                        type="button" 
+                        id="previewBtn"
+                        class="flex-1 bg-blue-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                    >
+                        👁️ Xem Preview
+                    </button>
+                    
+                    <button 
+                        type="submit" 
+                        id="createBtn"
+                        class="flex-1 bg-green-500 text-white px-6 py-4 rounded-lg font-semibold hover:bg-green-600 transition-colors"
+                    >
+                        ✨ Tạo Bài Học
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview Section -->
+        <div id="previewSection" class="bg-white rounded-2xl shadow-xl p-8 mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">📋 Preview Bài Học</h2>
+            <div id="previewContent" class="prose max-w-none"></div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <div class="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-8 text-center">
+                <div class="inline-flex items-center mb-6">
+                    <svg class="animate-spin h-12 w-12 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
+                <p class="text-purple-800 font-medium">Đang tạo bài học...</p>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden">
+            <div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
+                <div class="flex items-center justify-center mb-4">
+                    <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-green-800 mb-2">🎉 Tạo bài học thành công!</h3>
+                <p class="text-green-700 mb-4">Bài học đã được tạo và lưu vào hệ thống.</p>
+                <a id="viewLessonLink" href="/bai-hoc/" class="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                    👁️ Xem bài học
+                </a>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="hidden">
+            <div class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+                <h3 class="text-xl font-semibold text-red-800 mb-2">❌ Có lỗi xảy ra!</h3>
+                <p id="errorText" class="text-red-700 mb-4"></p>
+                <button onclick="resetForm()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                    Thử lại
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let relatedLessonsCount = 0;
+        let relatedConceptsCount = 0;
+
+        // Elements
+        const form = document.getElementById('lessonForm');
+        const previewBtn = document.getElementById('previewBtn');
+        const createBtn = document.getElementById('createBtn');
+        const previewSection = document.getElementById('previewSection');
+        const previewContent = document.getElementById('previewContent');
+        const loading = document.getElementById('loading');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Image preview
+        document.getElementById('lessonImage').addEventListener('input', function(e) {
+            const url = e.target.value;
+            const preview = document.getElementById('imagePreview');
+            const img = document.getElementById('previewImg');
+            
+            if (url) {
+                img.src = url;
+                preview.classList.remove('hidden');
+            } else {
+                preview.classList.add('hidden');
+            }
+        });
+
+        // Enable/disable Trọng Điểm inputs
+        document.getElementById('hasTriThuc').addEventListener('change', function(e) {
+            document.getElementById('triThucLink').disabled = !e.target.checked;
+        });
+
+        document.getElementById('hasNhanThuc').addEventListener('change', function(e) {
+            document.getElementById('nhanThucLink').disabled = !e.target.checked;
+        });
+
+        // Add Related Lesson
+        document.getElementById('addRelatedLesson').addEventListener('click', function() {
+            relatedLessonsCount++;
+            const container = document.getElementById('relatedLessonsContainer');
+            const item = document.createElement('div');
+            item.className = 'related-lesson-item';
+            item.innerHTML = `
+                <div class="flex items-start gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Hình (URL)</label>
+                        <input type="url" name="relatedLessonImage[]" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" placeholder="URL hình ảnh">
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Đường dẫn</label>
+                        <input type="text" name="relatedLessonLink[]" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" placeholder="/bai-hoc/...">
+                    </div>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="mt-6 text-red-500 hover:text-red-700">
+                        🗑️
+                    </button>
+                </div>
+            `;
+            container.appendChild(item);
+        });
+
+        // Add Related Concept
+        document.getElementById('addRelatedConcept').addEventListener('click', function() {
+            relatedConceptsCount++;
+            const container = document.getElementById('relatedConceptsContainer');
+            const item = document.createElement('div');
+            item.className = 'related-concept-item';
+            item.innerHTML = `
+                <div class="flex items-start gap-4">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Từ khóa</label>
+                        <input type="text" name="relatedConceptKey[]" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" placeholder="Tên khái niệm">
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Link</label>
+                        <input type="text" name="relatedConceptLink[]" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" placeholder="/khai-niem-nguon/...">
+                    </div>
+                    <button type="button" onclick="this.parentElement.parentElement.remove()" class="mt-6 text-red-500 hover:text-red-700">
+                        🗑️
+                    </button>
+                </div>
+            `;
+            container.appendChild(item);
+        });
+
+        // Preview
+        previewBtn.addEventListener('click', function() {
+            const data = gatherFormData();
+            
+            if (!data.title) {
+                alert('Vui lòng nhập tên bài học!');
+                return;
+            }
+
+            let html = `
+                <h1 class="text-3xl font-bold mb-6">${data.title}</h1>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h2 class="text-xl font-bold mb-2">Hình Bài Học</h2>
+                        ${data.image ? `<img src="${data.image}" alt="${data.title}" class="w-full rounded-lg shadow-md">` : '<p class="text-gray-500 italic">Chưa có hình ảnh</p>'}
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold mb-2">Khái Niệm</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            ${data.concept || '<p class="text-gray-500 italic">Chưa có nội dung</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (data.relatedLessons.length > 0) {
+                html += `
+                    <h2 class="text-xl font-bold mb-4 mt-8">Bài Học Liên Quan</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        ${data.relatedLessons.map(lesson => `
+                            <a href="${lesson.link}" class="block hover:opacity-80">
+                                <img src="${lesson.image}" alt="Related" class="w-full rounded-lg shadow-md">
+                            </a>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            if (data.relatedConcepts.length > 0) {
+                html += `
+                    <h2 class="text-xl font-bold mb-4 mt-8">Khái Niệm Liên Quan</h2>
+                    <table class="w-full border-collapse border border-gray-300 mb-6">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 px-4 py-2 text-left">Từ Khóa</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.relatedConcepts.map(concept => `
+                                <tr>
+                                    <td class="border border-gray-300 px-4 py-2">${concept.key}</td>
+                                    <td class="border border-gray-300 px-4 py-2">
+                                        <a href="${concept.link}" class="text-blue-600 hover:underline">${concept.link}</a>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
+
+            if (data.triThuc || data.nhanThuc) {
+                html += `
+                    <h2 class="text-xl font-bold mb-4 mt-8">Mục</h2>
+                    <ul class="list-disc list-inside">
+                        ${data.triThuc ? `<li><a href="${data.triThuc}" class="text-blue-600 hover:underline">Trọng Điểm Tri Thức</a></li>` : ''}
+                        ${data.nhanThuc ? `<li><a href="${data.nhanThuc}" class="text-blue-600 hover:underline">Trọng Điểm Nhận Thức</a></li>` : ''}
+                    </ul>
+                `;
+            }
+
+            previewContent.innerHTML = html;
+            previewSection.classList.remove('hidden');
+            previewSection.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Submit
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const data = gatherFormData();
+
+            if (!data.title) {
+                alert('Vui lòng nhập tên bài học!');
+                return;
+            }
+
+            loading.classList.add('active');
+            createBtn.disabled = true;
+
+            try {
+                const apiUrl = getApiEndpoint('/create-lesson-new');
+                console.log('🌐 Using API endpoint:', apiUrl);
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                console.log('📄 API Response:', result);
+
+                loading.classList.remove('active');
+                createBtn.disabled = false;
+
+                if (result.success) {
+                    successMessage.classList.remove('hidden');
+                    document.getElementById('viewLessonLink').href = result.url || '/bai-hoc/';
+                    form.reset();
+                    previewSection.classList.add('hidden');
+                    document.getElementById('relatedLessonsContainer').innerHTML = '';
+                    document.getElementById('relatedConceptsContainer').innerHTML = '';
+                    relatedLessonsCount = 0;
+                    relatedConceptsCount = 0;
+                    
+                    setTimeout(() => {
+                        window.location.href = result.url || '/bai-hoc/';
+                    }, 3000);
+                } else {
+                    showError(result.error || 'Không thể tạo bài học');
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                loading.classList.remove('active');
+                createBtn.disabled = false;
+                showError('Không thể kết nối API. Vui lòng đảm bảo server đang chạy.');
+            }
+        });
+
+        // Helper functions
+        function gatherFormData() {
+            const data = {
+                title: document.getElementById('lessonTitle').value,
+                image: document.getElementById('lessonImage').value,
+                concept: document.getElementById('lessonConcept').value,
+                relatedLessons: [],
+                relatedConcepts: [],
+                triThuc: document.getElementById('hasTriThuc').checked ? document.getElementById('triThucLink').value : '',
+                nhanThuc: document.getElementById('hasNhanThuc').checked ? document.getElementById('nhanThucLink').value : ''
+            };
+
+            // Gather related lessons
+            const lessonImages = document.querySelectorAll('input[name="relatedLessonImage[]"]');
+            const lessonLinks = document.querySelectorAll('input[name="relatedLessonLink[]"]');
+            for (let i = 0; i < lessonImages.length; i++) {
+                if (lessonImages[i].value && lessonLinks[i].value) {
+                    data.relatedLessons.push({
+                        image: lessonImages[i].value,
+                        link: lessonLinks[i].value
+                    });
+                }
+            }
+
+            // Gather related concepts
+            const conceptKeys = document.querySelectorAll('input[name="relatedConceptKey[]"]');
+            const conceptLinks = document.querySelectorAll('input[name="relatedConceptLink[]"]');
+            for (let i = 0; i < conceptKeys.length; i++) {
+                if (conceptKeys[i].value && conceptLinks[i].value) {
+                    data.relatedConcepts.push({
+                        key: conceptKeys[i].value,
+                        link: conceptLinks[i].value
+                    });
+                }
+            }
+
+            return data;
+        }
+
+        function getApiEndpoint(path) {
+            const hostname = window.location.hostname;
+            
+            if (hostname.includes('netlify.app') || hostname.includes('happymarketdocs.com')) {
+                return `/.netlify/functions${path}`;
+            } else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+                const port = window.location.port;
+                
+                if (port === '8888') {
+                    return `/.netlify/functions${path}`;
+                } else {
+                    console.log('🔍 Detected local Hugo server on port:', port);
+                    return `http://localhost:3001/api${path}`;
+                }
+            }
+            
+            return `/.netlify/functions${path}`;
+        }
+
+        function showError(message) {
+            document.getElementById('errorText').textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        function resetForm() {
+            form.reset();
+            errorMessage.classList.add('hidden');
+            successMessage.classList.add('hidden');
+            previewSection.classList.add('hidden');
+            document.getElementById('relatedLessonsContainer').innerHTML = '';
+            document.getElementById('relatedConceptsContainer').innerHTML = '';
+            relatedLessonsCount = 0;
+            relatedConceptsCount = 0;
+        }
+    </script>
+</body>
+</html>
+
