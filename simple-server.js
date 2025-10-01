@@ -886,6 +886,192 @@ ${imageTitle}`;
         message: error.message
       }));
     }
+  }
+  // Create lesson new endpoint
+  else if (parsedUrl.pathname === '/api/create-lesson-new' && req.method === 'POST') {
+    try {
+      let body = '';
+      req.on('data', chunk => {
+        body += chunk.toString();
+      });
+      
+      req.on('end', async () => {
+        try {
+          const lessonData = JSON.parse(body);
+          
+          // Validate required fields
+          if (!lessonData.title || lessonData.title.trim().length === 0) {
+            res.writeHead(400);
+            res.end(JSON.stringify({ 
+              success: false,
+              error: 'Tên bài học không được để trống'
+            }));
+            return;
+          }
+          
+          // Generate slug and markdown
+          const slug = generateSlug(lessonData.title);
+          const date = new Date().toISOString().split('T')[0];
+          
+          // Generate markdown content
+          let markdown = `---
+title: "${lessonData.title}"
+description: ""
+date: ${date}
+draft: false
+weight: 100
+tags: ["bài-học"]
+categories: ["bai-hoc"]
+---
+
+# ${lessonData.title}
+
+`;
+
+          // Section 1: Hình & Khái Niệm (2 columns)
+          markdown += `<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <div>
+    <h2>Hình Bài Học</h2>
+`;
+
+          if (lessonData.image) {
+            markdown += `    ![${lessonData.title}](${lessonData.image})\n`;
+          } else {
+            markdown += `    <p class="text-gray-500 italic">Đang trong quá trình xây dựng!</p>\n`;
+          }
+
+          markdown += `  </div>
+  <div>
+    <h2>Khái Niệm</h2>
+`;
+
+          if (lessonData.concept) {
+            markdown += `    <div class="bg-gray-50 p-4 rounded-lg">\n${lessonData.concept}\n    </div>\n`;
+          } else {
+            markdown += `    <p class="text-gray-500 italic">Đang trong quá trình xây dựng!</p>\n`;
+          }
+
+          markdown += `  </div>
+</div>
+
+`;
+
+          // Section 2: Bài Học Liên Quan
+          if (lessonData.relatedLessons && lessonData.relatedLessons.length > 0) {
+            markdown += `## Bài Học Liên Quan
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+`;
+            lessonData.relatedLessons.forEach(lesson => {
+              if (lesson.image && lesson.link) {
+                markdown += `  <a href="${lesson.link}" class="block hover:opacity-80">
+    <img src="${lesson.image}" alt="Bài học liên quan" class="w-full rounded-lg shadow-md">
+  </a>
+`;
+              }
+            });
+            markdown += `</div>
+
+`;
+          }
+
+          // Section 3: Khái Niệm Liên Quan
+          if (lessonData.relatedConcepts && lessonData.relatedConcepts.length > 0) {
+            markdown += `## Khái Niệm Liên Quan
+
+| Từ Khóa | Link |
+|---------|------|
+`;
+            lessonData.relatedConcepts.forEach(concept => {
+              if (concept.key && concept.link) {
+                markdown += `| ${concept.key} | [${concept.link}](${concept.link}) |\n`;
+              }
+            });
+            markdown += `\n`;
+          }
+
+          // Section 4: Mục (Trọng Điểm)
+          const hasTrongDiem = lessonData.triThuc || lessonData.nhanThuc;
+          if (hasTrongDiem) {
+            markdown += `## Mục
+
+`;
+            if (lessonData.triThuc) {
+              markdown += `1. [Trọng Điểm Tri Thức](${lessonData.triThuc})\n`;
+            }
+            if (lessonData.nhanThuc) {
+              markdown += `2. [Trọng Điểm Nhận Thức](${lessonData.nhanThuc})\n`;
+            }
+            markdown += `\n`;
+          }
+
+          // Footer
+          markdown += `---
+
+*Bài học được tạo tự động từ HappyMarketDocs Admin*
+`;
+
+          // Create file
+          const lessonPath = path.join(process.cwd(), 'content', 'BAI-HOC', slug, '_index.md');
+          const dirPath = path.dirname(lessonPath);
+          await fs.mkdir(dirPath, { recursive: true });
+          await fs.writeFile(lessonPath, markdown, { encoding: 'utf8' });
+          console.log('✅ Created lesson file:', lessonPath);
+          
+          // Trigger Hugo rebuild
+          await triggerHugoRebuild();
+          
+          // Auto commit and push to Git
+          const { exec } = require('child_process');
+          const util = require('util');
+          const execPromise = util.promisify(exec);
+          
+          try {
+            await execPromise(`git add "${lessonPath}"`);
+            console.log('✅ Git add:', lessonPath);
+            
+            const commitMessage = `feat: add lesson "${lessonData.title}"`;
+            await execPromise(`git commit -m "${commitMessage}"`);
+            console.log('✅ Git commit:', commitMessage);
+            
+            await execPromise('git push');
+            console.log('✅ Git push: pushed to remote');
+          } catch (gitError) {
+            console.warn('⚠️ Git operation failed:', gitError.message);
+          }
+          
+          res.writeHead(200);
+          res.end(JSON.stringify({
+            success: true,
+            data: {
+              title: lessonData.title,
+              slug: slug,
+              filePath: `content/BAI-HOC/${slug}/_index.md`,
+              url: `/bai-hoc/${slug}/`,
+              created: true
+            },
+            message: 'Bài học đã được tạo thành công!',
+            url: `/bai-hoc/${slug}/`
+          }));
+        } catch (error) {
+          console.error('Error creating lesson:', error);
+          res.writeHead(500);
+          res.end(JSON.stringify({ 
+            success: false,
+            error: 'Lỗi server',
+            message: error.message
+          }));
+        }
+      });
+    } catch (error) {
+      console.error('Error handling request:', error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ 
+        success: false,
+        error: 'Lỗi server',
+        message: error.message
+      }));
+    }
   } else {
     res.writeHead(404);
     res.end(JSON.stringify({ error: 'Not Found' }));
