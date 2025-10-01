@@ -151,7 +151,7 @@ async function updateTuKhaiNiemIndex(vocabData) {
       const updatedContent = indexContent.replace(lastRowRegex, `$1\n${newEntry}$2`);
       
       // Write updated content
-      await fs.writeFile(indexPath, updatedContent, 'utf8');
+      await fsPromises.writeFile(indexPath, updatedContent, 'utf8');
       console.log('✅ Updated tu-khainiem index:', newEntry);
     } else {
       console.warn('⚠️ Could not find table pattern in tu-khainiem index');
@@ -254,10 +254,10 @@ async function createLessonFile(slug, lessonData) {
   
   // Tạo thư mục nếu chưa tồn tại
   const dirPath = path.dirname(filePath);
-  await fs.mkdir(dirPath, { recursive: true });
+  await fsPromises.mkdir(dirPath, { recursive: true });
   
   // Write file to filesystem
-  await fs.writeFile(filePath, fileContent, 'utf8');
+  await fsPromises.writeFile(filePath, fileContent, 'utf8');
   
   return { path: filePath, content: fileContent };
 }
@@ -473,7 +473,7 @@ ${categoriesYaml}
 ${vocabData.content}`;
           
           // Write file
-          await fs.writeFile(vocabPath, markdownContent, { encoding: 'utf8' });
+          await fsPromises.writeFile(vocabPath, markdownContent, { encoding: 'utf8' });
           console.log('✅ Updated vocabulary file:', vocabPath);
           
           // Auto commit and push to Git
@@ -582,7 +582,7 @@ ${vocabData.content}`;
           
           // Create directory
           const dirPath = path.join(process.cwd(), 'content', 'TU-KHAINIEM', slug);
-          await fs.mkdir(dirPath, { recursive: true });
+          await fsPromises.mkdir(dirPath, { recursive: true });
           console.log('✅ Created directory:', dirPath);
           
           // Generate markdown content
@@ -606,7 +606,7 @@ ${categoriesYaml}
 ${vocabData.content}`;
           
           // Write file with UTF-8 encoding (no BOM)
-          await fs.writeFile(vocabPath, markdownContent, { encoding: 'utf8' });
+          await fsPromises.writeFile(vocabPath, markdownContent, { encoding: 'utf8' });
           console.log('✅ Created vocabulary file:', vocabPath);
           
           // Update main tu-khainiem index
@@ -807,7 +807,7 @@ ${imageTitle}`;
           // Create diagram file
           const diagramPath = path.join(process.cwd(), 'content', 'HINH', `${slug}.md`);
           console.log('📝 [DEBUG] Creating file at:', diagramPath);
-          await fs.writeFile(diagramPath, markdownContent, { encoding: 'utf8' });
+          await fsPromises.writeFile(diagramPath, markdownContent, { encoding: 'utf8' });
           console.log('✅ [SUCCESS] Created diagram file:', diagramPath);
           
           // Update HINH index
@@ -1066,8 +1066,8 @@ tableOfContents: true
           // Create file
           const lessonPath = path.join(process.cwd(), 'content', 'BAI-HOC', slug, '_index.md');
           const dirPath = path.dirname(lessonPath);
-          await fs.mkdir(dirPath, { recursive: true });
-          await fs.writeFile(lessonPath, markdown, { encoding: 'utf8' });
+          await fsPromises.mkdir(dirPath, { recursive: true });
+          await fsPromises.writeFile(lessonPath, markdown, { encoding: 'utf8' });
           console.log('✅ Created lesson file:', lessonPath);
           
           // Trigger Hugo rebuild
