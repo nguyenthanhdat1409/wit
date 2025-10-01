@@ -1157,13 +1157,10 @@ tableOfContents: true
             console.log('🔄 [DEBUG] Triggering Hugo rebuild...');
             try {
               const { exec } = require('child_process');
-              exec('hugo', { cwd: __dirname }, (error, stdout, stderr) => {
-                if (error) {
-                  console.error('❌ Hugo rebuild failed:', error);
-                } else {
-                  console.log('✅ [DEBUG] Hugo rebuild completed successfully');
-                }
-              });
+              const util = require('util');
+              const execAsync = util.promisify(exec);
+              await execAsync('hugo', { cwd: __dirname });
+              console.log('✅ [DEBUG] Hugo rebuild completed successfully');
             } catch (hugoError) {
               console.error('❌ Hugo rebuild error:', hugoError);
             }
@@ -1171,21 +1168,12 @@ tableOfContents: true
             // Git operations
             try {
               const { exec } = require('child_process');
-              exec(`git add ${diagramPath}`, { cwd: __dirname }, (error, stdout, stderr) => {
-                if (error) {
-                  console.error('⚠️ Git add failed:', error);
-                } else {
-                  console.log(`✅ Git add: ${fullPath}`);
-                }
-              });
-              
-              exec(`git commit -m "feat: delete diagram \\"${id}\\""`, { cwd: __dirname }, (error, stdout, stderr) => {
-                if (error) {
-                  console.error('⚠️ Git commit failed:', error);
-                } else {
-                  console.log('✅ Git commit successful');
-                }
-              });
+              const util = require('util');
+              const execAsync = util.promisify(exec);
+              await execAsync(`git add ${diagramPath}`, { cwd: __dirname });
+              console.log(`✅ Git add: ${fullPath}`);
+              await execAsync(`git commit -m "feat: delete diagram \\"${id}\\""`, { cwd: __dirname });
+              console.log('✅ Git commit successful');
             } catch (gitError) {
               console.error('⚠️ Git operation failed:', gitError);
             }
@@ -1256,13 +1244,10 @@ tableOfContents: true
             console.log('🔄 [DEBUG] Triggering Hugo rebuild...');
             try {
               const { exec } = require('child_process');
-              exec('hugo', { cwd: __dirname }, (error, stdout, stderr) => {
-                if (error) {
-                  console.error('❌ Hugo rebuild failed:', error);
-                } else {
-                  console.log('✅ [DEBUG] Hugo rebuild completed successfully');
-                }
-              });
+              const util = require('util');
+              const execAsync = util.promisify(exec);
+              await execAsync('hugo', { cwd: __dirname });
+              console.log('✅ [DEBUG] Hugo rebuild completed successfully');
             } catch (hugoError) {
               console.error('❌ Hugo rebuild error:', hugoError);
             }
@@ -1270,21 +1255,12 @@ tableOfContents: true
             // Git operations
             try {
               const { exec } = require('child_process');
-              exec(`git add ${lessonPath}`, { cwd: __dirname }, (error, stdout, stderr) => {
-                if (error) {
-                  console.error('⚠️ Git add failed:', error);
-                } else {
-                  console.log(`✅ Git add: ${fullPath}`);
-                }
-              });
-              
-              exec(`git commit -m "feat: delete lesson \\"${id}\\""`, { cwd: __dirname }, (error, stdout, stderr) => {
-                if (error) {
-                  console.error('⚠️ Git commit failed:', error);
-                } else {
-                  console.log('✅ Git commit successful');
-                }
-              });
+              const util = require('util');
+              const execAsync = util.promisify(exec);
+              await execAsync(`git add ${lessonPath}`, { cwd: __dirname });
+              console.log(`✅ Git add: ${fullPath}`);
+              await execAsync(`git commit -m "feat: delete lesson \\"${id}\\""`, { cwd: __dirname });
+              console.log('✅ Git commit successful');
             } catch (gitError) {
               console.error('⚠️ Git operation failed:', gitError);
             }
