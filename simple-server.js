@@ -1123,7 +1123,7 @@ tableOfContents: true
         message: error.message
       }));
     }
-  } else if (pathname === '/api/delete-diagram' && method === 'POST') {
+  } else if (parsedUrl.pathname === '/api/delete-diagram' && req.method === 'POST') {
     // Delete diagram endpoint
     try {
       let body = '';
@@ -1221,7 +1221,7 @@ tableOfContents: true
         message: error.message
       }));
     }
-  } else if (pathname === '/api/delete-lesson' && method === 'POST') {
+  } else if (parsedUrl.pathname === '/api/delete-lesson' && req.method === 'POST') {
     // Delete lesson endpoint
     try {
       let body = '';
@@ -1320,7 +1320,7 @@ tableOfContents: true
         message: error.message
       }));
     }
-  } else if (pathname === '/api/list-lessons' && method === 'GET') {
+  } else if (parsedUrl.pathname === '/api/list-lessons' && req.method === 'GET') {
     // List all lessons
     try {
       const lessonsDir = path.join(__dirname, 'content/BAI-HOC');
@@ -1355,7 +1355,7 @@ tableOfContents: true
       res.writeHead(500);
       res.end(JSON.stringify({ success: false, error: error.message }));
     }
-  } else if (pathname === '/api/list-diagrams' && method === 'GET') {
+  } else if (parsedUrl.pathname === '/api/list-diagrams' && req.method === 'GET') {
     // List all diagrams
     try {
       const diagramsDir = path.join(__dirname, 'content/HINH');
