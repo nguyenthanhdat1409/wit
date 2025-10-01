@@ -22,19 +22,5 @@
       <guid>https://happymarketdocs.com/tu-khainiem/test/</guid>
       <description>&lt;h1 id=&#34;test&#34;&gt;Test@#$%^&amp;amp;*()&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là test với ký tự đặc biệt. Slug sẽ được làm sạch.&lt;/p&gt;</description>
     </item>
-    <item>
-      <title>Test1</title>
-      <link>https://happymarketdocs.com/tu-khainiem/test1/</link>
-      <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>https://happymarketdocs.com/tu-khainiem/test1/</guid>
-      <description>&lt;h1 id=&#34;test1&#34;&gt;Test1&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xD;&#xA;**Nhóm:**  --&gt;&#xD;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là nội dung test cho từ vựng - khái niệm test1. Nội dung này sẽ được lưu trong file _index.md và có thể truy cập qua URL &lt;code&gt;/tu-khainiem/test1/&lt;/code&gt;.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Từ Vựng Tiếng Việt</title>
-      <link>https://happymarketdocs.com/tu-khainiem/tu-vung-tieng-viet/</link>
-      <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>https://happymarketdocs.com/tu-khainiem/tu-vung-tieng-viet/</guid>
-      <description>&lt;h1 id=&#34;từ-vựng-tiếng-việt&#34;&gt;Từ Vựng Tiếng Việt&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xA;**Nhóm:**  --&gt;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là test với dấu tiếng Việt. Slug sẽ được chuyển đổi.&lt;/p&gt;</description>
-    </item>
   </channel>
 </rss>

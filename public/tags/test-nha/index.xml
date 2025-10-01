@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Test Nha on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
-    <link>https://happymarketdocs.com/tags/test-nha/</link>
+    <link>http://localhost:1313/tags/test-nha/</link>
     <description>Recent content in Test Nha on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description>
     <generator>Hugo</generator>
     <language>vi-VN</language>
     <lastBuildDate>Tue, 30 Sep 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://happymarketdocs.com/tags/test-nha/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/test-nha/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>test nha</title>
-      <link>https://happymarketdocs.com/tu-khainiem/test-nha/</link>
+      <link>http://localhost:1313/tu-khainiem/test-nha/</link>
       <pubDate>Tue, 30 Sep 2025 00:00:00 +0000</pubDate>
-      <guid>https://happymarketdocs.com/tu-khainiem/test-nha/</guid>
+      <guid>http://localhost:1313/tu-khainiem/test-nha/</guid>
       <description>&lt;h1 id=&#34;test-nha&#34;&gt;test nha&lt;/h1&gt;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;test nha&lt;/p&gt;</description>
     </item>
   </channel>

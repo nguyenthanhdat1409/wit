@@ -1,17 +1,13 @@
 ---
-title: "test tu vung 1"
+title: "test nha d"
 description: ""
-date: 2025-09-30
+date: 2025-10-01
 draft: false
 weight: 59
 tags: [""]
 categories: [""]
 ---
 
-# test tu vung 1
-
 ## Khái Niệm
 
-test tu vung 1
-1. a
-2. aa
+a

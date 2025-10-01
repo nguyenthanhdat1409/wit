@@ -443,12 +443,11 @@ ${data.content}`;
             if (port === '8888') {
                 // netlify dev is running
                 return `/.netlify/functions${path}`;
-            } else if (port === '1313') {
-                // Hugo server is running, use simple-server API
-                return `http://localhost:3001/api${path}`;
             } else {
-                // Default: try netlify dev
-                return `http://localhost:8888/.netlify/functions${path}`;
+                // Hugo server với bất kỳ port nào (1313, 51712, etc.)
+                // → Sử dụng simple-server API
+                console.log('🔍 Detected local Hugo server on port:', port);
+                return `http://localhost:3001/api${path}`;
             }
         }
         

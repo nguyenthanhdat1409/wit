@@ -692,6 +692,11 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://happymarketdocs.com/tu-khainiem/test-nha-d/</loc>
+    <lastmod>2025-10-01T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://happymarketdocs.com/tu-khainiem/bai-test-31/</loc>
     <lastmod>2025-09-30T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -702,47 +707,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://happymarketdocs.com/tu-khainiem/test-nha/</loc>
-    <lastmod>2025-09-30T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://happymarketdocs.com/tu-khainiem/test-nha-1/</loc>
-    <lastmod>2025-09-30T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://happymarketdocs.com/tu-khainiem/test-nha-22/</loc>
-    <lastmod>2025-09-30T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://happymarketdocs.com/tu-khainiem/test-tu-vung-1/</loc>
-    <lastmod>2025-09-30T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://happymarketdocs.com/tu-khainiem/test-van-ban-1/</loc>
-    <lastmod>2025-09-30T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://happymarketdocs.com/tu-khainiem/bai-hoc-test/</loc>
     <lastmod>2025-09-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
     <loc>https://happymarketdocs.com/tu-khainiem/test/</loc>
-    <lastmod>2025-09-29T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://happymarketdocs.com/tu-khainiem/test1/</loc>
-    <lastmod>2025-09-29T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://happymarketdocs.com/tu-khainiem/tu-vung-tieng-viet/</loc>
     <lastmod>2025-09-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -1522,26 +1492,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>https://happymarketdocs.com/categories/</loc>
-    <lastmod>2025-09-30T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://happymarketdocs.com/tags/</loc>
-    <lastmod>2025-09-30T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://happymarketdocs.com/categories/test-nha/</loc>
-    <lastmod>2025-09-30T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://happymarketdocs.com/tags/test-nha/</loc>
-    <lastmod>2025-09-30T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>https://happymarketdocs.com/tags/api/</loc>
     <lastmod>2025-09-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -1557,7 +1507,17 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>https://happymarketdocs.com/categories/</loc>
+    <lastmod>2025-09-29T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://happymarketdocs.com/tags/special-chars/</loc>
+    <lastmod>2025-09-29T00:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>https://happymarketdocs.com/tags/</loc>
     <lastmod>2025-09-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -1568,11 +1528,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>https://happymarketdocs.com/categories/test-category/</loc>
-    <lastmod>2025-09-29T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>https://happymarketdocs.com/tags/vietnamese/</loc>
     <lastmod>2025-09-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
