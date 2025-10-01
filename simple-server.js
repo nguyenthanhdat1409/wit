@@ -82,7 +82,51 @@ async function updateHinhIndex(diagramData) {
   }
 }
 
-// Update main tu-khainiem index
+// Update HTML table in _index.md
+async function updateHtmlTable(vocabData) {
+  try {
+    console.log('🔍 [DEBUG] Starting updateHtmlTable for:', vocabData.title);
+    const indexPath = path.join(process.cwd(), 'content', 'TU-KHAINIEM', '_index.md');
+    
+    // Read current index file
+    let indexContent = await fsPromises.readFile(indexPath, 'utf8');
+    
+    // Extract content preview (first 10 characters)
+    const contentPreview = vocabData.content.trim().substring(0, 10);
+    const previewText = contentPreview ? contentPreview + '...' : '';
+    
+    // Generate slug if not provided
+    const slug = vocabData.slug || generateSlug(vocabData.title);
+    
+    // Create new table row
+    const newRow = `      <tr>
+        <td><a href="/tu-khainiem/${slug}/">${vocabData.title}</a></td>
+        <td>${previewText}</td>
+      </tr>`;
+    
+    // Find the last table row in tbody and add new entry
+    const tbodyPattern = /(<tbody>[\s\S]*?)(\s*<\/tbody>)/;
+    const match = indexContent.match(tbodyPattern);
+    
+    if (match) {
+      // Add new row before closing tbody tag
+      const updatedTbody = match[1] + newRow + '\n' + match[2];
+      const updatedContent = indexContent.replace(tbodyPattern, updatedTbody);
+      
+      // Write updated content
+      await fsPromises.writeFile(indexPath, updatedContent, 'utf8');
+      console.log('✅ Updated HTML table with new vocabulary:', vocabData.title);
+    } else {
+      console.warn('⚠️ Could not find tbody pattern in _index.md');
+      console.log('🔍 [DEBUG] Last 500 characters of file:');
+      console.log(indexContent.substring(indexContent.length - 500));
+    }
+  } catch (error) {
+    console.warn('⚠️ Failed to update HTML table:', error.message);
+  }
+}
+
+// Update main tu-khainiem index (old function - kept for reference)
 async function updateTuKhaiNiemIndex(vocabData) {
   try {
     console.log('🔍 [DEBUG] Starting updateTuKhaiNiemIndex for:', vocabData.title);
@@ -93,9 +137,11 @@ async function updateTuKhaiNiemIndex(vocabData) {
     // Read current index file
     let indexContent = await fsPromises.readFile(indexPath, 'utf8');
     console.log('📄 [DEBUG] Index file size:', indexContent.length, 'characters');
+    console.log('📄 [DEBUG] Last 500 characters of file:');
+    console.log(indexContent.substring(indexContent.length - 500));
     
-    // Extract content preview (first 50 characters)
-    const contentPreview = vocabData.content.trim().substring(0, 50);
+    // Extract content preview (first 10 characters)
+    const contentPreview = vocabData.content.trim().substring(0, 10);
     const previewText = contentPreview ? contentPreview + '...' : '';
     console.log('📝 [DEBUG] Content preview:', previewText);
     
@@ -113,26 +159,51 @@ async function updateTuKhaiNiemIndex(vocabData) {
     let match = null;
     
     // Pattern 1: Find the very last table row (most flexible)
-    const pattern1 = /(\|\| \[.*?\]\(.*?\/\) \| .*? \|)(\s*\n\s*<\/div>)/;
+    const pattern1 = /(\|\| \[.*?\]\(.*?\/\) \| .*? \|)(\n\n\n<\/div>)/;
     match = indexContent.match(pattern1);
+    console.log('🔍 [DEBUG] Pattern 1 result:', match ? 'FOUND' : 'NOT FOUND');
+    if (match) console.log('🔍 [DEBUG] Pattern 1 match:', match[1]);
     
     // Pattern 2: Find last table row before <script>
     if (!match) {
       const pattern2 = /(\|\| \[.*?\]\(.*?\/\) \| .*? \|)(\s*\n\s*<script>)/;
       match = indexContent.match(pattern2);
+      console.log('🔍 [DEBUG] Pattern 2 result:', match ? 'FOUND' : 'NOT FOUND');
+      if (match) console.log('🔍 [DEBUG] Pattern 2 match:', match[1]);
     }
     
     // Pattern 3: Find last table row before </div> or <script>
     if (!match) {
       const pattern3 = /(\|\| \[.*?\]\(.*?\/\) \| .*? \|)(\s*\n\s*(<\/div>|<script>))/;
       match = indexContent.match(pattern3);
+      console.log('🔍 [DEBUG] Pattern 3 result:', match ? 'FOUND' : 'NOT FOUND');
+      if (match) console.log('🔍 [DEBUG] Pattern 3 match:', match[1]);
+    }
+    
+    // Pattern 3.5: Find last table row with multiple empty lines before </div>
+    if (!match) {
+      const pattern35 = /(\|\| \[.*?\]\(.*?\/\) \| .*? \|)(\n\n\n<\/div>)/;
+      match = indexContent.match(pattern35);
+      console.log('🔍 [DEBUG] Pattern 3.5 result:', match ? 'FOUND' : 'NOT FOUND');
+      if (match) console.log('🔍 [DEBUG] Pattern 3.5 match:', match[1]);
+    }
+    
+    // Pattern 3.6: Find last table row with exactly 2 newlines before </div>
+    if (!match) {
+      const pattern36 = /(\|\| \[.*?\]\(.*?\/\) \| .*? \|)(\n\n<\/div>)/;
+      match = indexContent.match(pattern36);
+      console.log('🔍 [DEBUG] Pattern 3.6 result:', match ? 'FOUND' : 'NOT FOUND');
+      if (match) console.log('🔍 [DEBUG] Pattern 3.6 match:', match[1]);
     }
     
     // Pattern 4: Find the very last table row (no matter what comes after)
     if (!match) {
+      console.log('🔍 [DEBUG] Trying Pattern 4...');
       const allTableRows = indexContent.match(/\|\| \[.*?\]\(.*?\/\) \| .*? \|/g);
+      console.log('🔍 [DEBUG] Found table rows:', allTableRows ? allTableRows.length : 0);
       if (allTableRows && allTableRows.length > 0) {
         const lastRow = allTableRows[allTableRows.length - 1];
+        console.log('🔍 [DEBUG] Last table row:', lastRow);
         const lastRowIndex = indexContent.lastIndexOf(lastRow);
         const afterLastRow = indexContent.substring(lastRowIndex + lastRow.length);
         console.log('🔍 [DEBUG] After last table row:', afterLastRow.substring(0, 100));
@@ -141,14 +212,18 @@ async function updateTuKhaiNiemIndex(vocabData) {
         const simplePattern = new RegExp(`(${lastRow.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})(.*)$`);
         match = indexContent.match(simplePattern);
         console.log('🔍 [DEBUG] Simple pattern match:', match ? 'FOUND' : 'NOT FOUND');
+        if (match) console.log('🔍 [DEBUG] Pattern 4 match:', match[1]);
       }
     }
     console.log('🔍 [DEBUG] Regex match result:', match ? 'FOUND' : 'NOT FOUND');
     
     if (match) {
       console.log('✅ [DEBUG] Found matching pattern, updating file...');
+      console.log('✅ [DEBUG] Match groups:', match[1], '|', match[2]);
       // Add new entry after the last row
-      const updatedContent = indexContent.replace(lastRowRegex, `$1\n${newEntry}$2`);
+      const updatedContent = indexContent.replace(match[0], `${match[1]}\n${newEntry}${match[2]}`);
+      console.log('✅ [DEBUG] Updated content preview (last 200 chars):');
+      console.log(updatedContent.substring(updatedContent.length - 200));
       
       // Write updated content
       await fsPromises.writeFile(indexPath, updatedContent, 'utf8');
@@ -167,6 +242,17 @@ async function updateTuKhaiNiemIndex(vocabData) {
         allTableRows.slice(-3).forEach((row, index) => {
           console.log(`  ${allTableRows.length - 3 + index + 1}: ${row}`);
         });
+        
+        // Try to manually add the entry
+        console.log('🔍 [DEBUG] Attempting manual insertion...');
+        const lastRow = allTableRows[allTableRows.length - 1];
+        const lastRowIndex = indexContent.lastIndexOf(lastRow);
+        const beforeLastRow = indexContent.substring(0, lastRowIndex + lastRow.length);
+        const afterLastRow = indexContent.substring(lastRowIndex + lastRow.length);
+        
+        const updatedContent = beforeLastRow + '\n' + newEntry + afterLastRow;
+        await fsPromises.writeFile(indexPath, updatedContent, 'utf8');
+        console.log('✅ [DEBUG] Manually added entry:', newEntry);
       }
       
       // Try to find where the table ends
@@ -187,6 +273,7 @@ async function updateTuKhaiNiemIndex(vocabData) {
   } catch (error) {
     console.warn('⚠️ Failed to update tu-khainiem index:', error.message);
     console.error('❌ [DEBUG] Full error:', error);
+    console.error('❌ [DEBUG] Error stack:', error.stack);
     // Don't throw error, just log warning
   }
 }
@@ -609,10 +696,8 @@ ${vocabData.content}`;
           await fsPromises.writeFile(vocabPath, markdownContent, { encoding: 'utf8' });
           console.log('✅ Created vocabulary file:', vocabPath);
           
-          // Update main tu-khainiem index
-          console.log('🔄 [DEBUG] About to call updateTuKhaiNiemIndex...');
-          await updateTuKhaiNiemIndex(vocabData);
-          console.log('✅ [DEBUG] updateTuKhaiNiemIndex completed');
+          // Note: Không cần cập nhật bảng nữa vì đã sử dụng Hugo Shortcode tự động
+          console.log('ℹ️ [INFO] Sử dụng Hugo Shortcode tự động - không cần cập nhật bảng thủ công');
           
           // Trigger Hugo rebuild
           await triggerHugoRebuild();

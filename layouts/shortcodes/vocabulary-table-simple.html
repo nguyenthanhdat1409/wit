@@ -1,0 +1,18 @@
+{{ $vocabularies := where .Site.RegularPages "Section" "tu-khainiem" }}
+
+<table>
+  <thead>
+    <tr>
+      <th>Từ vựng</th>
+      <th>Khái niệm</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ range $vocabularies }}
+    <tr>
+      <td><a href="{{ .Permalink }}">{{ .Title }}</a></td>
+      <td>{{ .Content | plainify | truncate 10 }}...</td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>

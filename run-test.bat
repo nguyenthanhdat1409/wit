@@ -1,0 +1,6 @@
+@echo off
+echo Testing pattern matching...
+node test-pattern.js
+echo.
+echo Press any key to continue...
+pause > nul

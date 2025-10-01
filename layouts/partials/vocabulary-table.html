@@ -1,0 +1,55 @@
+{{ $vocabularies := where .Site.RegularPages "Section" "tu-khainiem" }}
+{{ $vocabularies = $vocabularies | sort "Title" }}
+
+<div id="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Từ vựng</th>
+        <th>Khái niệm</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range $vocabularies }}
+        {{ $content := .Content | plainify | truncate 10 }}
+        {{ $preview := "" }}
+        {{ if $content }}
+          {{ $preview = printf "%s..." $content }}
+        {{ end }}
+        <tr>
+          <td>
+            <a href="{{ .Permalink }}">{{ .Title }}</a>
+          </td>
+          <td>{{ $preview }}</td>
+        </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>
+
+<style>
+#table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#table-container th,
+#table-container td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  vertical-align: top;
+}
+
+#table-container th:first-child,
+#table-container td:first-child {
+  width: 220px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+#table-container th:last-child,
+#table-container td:last-child {
+  width: auto;
+}
+</style>
