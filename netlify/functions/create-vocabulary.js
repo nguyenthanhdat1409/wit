@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
+const { createOrUpdateFile } = require('./lib/github-helper');
 
 // Generate slug từ title
 function generateSlug(title) {
@@ -168,24 +169,57 @@ ${vocabData.content}`;
         };
       }
     } else {
-      // PRODUCTION: Trả về nội dung để user commit thủ công
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({
-          success: true,
-          data: {
-            title: vocabData.title,
-            slug: slug,
-            filePath: `content/TU-KHAINIEM/${slug}/_index.md`,
-            fileContent: markdownContent,
-            url: `/tu-khainiem/${slug}/`,
-            created: false, // Chưa tạo file trên server
-            message: 'Vui lòng commit file thủ công hoặc sử dụng local development để tự động tạo file.'
-          },
-          message: 'Đã tạo nội dung từ vựng. Vui lòng commit vào Git để hiển thị trên website.'
-        })
-      };
+      // PRODUCTION: Sử dụng GitHub API để tạo file và commit
+      try {
+        const filePath = `content/TU-KHAINIEM/${slug}/_index.md`;
+        const commitMessage = `feat: add vocabulary "${vocabData.title}" via Netlify Function`;
+        
+        console.log('🚀 Creating file on GitHub via API...');
+        const githubResult = await createOrUpdateFile(filePath, markdownContent, commitMessage);
+        
+        console.log('✅ File created on GitHub:', githubResult.path);
+        
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            data: {
+              title: vocabData.title,
+              slug: slug,
+              filePath: filePath,
+              url: `/tu-khainiem/${slug}/`,
+              created: true,
+              githubCommit: githubResult.commit.sha,
+              githubUrl: githubResult.url,
+              message: 'File đã được tạo và commit vào GitHub. Netlify sẽ tự động rebuild trong ~2-3 phút.'
+            },
+            message: 'Từ vựng đã được tạo thành công! Netlify đang rebuild...'
+          })
+        };
+      } catch (githubError) {
+        console.error('❌ GitHub API Error:', githubError);
+        
+        // Fallback: Trả về content để user commit thủ công
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            data: {
+              title: vocabData.title,
+              slug: slug,
+              filePath: `content/TU-KHAINIEM/${slug}/_index.md`,
+              fileContent: markdownContent,
+              url: `/tu-khainiem/${slug}/`,
+              created: false,
+              error: githubError.message,
+              message: 'Không thể tạo file tự động. Vui lòng commit thủ công hoặc sử dụng local development.'
+            },
+            message: 'Đã tạo nội dung từ vựng. Vui lòng commit vào Git để hiển thị trên website.'
+          })
+        };
+      }
     }
   } catch (error) {
     console.error('Error creating vocabulary:', error);

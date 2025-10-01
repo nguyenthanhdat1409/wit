@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
+const { createOrUpdateFile } = require('./lib/github-helper');
 
 // Generate slug từ title
 function generateSlug(title) {
@@ -93,31 +94,64 @@ diagram:
 
 ${imageTitle}`;
     
-    // ⚠️ QUAN TRỌNG: Trên Netlify, không thể ghi file trực tiếp
-    // Thay vào đó, trả về thông tin để user có thể tạo PR hoặc commit thủ công
+    // ⚠️ QUAN TRỌNG: Trên Netlify, sử dụng GitHub API để tạo file
     
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({
-        success: true,
-        data: {
-          title: imageTitle,
-          slug: slug,
-          imageUrl: imageUrl,
-          conceptLink: conceptLink,
-          lessonLink: lessonLink,
-          filePath: `content/HINH/${slug}.md`,
-          fileContent: markdownContent,
-          url: `/hinh/`,
-          created: false, // Chưa tạo file trên server
-          indexed: false,
-          rebuilt: false,
-          message: 'Vui lòng commit file thủ công hoặc sử dụng local development để tự động tạo file.'
-        },
-        message: 'Đã tạo nội dung đồ hình. Vui lòng commit vào Git để hiển thị trên website.'
-      })
-    };
+    try {
+      const filePath = `content/HINH/${slug}.md`;
+      const commitMessage = `feat: add diagram "${imageTitle}" via Netlify Function`;
+      
+      console.log('🚀 Creating diagram file on GitHub via API...');
+      const githubResult = await createOrUpdateFile(filePath, markdownContent, commitMessage);
+      
+      console.log('✅ Diagram file created on GitHub:', githubResult.path);
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            title: imageTitle,
+            slug: slug,
+            imageUrl: imageUrl,
+            conceptLink: conceptLink,
+            lessonLink: lessonLink,
+            filePath: filePath,
+            url: `/hinh/`,
+            created: true,
+            githubCommit: githubResult.commit.sha,
+            githubUrl: githubResult.url,
+            message: 'File đã được tạo và commit vào GitHub. Netlify sẽ tự động rebuild trong ~2-3 phút.'
+          },
+          message: 'Đồ hình đã được tạo thành công! Netlify đang rebuild...'
+        })
+      };
+    } catch (githubError) {
+      console.error('❌ GitHub API Error:', githubError);
+      
+      // Fallback: Trả về content để user commit thủ công
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            title: imageTitle,
+            slug: slug,
+            imageUrl: imageUrl,
+            conceptLink: conceptLink,
+            lessonLink: lessonLink,
+            filePath: `content/HINH/${slug}.md`,
+            fileContent: markdownContent,
+            url: `/hinh/`,
+            created: false,
+            error: githubError.message,
+            message: 'Không thể tạo file tự động. Vui lòng commit thủ công hoặc sử dụng local development.'
+          },
+          message: 'Đã tạo nội dung đồ hình. Vui lòng commit vào Git để hiển thị trên website.'
+        })
+      };
+    }
   } catch (error) {
     console.error('Error creating diagram:', error);
     return {

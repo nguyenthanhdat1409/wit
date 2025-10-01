@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Đồ Hình - HappyMarketDocs Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .loading { display: none; }
+        .loading.active { display: block; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-blue-50 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">🖼️ Tạo Đồ Hình Mới</h1>
+            <p class="text-gray-600">Thêm hình ảnh mới vào thư viện</p>
+        </div>
+
+        <!-- Form -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+            <form id="diagramForm">
+                <!-- Tên Hình -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        Tên Hình <span class="text-red-500">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="imageTitle"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="VD: Sơ đồ tư duy chiến lược"
+                        required
+                    >
+                </div>
+
+                <!-- URL Hình Ảnh -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        URL Hình Ảnh <span class="text-red-500">*</span>
+                    </label>
+                    <input 
+                        type="url" 
+                        id="imageUrl"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="https://example.com/image.png"
+                        required
+                    >
+                    <p class="text-sm text-gray-500 mt-1">Link trực tiếp đến hình ảnh</p>
+                </div>
+
+                <!-- Link Khái Niệm -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        Link Khái Niệm (optional)
+                    </label>
+                    <input 
+                        type="text" 
+                        id="conceptLink"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="/khai-niem-nguon/..."
+                    >
+                </div>
+
+                <!-- Link Bài Học -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        Link Bài Học (optional)
+                    </label>
+                    <input 
+                        type="text" 
+                        id="lessonLink"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="/bai-hoc/..."
+                    >
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-4">
+                    <button 
+                        type="button" 
+                        id="previewBtn"
+                        class="flex-1 bg-blue-600 text-white px-6 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                    >
+                        👁️ Xem Preview
+                    </button>
+                    
+                    <button 
+                        type="submit" 
+                        id="createBtn"
+                        class="flex-1 bg-green-500 text-white px-6 py-4 rounded-lg font-semibold hover:bg-green-600 transition-colors"
+                    >
+                        ✈️ Tạo Đồ Hình
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview -->
+        <div id="previewSection" class="bg-white rounded-2xl shadow-xl p-8 mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">📋 Preview</h2>
+            <div id="previewContent" class="prose max-w-none"></div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <div class="bg-orange-50 border border-orange-200 rounded-lg p-6 text-center">
+                <div class="inline-flex items-center mb-4">
+                    <svg class="animate-spin h-8 w-8 text-orange-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="ml-3 text-lg font-medium text-orange-800">Đang tạo đồ hình...</span>
+                </div>
+                <div class="text-sm text-orange-700">
+                    Đang xử lý, tạo file markdown và cập nhật trang...
+                </div>
+            </div>
+        </div>
+
+        <!-- Success -->
+        <div id="successMessage" class="hidden">
+            <div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
+                <div class="flex items-center justify-center mb-4">
+                    <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-green-800 mb-2">🎉 Tạo đồ hình thành công!</h3>
+                <p class="text-green-700 mb-4">Đồ hình đã được thêm vào trang Hình.</p>
+                <a id="viewDiagramLink" href="/hinh/" class="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                    👁️ Xem trang Hình
+                </a>
+            </div>
+        </div>
+
+        <!-- Error -->
+        <div id="errorMessage" class="hidden">
+            <div class="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+                <h3 class="text-xl font-semibold text-red-800 mb-2">❌ Có lỗi xảy ra!</h3>
+                <p id="errorText" class="text-red-700 mb-4"></p>
+                <button onclick="resetForm()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                    Thử lại
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elements
+        const form = document.getElementById('diagramForm');
+        const previewBtn = document.getElementById('previewBtn');
+        const createBtn = document.getElementById('createBtn');
+        const previewSection = document.getElementById('previewSection');
+        const previewContent = document.getElementById('previewContent');
+        const loading = document.getElementById('loading');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Preview
+        previewBtn.addEventListener('click', function() {
+            const title = document.getElementById('imageTitle').value;
+            const imageUrl = document.getElementById('imageUrl').value;
+            const conceptLink = document.getElementById('conceptLink').value;
+            const lessonLink = document.getElementById('lessonLink').value;
+
+            if (!title || !imageUrl) {
+                alert('Vui lòng nhập đầy đủ thông tin bắt buộc!');
+                return;
+            }
+
+            previewContent.innerHTML = `
+                <h1 class="text-2xl font-bold mb-4">${title}</h1>
+                <img src="${imageUrl}" alt="${title}" class="max-w-full h-auto rounded-lg shadow-lg mb-4">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <p><strong>Tên hình:</strong> ${title}</p>
+                    <p><strong>URL:</strong> <a href="${imageUrl}" target="_blank" class="text-blue-600">${imageUrl}</a></p>
+                    ${conceptLink ? `<p><strong>Link Khái Niệm:</strong> <a href="${conceptLink}" class="text-blue-600">${conceptLink}</a></p>` : ''}
+                    ${lessonLink ? `<p><strong>Link Bài Học:</strong> <a href="${lessonLink}" class="text-blue-600">${lessonLink}</a></p>` : ''}
+                </div>
+            `;
+
+            previewSection.classList.remove('hidden');
+        });
+
+        // Submit
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const diagramData = {
+                imageTitle: document.getElementById('imageTitle').value,
+                imageUrl: document.getElementById('imageUrl').value,
+                conceptLink: document.getElementById('conceptLink').value,
+                lessonLink: document.getElementById('lessonLink').value
+            };
+
+            if (!diagramData.imageTitle || !diagramData.imageUrl) {
+                alert('Vui lòng nhập đầy đủ thông tin bắt buộc!');
+                return;
+            }
+
+            // Show loading
+            loading.classList.add('active');
+            createBtn.disabled = true;
+
+            try {
+                // Auto-detect API endpoint
+                const apiUrl = getApiEndpoint('/create-diagram');
+                console.log('🌐 Using API endpoint:', apiUrl);
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(diagramData)
+                });
+
+                const result = await response.json();
+                console.log('📄 API Response:', result);
+
+                loading.classList.remove('active');
+                createBtn.disabled = false;
+
+                if (result.success) {
+                    successMessage.classList.remove('hidden');
+                    form.reset();
+                    previewSection.classList.add('hidden');
+                    
+                    // Auto redirect after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = '/hinh/';
+                    }, 3000);
+                } else {
+                    showError(result.error || 'Không thể tạo đồ hình');
+                }
+            } catch (error) {
+                console.error('❌ Error:', error);
+                loading.classList.remove('active');
+                createBtn.disabled = false;
+                showError('Không thể kết nối API. Vui lòng đảm bảo server đang chạy.');
+            }
+        });
+
+        // Helper function to detect API endpoint
+        function getApiEndpoint(path) {
+            const hostname = window.location.hostname;
+            
+            if (hostname.includes('netlify.app') || hostname.includes('happymarketdocs.com')) {
+                // Production/Deploy Preview: Use Netlify Functions
+                return `/.netlify/functions${path}`;
+            } else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+                // Local development
+                const port = window.location.port;
+                
+                if (port === '8888') {
+                    // netlify dev is running
+                    return `/.netlify/functions${path}`;
+                } else if (port === '1313') {
+                    // Hugo server is running, use simple-server API
+                    return `http://localhost:3001/api${path}`;
+                } else {
+                    // Default: try netlify dev
+                    return `http://localhost:8888/.netlify/functions${path}`;
+                }
+            }
+            
+            // Fallback to Netlify Functions
+            return `/.netlify/functions${path}`;
+        }
+
+        function showError(message) {
+            document.getElementById('errorText').textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        function resetForm() {
+            form.reset();
+            errorMessage.classList.add('hidden');
+            successMessage.classList.add('hidden');
+            previewSection.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
+
