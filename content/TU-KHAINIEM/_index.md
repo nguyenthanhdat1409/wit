@@ -6,6 +6,48 @@ draft: false
 weight: 1
 ---
 
+<div>
+
+<table class="kv-table" aria-label="Bảng từ vựng - khái niệm">
+  <thead>
+    <tr>
+      <th class="kv-label">Từ vựng</th>
+      <th>Khái niệm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="kv-label">
+      <a class="title" href="https://wit.convoi.com.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" target="_blank" rel="noopener noreferrer">
+          3 Câu hỏi quan trọng trong đời người
+        </a></td>
+      <td class="kv-content">
+        <p class="meta" style="color:#666; margin-top:6px;">Ai là người quan trọng nhất?...</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="kv-label">
+      <a class="title" href="https://wit.convoi.com.vn/index.php/content/4-dong-luc-sinh-ton/" target="_blank" rel="noopener noreferrer">
+          4 Động Lực Sinh Tồn
+        </a></td>
+      <td class="kv-content">
+        <p class="meta" style="color:#666; margin-top:6px;">1. Bản thân 2. Gia đình ...</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="kv-label">
+      <a class="title" href="https://wit.convoi.com.vn/index.php/content/4-dong-luc-sinh-ton/" target="_blank" rel="noopener noreferrer">
+          5 Sự so sánh
+        </a></td>
+      <td class="kv-content">
+        <p class="meta" style="color:#666; margin-top:6px;"></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 <div id="table-container">
 
 | Từ vựng | Khái niệm |
