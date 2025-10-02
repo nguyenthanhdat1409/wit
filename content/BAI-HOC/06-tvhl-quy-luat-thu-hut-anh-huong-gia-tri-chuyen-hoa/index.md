@@ -30,9 +30,14 @@ lesson:
     <h2 style="text-align: center; font-weight: bold; font-size: 22px; margin-bottom: 12px;">
       Khái Niệm
     </h2>
-    <p style="text-align: left; font-weight: bold;">
-    *Đang trong quá trình xây dựng và phát triển!
-    </p>
+    <p style="text-align: left;">
+
+<!-- Bắt đâu việt khái niệm dưới đây -->
+
+Đang trong quá trình xây dựng và phát triển!
+
+<!-- Kết thúc viết khái niệm -->
+
   </div>
 
 </div>

@@ -39,7 +39,19 @@ lesson:
     </h2>
   <p style="text-align: left;">
 
+<!-- Viết khái niệm bài học 
+
+**    dùng để in đậm chữ, bao quanh chữ muốn in đậm
+<br>  dùng để xuống dòng, đặt sau chữ mà mình muốn xuống dòng.
+--    là dấu - đầu dòng 
+
+-->
+
+
 **Đang trong quá trình xây dựng!** <br>
+
+
+<!-- Kết thúc viết khái niệm -->
   </p>
   </div>
 

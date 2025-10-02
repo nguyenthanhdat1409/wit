@@ -40,8 +40,17 @@ lesson:
     </h2>
   <p style="text-align: left;">
 
+<!-- Viết khái niệm bài học 
+
+**    dùng để in đậm chữ, bao quanh chữ muốn in đậm
+<br>  dùng để xuống dòng, đặt sau chữ mà mình muốn xuống dòng.
+--    là dấu - đầu dòng 
+
+-->
+
 **Đang trong quá trình xây dựng và phát triển!** <br>
 
+<!-- Kết thúc viết khái niệm bài học -->
 
   </p>
   </div>
@@ -73,12 +82,6 @@ lesson:
            style="width: 100%; height: 200px; object-fit: contain; border-radius: 4px; padding:10px;">
     </div>
   </a>
-  <!-- <a href="\" style="flex: 1 1 calc(25% - 12px); max-width: calc(25% - 12px); text-align: center;">
-    <div style="border: 1px solid #fff; border-radius: 8px; padding: 8px; background: #fff;">
-      <img src="/images/hinh13a.png" alt="Hình 3"
-           style="width: 100%; height: 200px; object-fit: contain; border-radius: 4px; padding:10px;">
-    </div>
-  </a> -->
   
 </div>
 

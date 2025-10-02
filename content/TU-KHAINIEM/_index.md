@@ -10,7 +10,7 @@ weight: 1
 <!-- {{< vocabulary-table >}} -->
 
 <!-- BẢNG MARKDOWN TĨNH (HIỂN THỊ DATA) -->
-<div id="table-container">
+<!-- <div id="table-container">
 
 | Từ vựng | Khái niệm |
 |------------------|-----------------|
@@ -251,8 +251,8 @@ weight: 1
 -->
 
 
-<!-- CÁCH 2: Bảng tĩnh (Thủ công) - Format mới -->
-<!--
+<!-- CÁCH 2: Bảng tĩnh (Thủ công) - Format mới
+
 <div id="table-container">
   <table>
     <thead>
@@ -282,13 +282,14 @@ weight: 1
         <td><a href="/tu-khainiem/an-vui/">An vui</a></td>
         <td>An vui là trạng thái nhận thức nội tâm xuất phát từ sự chân thật nơi chính mình, xuất phát từ Nghe - Thấy - Nói...</td>
       </tr>
-      <!-- Thêm các dòng khác theo format này -->
+
 
   </table>
-</div>
+</div> 
+-->
 
 <!-- BẢNG CŨ (ĐÃ COMMENT) - GIỮ NGUYÊN NỘI DUNG -->
-<!--
+
 <div id="table-container">
 
 | Từ vựng | Khái niệm |
@@ -448,7 +449,7 @@ weight: 1
 | [test 9](test-9/) | 1. a 2. b **ac**... |
 
 
-</div> -->
+</div> 
 
 
 <style>

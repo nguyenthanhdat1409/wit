@@ -38,8 +38,11 @@ lesson:
       Khái Niệm
     </h2>
     <p style="text-align: left; font-size: 18px; line-height: 1.6;">
-      <!-- Ánh sáng xuất hiện, bóng tối biến mất.<br>
-      Ánh sáng còn tồn tại, bóng tối không thể hiển lộ. -->
+      <!-- 
+      **    dùng để in đậm chữ, bao quanh chữ muốn in đậm
+      <br>  dùng để xuống dòng, đặt sau chữ mà mình muốn xuống dòng.
+      --    là dấu - đầu dòng  
+      -->
       Bóng tồi ví như vấn nạn <br>
       Sung quanh cuộc đời mình, cơ bản có 4 vấn nạn:<br>
       1. Nội tâm<br>

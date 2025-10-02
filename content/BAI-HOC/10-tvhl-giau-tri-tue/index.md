@@ -28,7 +28,11 @@ lesson:
     </h2>
   <p style="text-align: left;">
 
+<!-- Bắt đâu viết khái niệm dưới đây -->
+
 **Đang trong quá trình xây dựng và phát triển!** <br>
+
+<!-- Bắt đâu viết khái niệm dưới đây -->
 
   </p>
   </div>

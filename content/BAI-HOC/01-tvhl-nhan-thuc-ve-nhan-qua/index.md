@@ -33,6 +33,14 @@ lesson:
     </h2>
   <p style="text-align: left;">
 
+<!-- Viết khái niệm bài học 
+
+**    dùng để in đậm chữ, bao quanh chữ muốn in đậm
+<br>  dùng để xuống dòng, đặt sau chữ mà mình muốn xuống dòng.
+--    là dấu - đầu dòng
+
+-->
+
 Khi .... Vũ trụ quan thì thấu suốt **Nhân sinh quan** và triệt ngộ **Thế giới quan**.
 
 **Tri thức** con người chia thành 3 nhóm:<br>
@@ -42,6 +50,9 @@ Khi .... Vũ trụ quan thì thấu suốt **Nhân sinh quan** và triệt ngộ
 
 
 **"Nhân duyên quả trong nhân sinh"**
+
+<!-- Kết thúc Viết khái niệm bài học -->
+
   </p>
   </div>
 
