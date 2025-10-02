@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WordPress Integration - HappyMarketDocs Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .loading {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="glassmorphism rounded-2xl p-6 mb-8 shadow-2xl">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-2">
+                        <i class="fas fa-wordpress mr-3"></i>
+                        WordPress Integration
+                    </h1>
+                    <p class="text-white/80">Kết nối và trích xuất wiki content từ WordPress</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="/admin/" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all">
+                        <i class="fas fa-home mr-2"></i>Admin Home
+                    </a>
+                    <button onclick="testConnection()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-all">
+                        <i class="fas fa-plug mr-2"></i>Test Connection
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Configuration Panel -->
+            <div class="glassmorphism rounded-2xl p-6 shadow-2xl">
+                <h2 class="text-2xl font-bold text-white mb-6">
+                    <i class="fas fa-cog mr-3"></i>
+                    Cấu hình WordPress
+                </h2>
+                
+                <form id="wordpressConfigForm" class="space-y-6">
+                    <div>
+                        <label class="block text-white/90 text-sm font-medium mb-2">
+                            <i class="fas fa-link mr-2"></i>WordPress URL
+                        </label>
+                        <input 
+                            type="url" 
+                            id="wordpressUrl" 
+                            placeholder="https://wit.convoi.com.vn"
+                            value="https://wit.convoi.com.vn"
+                            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                        >
+                        <p class="text-white/60 text-sm mt-1">Nhập URL WordPress của bạn (không bao gồm /wp-admin)</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-white/90 text-sm font-medium mb-2">
+                                <i class="fas fa-user mr-2"></i>Username (tùy chọn)
+                            </label>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                placeholder="admin hoặc email"
+                                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                            <p class="text-white/60 text-sm mt-1">Để lấy private content</p>
+                        </div>
+                        <div>
+                            <label class="block text-white/90 text-sm font-medium mb-2">
+                                <i class="fas fa-key mr-2"></i>Password (tùy chọn)
+                            </label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                placeholder="Application Password"
+                                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                            <p class="text-white/60 text-sm mt-1">Application Password (khuyến nghị)</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-white/90 text-sm font-medium mb-2">
+                                <i class="fas fa-filter mr-2"></i>API Type
+                            </label>
+                            <select id="apiType" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="graphql">GraphQL (Recommended)</option>
+                                <option value="rest">REST API</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-white/90 text-sm font-medium mb-2">
+                                <i class="fas fa-filter mr-2"></i>Endpoint
+                            </label>
+                            <select id="endpoint" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="posts">Posts</option>
+                                <option value="pages">Pages</option>
+                                <option value="categories">Categories</option>
+                                <option value="tags">Tags</option>
+                                <option value="media">Media</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-white/90 text-sm font-medium mb-2">
+                                <i class="fas fa-hashtag mr-2"></i>Per Page
+                            </label>
+                            <input 
+                                type="number" 
+                                id="perPage" 
+                                value="10" 
+                                min="1" 
+                                max="100"
+                                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-white/90 text-sm font-medium mb-2">
+                            <i class="fas fa-search mr-2"></i>Tìm kiếm
+                        </label>
+                        <input 
+                            type="text" 
+                            id="searchQuery" 
+                            placeholder="Từ khóa tìm kiếm..."
+                            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-white/90 text-sm font-medium mb-2">
+                            <i class="fas fa-tags mr-2"></i>Categories (tùy chọn)
+                        </label>
+                        <input 
+                            type="text" 
+                            id="categories" 
+                            placeholder="1,2,3 hoặc để trống"
+                            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                        <p class="text-white/60 text-sm mt-1">Nhập ID categories cách nhau bởi dấu phẩy</p>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg font-medium transition-all flex items-center justify-center"
+                    >
+                        <i class="fas fa-download mr-2"></i>
+                        Lấy Dữ Liệu WordPress
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="glassmorphism rounded-2xl p-6 shadow-2xl">
+                <h2 class="text-2xl font-bold text-white mb-6">
+                    <i class="fas fa-list mr-3"></i>
+                    Kết Quả Trích Xuất
+                </h2>
+                
+                <div id="loadingIndicator" class="hidden text-center py-8">
+                    <i class="fas fa-spinner loading text-4xl text-white mb-4"></i>
+                    <p class="text-white/80">Đang lấy dữ liệu từ WordPress...</p>
+                </div>
+
+                <div id="errorMessage" class="hidden bg-red-500/20 border border-red-500/50 rounded-lg p-4 mb-6">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-red-400 mr-3"></i>
+                        <span class="text-red-200" id="errorText"></span>
+                    </div>
+                </div>
+
+                <div id="resultsContainer" class="space-y-4">
+                    <div class="text-center py-8 text-white/60">
+                        <i class="fas fa-info-circle text-3xl mb-4"></i>
+                        <p>Nhập thông tin WordPress và click "Lấy Dữ Liệu" để bắt đầu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wiki Content Extraction Panel -->
+        <div class="glassmorphism rounded-2xl p-6 mt-8 shadow-2xl">
+            <h2 class="text-2xl font-bold text-white mb-6">
+                <i class="fas fa-file-alt mr-3"></i>
+                Wiki Content Extractor
+            </h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Tùy chọn trích xuất</h3>
+                    <div class="space-y-4">
+                        <label class="flex items-center text-white/90">
+                            <input type="checkbox" id="extractHeadings" checked class="mr-3">
+                            <span>Trích xuất headings (H1-H4)</span>
+                        </label>
+                        <label class="flex items-center text-white/90">
+                            <input type="checkbox" id="extractLists" checked class="mr-3">
+                            <span>Trích xuất danh sách</span>
+                        </label>
+                        <label class="flex items-center text-white/90">
+                            <input type="checkbox" id="extractImportant" checked class="mr-3">
+                            <span>Trích xuất đoạn văn quan trọng</span>
+                        </label>
+                        <label class="flex items-center text-white/90">
+                            <input type="checkbox" id="extractImages" class="mr-3">
+                            <span>Trích xuất thông tin hình ảnh</span>
+                        </label>
+                        <label class="flex items-center text-white/90">
+                            <input type="checkbox" id="extractLinks" class="mr-3">
+                            <span>Trích xuất liên kết</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Xuất dữ liệu</h3>
+                    <div class="space-y-3">
+                        <button onclick="exportToJSON()" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg transition-all">
+                            <i class="fas fa-download mr-2"></i>Xuất JSON
+                        </button>
+                        <button onclick="exportToMarkdown()" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-all">
+                            <i class="fas fa-file-markdown mr-2"></i>Xuất Markdown
+                        </button>
+                        <button onclick="createHugoContent()" class="w-full bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded-lg transition-all">
+                            <i class="fas fa-plus mr-2"></i>Tạo Hugo Content
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentData = null;
+
+        // Form submission
+        document.getElementById('wordpressConfigForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await fetchWordPressData();
+        });
+
+        // Test connection
+        async function testConnection() {
+            const wordpressUrl = document.getElementById('wordpressUrl').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const apiType = document.getElementById('apiType').value;
+            
+            if (!wordpressUrl) {
+                showError('Vui lòng nhập WordPress URL trước');
+                return;
+            }
+
+            showLoading();
+            
+            try {
+                let response;
+                
+                if (apiType === 'graphql') {
+                    // Test GraphQL
+                    const graphqlQuery = `
+                        query TestConnection {
+                            posts(first: 1) {
+                                nodes {
+                                    id
+                                    title
+                                }
+                            }
+                        }
+                    `;
+                    
+                    response = await fetch('/.netlify/functions/wordpress-graphql', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            wordpressUrl: wordpressUrl,
+                            query: graphqlQuery,
+                            username: username,
+                            password: password
+                        })
+                    });
+                } else {
+                    // Test REST API
+                    response = await fetch('/.netlify/functions/wordpress-api', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            wordpressUrl: wordpressUrl,
+                            endpoint: 'posts',
+                            params: { per_page: 1 },
+                            username: username,
+                            password: password
+                        })
+                    });
+                }
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    const source = result.source || 'unknown';
+                    showSuccess(`Kết nối WordPress thành công! (${source.toUpperCase()})`);
+                    
+                    if (result.message) {
+                        showInfo(result.message);
+                    }
+                } else {
+                    showError(result.error || 'Không thể kết nối WordPress');
+                }
+            } catch (error) {
+                showError('Lỗi kết nối: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Fetch WordPress data
+        async function fetchWordPressData() {
+            const wordpressUrl = document.getElementById('wordpressUrl').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const apiType = document.getElementById('apiType').value;
+            const endpoint = document.getElementById('endpoint').value;
+            const perPage = document.getElementById('perPage').value;
+            const searchQuery = document.getElementById('searchQuery').value;
+            const categories = document.getElementById('categories').value;
+
+            showLoading();
+
+            try {
+                let response;
+                let result;
+
+                if (apiType === 'graphql') {
+                    // Build GraphQL query
+                    const graphqlQuery = buildGraphQLQuery(endpoint, perPage, searchQuery, categories);
+                    
+                    response = await fetch('/.netlify/functions/wordpress-graphql', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            wordpressUrl: wordpressUrl,
+                            query: graphqlQuery,
+                            username: username,
+                            password: password
+                        })
+                    });
+
+                    result = await response.json();
+                    
+                    if (result.success) {
+                        // Transform GraphQL data to match expected format
+                        currentData = transformGraphQLData(result.data, endpoint);
+                        displayResults(currentData);
+                        const source = result.source || 'graphql';
+                        showSuccess(`Đã lấy được ${currentData.length} mục từ WordPress (${source.toUpperCase()})`);
+                        
+                        if (result.message) {
+                            showInfo(result.message);
+                        }
+                    } else {
+                        showError(result.error || 'Không thể lấy dữ liệu từ WordPress');
+                    }
+                } else {
+                    // REST API
+                    const config = {
+                        wordpressUrl: wordpressUrl,
+                        endpoint: endpoint,
+                        params: {},
+                        username: username,
+                        password: password
+                    };
+
+                    if (perPage) config.params.per_page = perPage;
+                    if (searchQuery) config.params.search = searchQuery;
+                    if (categories) config.params.categories = categories;
+
+                    response = await fetch('/.netlify/functions/wordpress-api', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(config)
+                    });
+
+                    result = await response.json();
+                    
+                    if (result.success) {
+                        currentData = result.data;
+                        displayResults(result.data);
+                        showSuccess(`Đã lấy được ${result.data.length} mục từ WordPress (REST API)`);
+                    } else {
+                        showError(result.error || 'Không thể lấy dữ liệu từ WordPress');
+                    }
+                }
+            } catch (error) {
+                showError('Lỗi: ' + error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Display results
+        function displayResults(data) {
+            const container = document.getElementById('resultsContainer');
+            
+            if (data.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-white/60">
+                        <i class="fas fa-inbox text-3xl mb-4"></i>
+                        <p>Không tìm thấy dữ liệu nào</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = data.map(item => `
+                <div class="bg-white/10 rounded-lg p-4 border border-white/20">
+                    <div class="flex items-start justify-between mb-3">
+                        <h3 class="text-white font-semibold text-lg">${item.title}</h3>
+                        <span class="bg-blue-500/20 text-blue-200 px-2 py-1 rounded text-sm">
+                            ${item.type}
+                        </span>
+                    </div>
+                    
+                    <div class="text-white/80 text-sm mb-3">
+                        <p class="line-clamp-2">${item.excerpt}</p>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-xs text-white/60">
+                        <div class="flex items-center space-x-4">
+                            <span><i class="fas fa-calendar mr-1"></i>${new Date(item.date).toLocaleDateString('vi-VN')}</span>
+                            <span><i class="fas fa-user mr-1"></i>Author ${item.author}</span>
+                            <span><i class="fas fa-file-alt mr-1"></i>${item.wordCount} từ</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            ${item.hasImages ? '<span class="bg-green-500/20 text-green-200 px-1 rounded">📷</span>' : ''}
+                            ${item.hasLinks ? '<span class="bg-blue-500/20 text-blue-200 px-1 rounded">🔗</span>' : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <button onclick="viewWikiContent(${item.id})" class="bg-blue-500/20 hover:bg-blue-500/30 text-blue-200 px-3 py-1 rounded text-sm transition-all">
+                            <i class="fas fa-eye mr-1"></i>Xem Wiki Content
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // View wiki content
+        function viewWikiContent(itemId) {
+            const item = currentData.find(d => d.id === itemId);
+            if (!item) return;
+
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4';
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg max-w-4xl w-full max-h-[80vh] overflow-hidden">
+                    <div class="bg-gray-800 text-white p-4 flex items-center justify-between">
+                        <h2 class="text-xl font-bold">Wiki Content: ${item.title}</h2>
+                        <button onclick="this.closest('.fixed').remove()" class="text-white/60 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="p-6 overflow-y-auto max-h-[60vh]">
+                        <div class="space-y-4">
+                            <div>
+                                <h3 class="font-semibold text-gray-800 mb-2">Nội dung chính:</h3>
+                                <div class="bg-gray-50 p-4 rounded-lg text-sm">
+                                    ${item.wikiContent.substring(0, 500)}${item.wikiContent.length > 500 ? '...' : ''}
+                                </div>
+                            </div>
+                            
+                            ${item.wikiSections.length > 0 ? `
+                            <div>
+                                <h3 class="font-semibold text-gray-800 mb-2">Sections trích xuất:</h3>
+                                <div class="space-y-2">
+                                    ${item.wikiSections.map(section => `
+                                        <div class="bg-blue-50 p-3 rounded-lg text-sm">
+                                            <span class="font-medium">${section.type}:</span> ${section.text}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            ` : ''}
+                            
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <span class="font-medium">Số từ:</span> ${item.wordCount}
+                                </div>
+                                <div>
+                                    <span class="font-medium">Cập nhật:</span> ${new Date(item.lastUpdated).toLocaleString('vi-VN')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Export functions
+        function exportToJSON() {
+            if (!currentData) {
+                showError('Không có dữ liệu để xuất');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(currentData, null, 2);
+            downloadFile(dataStr, 'wordpress-wiki-content.json', 'application/json');
+        }
+
+        function exportToMarkdown() {
+            if (!currentData) {
+                showError('Không có dữ liệu để xuất');
+                return;
+            }
+            
+            const markdown = currentData.map(item => `
+# ${item.title}
+
+**Ngày tạo:** ${new Date(item.date).toLocaleDateString('vi-VN')}  
+**Tác giả:** ${item.author}  
+**Số từ:** ${item.wordCount}  
+**Slug:** ${item.slug}
+
+## Nội dung Wiki
+
+${item.wikiContent}
+
+${item.wikiSections.length > 0 ? `
+## Sections Trích Xuất
+
+${item.wikiSections.map(section => `- **${section.type}:** ${section.text}`).join('\n')}
+` : ''}
+
+---
+            `).join('\n\n');
+            
+            downloadFile(markdown, 'wordpress-wiki-content.md', 'text/markdown');
+        }
+
+        function createHugoContent() {
+            if (!currentData) {
+                showError('Không có dữ liệu để tạo Hugo content');
+                return;
+            }
+            
+            const hugoContent = currentData.map(item => {
+                const frontMatter = `---
+title: "${item.title}"
+description: "${item.excerpt.replace(/"/g, '\\"')}"
+date: ${item.date}
+draft: false
+tags: [${item.tags.join(', ')}]
+categories: [${item.categories.join(', ')}]
+author: ${item.author}
+slug: ${item.slug}
+source: "wordpress"
+source_url: "${document.getElementById('wordpressUrl').value}/wp-json/wp/v2/posts/${item.id}"
+---
+
+# ${item.title}
+
+${item.wikiContent}
+
+${item.wikiSections.length > 0 ? `
+## Các Section Trích Xuất
+
+${item.wikiSections.map(section => `### ${section.type}
+
+${section.text}`).join('\n\n')}
+` : ''}
+
+---
+*Nội dung được trích xuất từ WordPress*
+`;
+                return {
+                    filename: `${item.slug}.md`,
+                    content: frontMatter
+                };
+            });
+            
+            // Create zip file with all content
+            createZipFile(hugoContent);
+        }
+
+        // Utility functions
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function createZipFile(files) {
+            // Simple implementation - in real app, use a proper zip library
+            const zipContent = files.map(file => `=== ${file.filename} ===\n\n${file.content}\n\n`).join('\n');
+            downloadFile(zipContent, 'hugo-content.txt', 'text/plain');
+        }
+
+        function showLoading() {
+            document.getElementById('loadingIndicator').classList.remove('hidden');
+            document.getElementById('resultsContainer').classList.add('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingIndicator').classList.add('hidden');
+            document.getElementById('resultsContainer').classList.remove('hidden');
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            errorText.textContent = message;
+            errorDiv.classList.remove('hidden');
+            setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+        }
+
+        function showSuccess(message) {
+            // Create success notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            notification.innerHTML = `<i class="fas fa-check mr-2"></i>${message}`;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function showInfo(message) {
+            // Create info notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-16 right-4 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            notification.innerHTML = `<i class="fas fa-info-circle mr-2"></i>${message}`;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 5000);
+        }
+
+        // Build GraphQL query based on endpoint and parameters
+        function buildGraphQLQuery(endpoint, perPage, searchQuery, categories) {
+            const limit = perPage || 10;
+            let query = '';
+            
+            switch (endpoint) {
+                case 'posts':
+                    query = `
+                        query GetPosts {
+                            posts(first: ${limit}${searchQuery ? `, where: { search: "${searchQuery}" }` : ''}) {
+                                nodes {
+                                    id
+                                    title
+                                    content
+                                    excerpt
+                                    date
+                                    slug
+                                    author {
+                                        node {
+                                            name
+                                        }
+                                    }
+                                    categories {
+                                        nodes {
+                                            name
+                                            slug
+                                        }
+                                    }
+                                    tags {
+                                        nodes {
+                                            name
+                                            slug
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    `;
+                    break;
+                    
+                case 'pages':
+                    query = `
+                        query GetPages {
+                            pages(first: ${limit}${searchQuery ? `, where: { search: "${searchQuery}" }` : ''}) {
+                                nodes {
+                                    id
+                                    title
+                                    content
+                                    excerpt
+                                    date
+                                    slug
+                                    author {
+                                        node {
+                                            name
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    `;
+                    break;
+                    
+                case 'categories':
+                    query = `
+                        query GetCategories {
+                            categories(first: ${limit}) {
+                                nodes {
+                                    id
+                                    name
+                                    slug
+                                    description
+                                    count
+                                }
+                            }
+                        }
+                    `;
+                    break;
+                    
+                case 'tags':
+                    query = `
+                        query GetTags {
+                            tags(first: ${limit}) {
+                                nodes {
+                                    id
+                                    name
+                                    slug
+                                    description
+                                    count
+                                }
+                            }
+                        }
+                    `;
+                    break;
+                    
+                default:
+                    query = `
+                        query GetPosts {
+                            posts(first: ${limit}) {
+                                nodes {
+                                    id
+                                    title
+                                    content
+                                    excerpt
+                                    date
+                                    slug
+                                }
+                            }
+                        }
+                    `;
+            }
+            
+            return query;
+        }
+
+        // Transform GraphQL data to match expected format
+        function transformGraphQLData(data, endpoint) {
+            if (!data) return [];
+            
+            let nodes = [];
+            
+            switch (endpoint) {
+                case 'posts':
+                    nodes = data.posts?.nodes || [];
+                    break;
+                case 'pages':
+                    nodes = data.pages?.nodes || [];
+                    break;
+                case 'categories':
+                    nodes = data.categories?.nodes || [];
+                    break;
+                case 'tags':
+                    nodes = data.tags?.nodes || [];
+                    break;
+                default:
+                    nodes = data.posts?.nodes || [];
+            }
+            
+            return nodes.map(item => ({
+                id: parseInt(item.id),
+                title: item.title || item.name || 'Untitled',
+                content: item.content || '',
+                excerpt: item.excerpt || item.description || '',
+                date: item.date || new Date().toISOString(),
+                slug: item.slug || '',
+                author: item.author?.node?.name || 'Unknown',
+                categories: item.categories?.nodes?.map(c => c.name) || [],
+                tags: item.tags?.nodes?.map(t => t.name) || [],
+                type: endpoint,
+                wordCount: item.content ? item.content.replace(/<[^>]*>/g, '').split(' ').length : 0,
+                hasImages: item.content ? item.content.includes('<img') : false,
+                hasLinks: item.content ? item.content.includes('<a href') : false,
+                wikiContent: extractWikiContent(item.content || ''),
+                wikiSections: extractWikiSections(item.content || ''),
+                lastUpdated: item.date || new Date().toISOString()
+            }));
+        }
+
+        // Extract wiki content from HTML
+        function extractWikiContent(content) {
+            if (!content) return '';
+            
+            // Remove HTML tags and clean up
+            let text = content.replace(/<[^>]*>/g, '');
+            text = text.replace(/\s+/g, ' ').trim();
+            
+            return text;
+        }
+
+        // Extract wiki sections (headings, lists, etc.)
+        function extractWikiSections(content) {
+            if (!content) return [];
+            
+            const sections = [];
+            
+            // Extract headings
+            const headingMatches = content.match(/<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi);
+            if (headingMatches) {
+                headingMatches.forEach(heading => {
+                    const text = heading.replace(/<[^>]*>/g, '').trim();
+                    if (text) {
+                        sections.push({ type: 'Heading', text });
+                    }
+                });
+            }
+            
+            // Extract lists
+            const listMatches = content.match(/<[uo]l[^>]*>(.*?)<\/[uo]l>/gi);
+            if (listMatches) {
+                listMatches.forEach(list => {
+                    const text = list.replace(/<[^>]*>/g, '').trim();
+                    if (text) {
+                        sections.push({ type: 'List', text });
+                    }
+                });
+            }
+            
+            return sections;
+        }
+    </script>
+</body>
+</html>

@@ -21,7 +21,11 @@
     "check": "hugo --gc --minify --quiet && echo 'Build successful'",
     "serve": "hugo server -D --bind 0.0.0.0 --baseURL http://localhost:1313",
     "update-toc": "node scripts/update-bai-hoc-toc.js",
-    "test-toc": "node scripts/test-toc-update.js"
+    "test-toc": "node scripts/test-toc-update.js",
+    "wordpress:import": "node scripts/wordpress-to-hugo.js",
+    "wordpress:test": "node scripts/wordpress-to-hugo.js --dry-run",
+    "wordpress:test-graphql": "node test-graphql-wordpress.js",
+    "wordpress:test-auth": "node test-wordpress-auth.js"
   },
   "keywords": [
     "phát triển nội tâm",

@@ -126,5 +126,5 @@ Khi .... Vũ trụ quan thì thấu suốt **Nhân sinh quan** và triệt ngộ
 </table>
 
 
-- [1.Trọng Điểm Tri Thức](../../KHAI-NIEM-NGUON/tvhl-nhan-thuc-ve-nhan-qua/trong-tam-tri-thuc)
+- [1.Trọng Điểm Tri Thức](../../KHAI-NIEM-NGUON/tvhl-nhan-thuc-ve-nhan-qua/trong-tam-tri-thuc) <br>
 - [2.Trọng Điểm Nhận Thức](../../KHAI-NIEM-NGUON/tvhl-nhan-thuc-ve-nhan-qua/trong-diem-nhan-thuc)

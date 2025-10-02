@@ -692,47 +692,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tu-khainiem/test-nha/</loc>
-    <lastmod>2025-10-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tu-khainiem/test-nha-d/</loc>
-    <lastmod>2025-10-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tu-khainiem/test-tu-vung-1/</loc>
-    <lastmod>2025-10-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tu-khainiem/test-tv/</loc>
-    <lastmod>2025-10-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tu-khainiem/test-tv-1/</loc>
-    <lastmod>2025-10-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/tu-khainiem/bai-test-31/</loc>
     <lastmod>2025-09-30T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tu-khainiem/test-bai-hoc/</loc>
-    <lastmod>2025-09-30T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/tu-khainiem/bai-hoc-test/</loc>
-    <lastmod>2025-09-29T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tu-khainiem/test/</loc>
     <lastmod>2025-09-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -1487,11 +1452,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/tu-khainiem/test-tu-vung-moi/</loc>
-    <lastmod>2025-01-10T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
     <loc>http://localhost:1313/khai-niem-nguon/m%C3%B4i-tr%C6%B0%E1%BB%9Dng/y%C3%AAu-th%C6%B0%C6%A1ng/</loc>
     <lastmod>2024-01-01T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -1529,11 +1489,6 @@
   </url><url>
     <loc>http://localhost:1313/bai-hoc/bai-hoc-a/</loc>
     <lastmod>2025-10-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tu-khainiem/test-markdown/</loc>
-    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -1583,11 +1538,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/tags/bai-hoc/</loc>
-    <lastmod>2025-09-29T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/tags/special-chars/</loc>
     <lastmod>2025-09-29T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -1869,11 +1819,6 @@
   </url><url>
     <loc>http://localhost:1313/tags/xvi.-nguy%C3%AAn-l%C3%BD-%C3%A1nh-s%C3%A1ng/</loc>
     <lastmod>2025-09-21T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/categories/test/</loc>
-    <lastmod>2025-01-30T00:00:00+00:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>

@@ -16,7 +16,7 @@ weight: 1
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <!-- <tr>
       <td class="kv-label">
       <a class="title" href="https://wit.convoi.com.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" target="_blank" rel="noopener noreferrer">
           3 Câu hỏi quan trọng trong đời người
@@ -24,7 +24,23 @@ weight: 1
       <td class="kv-content">
         <p class="meta" style="color:#666; margin-top:6px;">Ai là người quan trọng nhất?...</p>
       </td>
-    </tr>
+    </tr> -->
+    <tr>
+  <td class="kv-label">
+    <a class="title" href="https://wit.convoi.com.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" target="_blank" rel="noopener noreferrer">
+      3 Câu hỏi quan trọng trong đời người
+    </a>
+  </td>
+  <td class="kv-content">
+    <iframe 
+      src="https://wit.convoi.com.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" 
+      width="100%" 
+      height="600" 
+      frameborder="0"
+      style="border:1px solid #ddd; border-radius:6px;">
+    </iframe>
+  </td>
+</tr>
     <tr>
       <td class="kv-label">
       <a class="title" href="https://wit.convoi.com.vn/index.php/content/4-dong-luc-sinh-ton/" target="_blank" rel="noopener noreferrer">
