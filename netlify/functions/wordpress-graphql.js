@@ -65,11 +65,36 @@ exports.handler = async (event, context) => {
       })
     });
 
-    // If GraphQL fails, try REST API as fallback
+    // If GraphQL fails, try custom REST API first, then standard REST API
     if (!response.ok && response.status === 404) {
-      console.log('GraphQL not available, trying REST API...');
+      console.log('GraphQL not available, trying custom REST API...');
       
-      // Convert GraphQL query to REST API call
+      // Try custom REST API first
+      try {
+        const customResponse = await fetch(`${wordpressUrl}/wp-json/custom/v1/contents`, {
+          headers: requestHeaders
+        });
+        
+        if (customResponse.ok) {
+          const customData = await customResponse.json();
+          const transformedData = transformCustomAPIData(customData);
+          
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              data: transformedData,
+              source: 'custom-api',
+              message: 'Using custom WordPress REST API'
+            })
+          };
+        }
+      } catch (error) {
+        console.log('Custom API failed, trying standard REST API...');
+      }
+      
+      // Convert GraphQL query to standard REST API call
       const restData = await convertGraphQLToREST(wordpressUrl, query, requestHeaders);
       
       return {
@@ -79,7 +104,7 @@ exports.handler = async (event, context) => {
           success: true,
           data: restData,
           source: 'rest-api',
-          message: 'GraphQL not available, using REST API'
+          message: 'GraphQL not available, using standard REST API'
         })
       };
     }
@@ -255,4 +280,39 @@ async function convertGraphQLToREST(wordpressUrl, query, headers) {
   } catch (error) {
     throw new Error(`REST API conversion failed: ${error.message}`);
   }
+}
+
+// Transform custom API data to match GraphQL structure
+function transformCustomAPIData(customData) {
+  if (!customData || !customData.contents || !customData.contents.nodes) {
+    return {
+      posts: { nodes: [] }
+    };
+  }
+  
+  const transformedNodes = customData.contents.nodes.map(post => ({
+    id: post.id.toString(),
+    title: post.title || 'Untitled',
+    content: post.content || '',
+    excerpt: post.content ? post.content.replace(/<[^>]*>/g, '').substring(0, 200) + '...' : '',
+    date: new Date().toISOString(), // Custom API doesn't provide date
+    slug: post.link ? post.link.split('/').pop() : `post-${post.id}`,
+    author: {
+      node: {
+        name: 'Unknown' // Custom API doesn't provide author
+      }
+    },
+    categories: {
+      nodes: [] // Custom API doesn't provide categories
+    },
+    tags: {
+      nodes: [] // Custom API doesn't provide tags
+    }
+  }));
+  
+  return {
+    posts: {
+      nodes: transformedNodes
+    }
+  };
 }
