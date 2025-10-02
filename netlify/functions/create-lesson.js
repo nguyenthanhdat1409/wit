@@ -209,6 +209,28 @@ exports.handler = async (event, context) => {
     // Create lesson file
     const result = await createLessonFile(slug, lessonData);
     
+    // Auto commit and push to Git (giống như tạo từ vựng)
+    const { exec } = require('child_process');
+    const util = require('util');
+    const execPromise = util.promisify(exec);
+    
+    try {
+      // Add lesson file to git
+      const lessonPath = path.join(process.cwd(), 'content', 'BAI-HOC', slug, 'index.md');
+      await execPromise(`git add "${lessonPath}"`);
+      
+      // Commit with descriptive message
+      const commitMessage = `feat: add lesson "${lessonData.title}"`;
+      await execPromise(`git commit -m "${commitMessage}"`);
+      
+      // Push to repository
+      await execPromise('git push');
+      console.log('✅ Git: lesson committed and pushed');
+    } catch (gitError) {
+      console.warn('⚠️ Git operation failed for lesson:', gitError.message);
+      // Không fail toàn bộ request nếu chỉ lỗi Git
+    }
+    
     // Cập nhật mục lục BAI-HOC tự động
     try {
       await updateBaiHocTableOfContents();
@@ -224,7 +246,7 @@ exports.handler = async (event, context) => {
         success: true,
         slug: slug,
         url: `/bai-hoc/${slug}/`,
-        message: 'Bài học đã được tạo thành công!'
+        message: 'Bài học đã được tạo thành công và tự động deploy!'
       })
     };
   } catch (error) {

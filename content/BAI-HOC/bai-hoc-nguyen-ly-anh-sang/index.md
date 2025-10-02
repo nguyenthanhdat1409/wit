@@ -14,11 +14,6 @@ lesson:
     tuKhaiNiem: "nguyen-ly-anh-sang"
 ---
 
-<!-- # Bài học nguyên lý ánh sáng -->
-
-<!-- **Mã hình:** WNT36003  
-**Khóa học:** THẤU HIỂU NỘI TÂM - KIẾN TẠO AN VUI -->
-
 <div style="display: flex; gap: 16px;">
 
   <div style="flex: 1; max-width: 50%;">
