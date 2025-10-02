@@ -282,7 +282,7 @@
                     // Test GraphQL
                     const graphqlQuery = `
                         query TestConnection {
-                            posts(first: 1) {
+                            contents {
                                 nodes {
                                     id
                                     title
@@ -307,7 +307,7 @@
                     // Test Custom REST API
                     const graphqlQuery = `
                         query TestConnection {
-                            posts(first: 1) {
+                            contents {
                                 nodes {
                                     id
                                     title
@@ -698,33 +698,15 @@ ${section.text}`).join('\n\n')}
             
             switch (endpoint) {
                 case 'posts':
+                    // Use contents endpoint for WordPress GraphQL
                     query = `
-                        query GetPosts {
-                            posts(first: ${limit}${searchQuery ? `, where: { search: "${searchQuery}" }` : ''}) {
+                        query GetContents {
+                            contents {
                                 nodes {
                                     id
                                     title
                                     content
-                                    excerpt
-                                    date
-                                    slug
-                                    author {
-                                        node {
-                                            name
-                                        }
-                                    }
-                                    categories {
-                                        nodes {
-                                            name
-                                            slug
-                                        }
-                                    }
-                                    tags {
-                                        nodes {
-                                            name
-                                            slug
-                                        }
-                                    }
+                                    link
                                 }
                             }
                         }
@@ -813,7 +795,8 @@ ${section.text}`).join('\n\n')}
             
             switch (endpoint) {
                 case 'posts':
-                    nodes = data.posts?.nodes || [];
+                    // Handle both posts and contents endpoints
+                    nodes = data.posts?.nodes || data.contents?.nodes || [];
                     break;
                 case 'pages':
                     nodes = data.pages?.nodes || [];
@@ -825,27 +808,49 @@ ${section.text}`).join('\n\n')}
                     nodes = data.tags?.nodes || [];
                     break;
                 default:
-                    nodes = data.posts?.nodes || [];
+                    nodes = data.posts?.nodes || data.contents?.nodes || [];
             }
             
-            return nodes.map(item => ({
-                id: parseInt(item.id),
-                title: item.title || item.name || 'Untitled',
-                content: item.content || '',
-                excerpt: item.excerpt || item.description || '',
-                date: item.date || new Date().toISOString(),
-                slug: item.slug || '',
-                author: item.author?.node?.name || 'Unknown',
-                categories: item.categories?.nodes?.map(c => c.name) || [],
-                tags: item.tags?.nodes?.map(t => t.name) || [],
-                type: endpoint,
-                wordCount: item.content ? item.content.replace(/<[^>]*>/g, '').split(' ').length : 0,
-                hasImages: item.content ? item.content.includes('<img') : false,
-                hasLinks: item.content ? item.content.includes('<a href') : false,
-                wikiContent: extractWikiContent(item.content || ''),
-                wikiSections: extractWikiSections(item.content || ''),
-                lastUpdated: item.date || new Date().toISOString()
-            }));
+            return nodes.map(item => {
+                // Handle GraphQL ID format (e.g., "cG9zdDo1OTc1")
+                let itemId = item.id;
+                if (typeof itemId === 'string' && itemId.startsWith('cG9zdDo')) {
+                    // Extract numeric ID from GraphQL ID
+                    try {
+                        const decoded = atob(itemId);
+                        itemId = decoded.split(':')[1] || itemId;
+                    } catch (e) {
+                        // Keep original ID if decoding fails
+                    }
+                }
+                
+                // Extract slug from link if available
+                let slug = item.slug || '';
+                if (item.link && !slug) {
+                    const urlParts = item.link.split('/');
+                    slug = urlParts[urlParts.length - 2] || urlParts[urlParts.length - 1];
+                }
+                
+                return {
+                    id: parseInt(itemId) || itemId,
+                    title: item.title || item.name || 'Untitled',
+                    content: item.content || '',
+                    excerpt: item.excerpt || item.description || (item.content ? item.content.replace(/<[^>]*>/g, '').substring(0, 200) + '...' : ''),
+                    date: item.date || new Date().toISOString(),
+                    slug: slug,
+                    author: item.author?.node?.name || 'Unknown',
+                    categories: item.categories?.nodes?.map(c => c.name) || [],
+                    tags: item.tags?.nodes?.map(t => t.name) || [],
+                    type: endpoint,
+                    wordCount: item.content ? item.content.replace(/<[^>]*>/g, '').split(' ').length : 0,
+                    hasImages: item.content ? item.content.includes('<img') : false,
+                    hasLinks: item.content ? item.content.includes('<a href') : false,
+                    wikiContent: extractWikiContent(item.content || ''),
+                    wikiSections: extractWikiSections(item.content || ''),
+                    lastUpdated: item.date || new Date().toISOString(),
+                    link: item.link || ''
+                };
+            });
         }
 
         // Extract wiki content from HTML

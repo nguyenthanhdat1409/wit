@@ -26,7 +26,8 @@
     "wordpress:test": "node scripts/wordpress-to-hugo.js --dry-run",
     "wordpress:test-graphql": "node test-graphql-wordpress.js",
     "wordpress:test-auth": "node test-wordpress-auth.js",
-    "wordpress:test-custom": "node test-custom-wordpress-api.js"
+    "wordpress:test-custom": "node test-custom-wordpress-api.js",
+    "wordpress:test-real": "node test-real-graphql.js"
   },
   "keywords": [
     "phát triển nội tâm",
