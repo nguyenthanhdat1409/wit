@@ -282,7 +282,7 @@
                     // Test GraphQL
                     const graphqlQuery = `
                         query TestConnection {
-                            contents {
+                            posts(first: 1) {
                                 nodes {
                                     id
                                     title
@@ -307,7 +307,7 @@
                     // Test Custom REST API
                     const graphqlQuery = `
                         query TestConnection {
-                            contents {
+                            posts(first: 1) {
                                 nodes {
                                     id
                                     title
@@ -698,15 +698,36 @@ ${section.text}`).join('\n\n')}
             
             switch (endpoint) {
                 case 'posts':
-                    // Use contents endpoint for WordPress GraphQL
+                    // Use posts endpoint for WordPress GraphQL
                     query = `
-                        query GetContents {
-                            contents {
+                        query GetPosts {
+                            posts(first: ${limit}${searchQuery ? `, where: { search: "${searchQuery}" }` : ''}) {
                                 nodes {
                                     id
                                     title
                                     content
+                                    excerpt
+                                    date
+                                    slug
                                     link
+                                    status
+                                    author {
+                                        node {
+                                            name
+                                        }
+                                    }
+                                    categories {
+                                        nodes {
+                                            name
+                                            slug
+                                        }
+                                    }
+                                    tags {
+                                        nodes {
+                                            name
+                                            slug
+                                        }
+                                    }
                                 }
                             }
                         }

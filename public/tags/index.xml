@@ -254,6 +254,20 @@
       <description></description>
     </item>
     <item>
+      <title>Hello-World</title>
+      <link>http://localhost:1313/tags/hello-world/</link>
+      <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/hello-world/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wordpress-Import</title>
+      <link>http://localhost:1313/tags/wordpress-import/</link>
+      <pubDate>Mon, 15 Jan 2024 10:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/wordpress-import/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>12 Bước</title>
       <link>http://localhost:1313/tags/12-b%C6%B0%E1%BB%9Bc/</link>
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>

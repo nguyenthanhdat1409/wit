@@ -6,6 +6,8 @@ draft: false
 weight: 1
 ---
 
+<!-- 
+CODE CŨ - COMMENT LẠI
 <div>
 
 <table class="kv-table" aria-label="Bảng từ vựng - khái niệm">
@@ -16,15 +18,6 @@ weight: 1
     </tr>
   </thead>
   <tbody>
-    <!-- <tr>
-      <td class="kv-label">
-      <a class="title" href="https://wit.convoi.com.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" target="_blank" rel="noopener noreferrer">
-          3 Câu hỏi quan trọng trong đời người
-        </a></td>
-      <td class="kv-content">
-        <p class="meta" style="color:#666; margin-top:6px;">Ai là người quan trọng nhất?...</p>
-      </td>
-    </tr> -->
     <tr>
   <td class="kv-label">
     <a class="title" href="https://wit.convoi.com.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" target="_blank" rel="noopener noreferrer">
@@ -62,8 +55,308 @@ weight: 1
   </tbody>
 </table>
 </div>
+-->
+
+<!-- CODE MỚI - LOAD DỮ LIỆU TỪ WORDPRESS API -->
+<div id="wordpress-content">
+  <div class="loading" style="text-align: center; padding: 20px;">
+    <p>🔄 Đang tải dữ liệu từ WordPress...</p>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const wordpressUrl = 'https://wit.convoi.com.vn';
+  const apiUrl = `${wordpressUrl}/wp-json/custom/v1/contents`;
+  
+  console.log('🚀 Loading WordPress data from:', apiUrl);
+  
+  fetch(apiUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('✅ WordPress data loaded:', data);
+      displayWordPressContent(data);
+    })
+    .catch(error => {
+      console.error('❌ Error loading WordPress data:', error);
+      displayError(error);
+    });
+});
+
+function displayWordPressContent(data) {
+  const container = document.getElementById('wordpress-content');
+  
+  if (!data.data || !data.data.contents || !data.data.contents.nodes) {
+    container.innerHTML = '<p>❌ Không có dữ liệu từ WordPress</p>';
+    return;
+  }
+  
+  const posts = data.data.contents.nodes;
+  console.log(`📊 Found ${posts.length} posts from WordPress`);
+  
+  let html = `
+    <div class="wordpress-posts">
+      <h2>📚 Từ vựng - Khái niệm từ WordPress</h2>
+      <p class="meta-info">Đã tải ${posts.length} bài viết từ WordPress API</p>
+      
+      <table class="kv-table" aria-label="Bảng từ vựng - khái niệm từ WordPress">
+        <thead>
+          <tr>
+            <th class="kv-label">Từ vựng</th>
+            <th>Khái niệm</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+  
+  posts.forEach((post, index) => {
+    const title = post.title || 'Không có tiêu đề';
+    const content = post.content || 'Đang trong quá trình bổ sung nội dung...';
+    const link = post.link || '#';
+    const postId = post.id || index;
+    
+    // Làm sạch HTML content và lấy preview
+    let cleanContent = content.replace(/<[^>]*>/g, '').trim();
+    
+    // Loại bỏ chữ "Khái niệm" và "Khái Niệm" khỏi nội dung
+    cleanContent = cleanContent.replace(/^Khái niệm\s*:?\s*/i, '').replace(/^Khái Niệm\s*:?\s*/i, '');
+    
+    const preview = cleanContent.length > 200 ? cleanContent.substring(0, 200) + '...' : cleanContent;
+    
+    html += `
+      <tr>
+        <td class="kv-label">
+          <a class="title" href="${link}" target="_blank" rel="noopener noreferrer">
+            ${title}
+          </a>
+          <br>
+          <small style="color: #666;">ID: ${postId}</small>
+        </td>
+        <td class="kv-content">
+          <div class="content-preview">
+            ${preview || 'Đang trong quá trình bổ sung nội dung...'}
+          </div>
+          <div class="content-full" style="display: none;">
+            ${content.replace(/^Khái niệm\s*:?\s*/i, '').replace(/^Khái Niệm\s*:?\s*/i, '')}
+          </div>
+          <button onclick="toggleContent(${index})" class="toggle-btn" style="margin-top: 8px; padding: 4px 8px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Xem chi tiết
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+  
+  html += `
+        </tbody>
+      </table>
+    </div>
+  `;
+  
+  container.innerHTML = html;
+}
+
+function displayError(error) {
+  const container = document.getElementById('wordpress-content');
+  container.innerHTML = `
+    <div class="error">
+      <h3>❌ Lỗi tải dữ liệu</h3>
+      <p>Không thể tải dữ liệu từ WordPress API</p>
+      <p><strong>Lỗi:</strong> ${error.message}</p>
+      <p><strong>URL:</strong> https://wit.convoi.com.vn/wp-json/custom/v1/contents</p>
+      <button onclick="location.reload()" style="margin-top: 10px; padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        🔄 Thử lại
+      </button>
+    </div>
+  `;
+}
+
+function toggleContent(index) {
+  const preview = document.querySelectorAll('.content-preview')[index];
+  const full = document.querySelectorAll('.content-full')[index];
+  const button = document.querySelectorAll('.toggle-btn')[index];
+  
+  if (full.style.display === 'none') {
+    preview.style.display = 'none';
+    full.style.display = 'block';
+    button.textContent = 'Thu gọn';
+  } else {
+    preview.style.display = 'block';
+    full.style.display = 'none';
+    button.textContent = 'Xem chi tiết';
+  }
+}
+</script>
+
+<style>
+.wordpress-posts {
+  margin: 20px 0;
+}
+
+.meta-info {
+  color: #666;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.kv-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.kv-table th,
+.kv-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  vertical-align: top;
+}
+
+.kv-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.kv-label {
+  width: 30%;
+  min-width: 200px;
+}
+
+.kv-content {
+  width: 70%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .kv-table {
+    font-size: 14px;
+  }
+  
+  .kv-table th,
+  .kv-table td {
+    padding: 8px;
+  }
+  
+  .kv-label {
+    width: 100%;
+    min-width: auto;
+    display: block;
+  }
+  
+  .kv-content {
+    width: 100%;
+    display: block;
+  }
+  
+  .kv-table tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .kv-table th {
+    display: none;
+  }
+  
+  .kv-label::before {
+    content: "📚 Từ vựng: ";
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .kv-content::before {
+    content: "📖 Nội dung: ";
+    font-weight: bold;
+    color: #28a745;
+    display: block;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .kv-table {
+    font-size: 12px;
+  }
+  
+  .kv-table th,
+  .kv-table td {
+    padding: 6px;
+  }
+  
+  .wordpress-posts h2 {
+    font-size: 18px;
+  }
+  
+  .meta-info {
+    font-size: 12px;
+  }
+}
+
+.title {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.title:hover {
+  text-decoration: underline;
+}
+
+.content-preview {
+  color: #666;
+  line-height: 1.5;
+}
+
+.content-full {
+  color: #333;
+  line-height: 1.6;
+}
+
+.toggle-btn:hover {
+  background: #0056b3 !important;
+}
+
+/* Responsive button */
+@media (max-width: 768px) {
+  .toggle-btn {
+    width: 100%;
+    padding: 8px 12px !important;
+    font-size: 14px;
+    margin-top: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .toggle-btn {
+    font-size: 12px;
+    padding: 6px 10px !important;
+  }
+}
+
+.error {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #f5c6cb;
+}
+
+.loading {
+  color: #666;
+  font-style: italic;
+}
+</style>
 
 
+<!-- 
+CODE CŨ - COMMENT LẠI PHẦN CÒN LẠI
 <div id="table-container">
 
 | Từ vựng | Khái niệm |
@@ -331,3 +624,4 @@ document.addEventListener("DOMContentLoaded", function () {
   renderTable(currentPage);
 });
 </script>
+-->
