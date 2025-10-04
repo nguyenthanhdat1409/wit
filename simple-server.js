@@ -846,7 +846,8 @@ ${vocabData.content}`;
       }));
     }
   }
-  // Create diagram endpoint
+  // Create diagram endpoint - TEMPORARILY COMMENTED OUT
+  /*
   else if (parsedUrl.pathname === '/api/create-diagram' && req.method === 'POST') {
     try {
       let body = '';
@@ -995,6 +996,7 @@ ${imageTitle}`;
       }));
     }
   }
+  */
   // Create lesson new endpoint
   else if (parsedUrl.pathname === '/api/create-lesson-new' && req.method === 'POST') {
     try {

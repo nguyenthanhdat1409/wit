@@ -14,6 +14,8 @@ function generateSlug(title) {
     .trim('-'); // Remove leading/trailing hyphens
 }
 
+// TEMPORARILY COMMENTED OUT - Diagram creation function
+/*
 exports.handler = async (event, context) => {
   // Set CORS headers
   const headers = {
@@ -165,4 +167,5 @@ ${imageTitle}`;
     };
   }
 };
+*/
 
