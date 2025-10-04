@@ -149,12 +149,17 @@ function hideWordPressHeader(iframe) {
     // Tạo overlay che header
     const headerOverlay = document.createElement('div');
     headerOverlay.className = 'wordpress-header-overlay';
+    
+    // Kiểm tra nếu là mobile để tăng chiều cao overlay
+    const isMobile = window.innerWidth <= 480;
+    const overlayHeight = isMobile ? 'calc(80px + 29%)' : '80px';
+    
     headerOverlay.style.cssText = `
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 80px;
+        height: ${overlayHeight};
         background: white;
         z-index: 1000;
         pointer-events: none;

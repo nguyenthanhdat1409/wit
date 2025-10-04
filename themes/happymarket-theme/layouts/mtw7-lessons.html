@@ -341,6 +341,28 @@
         pointer-events: none;
     }
     
+    /* CSS để điều chỉnh nội dung trong iframe */
+    .mtw7-iframe {
+        /* Thêm CSS để điều chỉnh nội dung bên trong iframe */
+    }
+    
+    /* Responsive margin-top cho post header trong iframe */
+    @media (max-width: 480px) {
+        .mtw7-iframe {
+            /* Điều chỉnh iframe để tạo khoảng cách cho mobile */
+            transform: translateY(-80px);
+        }
+        
+        /* Tăng chiều cao overlay trên mobile để tạo khoảng cách */
+        .mtw7-iframe-body::before {
+            height: calc(80px + 29%);
+        }
+        
+        .wordpress-header-overlay {
+            height: calc(80px + 29%);
+        }
+    }
+    
     .mtw7-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
