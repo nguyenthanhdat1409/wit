@@ -320,7 +320,10 @@ function displayMTW7Content(data) {
     `;
     
     posts.forEach((post, index) => {
-        const title = post.title || 'Không có tiêu đề';
+        // Bỏ chữ "TVHL" khỏi title
+        let title = post.title || 'Không có tiêu đề';
+        title = title.replace(/TVHL\.?\s*/g, '').replace(/&#8211;/g, '–');
+        
         const link = post.link || '#';
         const content = post.content ? post.content.substring(0, 200) + '...' : 'Không có nội dung';
         
