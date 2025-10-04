@@ -241,21 +241,16 @@ body {
 }
 
 /* Dropdown menu styles */
-.group:hover .group-hover\:opacity-100 {
-    opacity: 1;
-}
-
-.group:hover .group-hover\:visible {
-    visibility: visible;
-}
-
-/* Enhanced dropdown animation */
-.dropdown-menu {
+.dropdown-content {
+    opacity: 0;
+    visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.2s ease-in-out;
 }
 
-.group:hover .dropdown-menu {
+.dropdown-content.show {
+    opacity: 1;
+    visibility: visible;
     transform: translateY(0);
 }
 

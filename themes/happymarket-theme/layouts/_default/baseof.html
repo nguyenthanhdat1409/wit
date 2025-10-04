@@ -73,14 +73,14 @@
                     {{ range .Site.Menus.main }}
                         {{ if eq .Name "Bài học" }}
                         <!-- Dropdown menu for Bài học -->
-                        <div class="relative group">
+                        <div class="relative group" onmouseenter="showDropdown(this)" onmouseleave="hideDropdown(this)">
                             <button class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors flex items-center">
                                 {{ .Name }}
                                 <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 dropdown-menu">
+                            <div class="dropdown-content absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible transition-all duration-200 z-50" style="transform: translateY(-10px);">
                                 <div class="py-1">
                                     <a href="/bai-hoc/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
                                         📚 Bài học TVHL
@@ -408,6 +408,25 @@
         // Function to show MTW7 popup (placeholder for now)
         function showMTW7Popup() {
             alert('Tính năng Bài học MTW7 sẽ được tích hợp với WordPress API trong thời gian tới!');
+        }
+
+        // Dropdown functions
+        function showDropdown(element) {
+            const dropdown = element.querySelector('.dropdown-content');
+            if (dropdown) {
+                dropdown.style.opacity = '1';
+                dropdown.style.visibility = 'visible';
+                dropdown.style.transform = 'translateY(0)';
+            }
+        }
+
+        function hideDropdown(element) {
+            const dropdown = element.querySelector('.dropdown-content');
+            if (dropdown) {
+                dropdown.style.opacity = '0';
+                dropdown.style.visibility = 'hidden';
+                dropdown.style.transform = 'translateY(-10px)';
+            }
         }
     </script>
     
