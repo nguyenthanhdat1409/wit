@@ -89,7 +89,7 @@
                                     <a href="/bai-hoc/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
                                         📚 Bài học TVHL
                                     </a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600" onclick="showMTW7Popup(); return false;">
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600" onclick="console.log('Click detected!'); showMTW7Popup(); return false;">
                                         🎯 Bài học MTW7
                                     </a>
                                 </div>
@@ -157,7 +157,7 @@
                             <a href="/bai-hoc/" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50">
                                 📚 Bài học TVHL
                             </a>
-                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50" onclick="showMTW7Popup(); return false;">
+                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50" onclick="console.log('Mobile click detected!'); showMTW7Popup(); return false;">
                                 🎯 Bài học MTW7
                             </a>
                         </div>
@@ -581,6 +581,8 @@
 
         
         function showMTW7Popup(event) {
+            console.log('🎯 showMTW7Popup called!');
+            
             
             if (event) {
                 event.preventDefault();
@@ -612,6 +614,7 @@
             `;
             
             document.body.appendChild(modal);
+            console.log('✅ Modal created and added to DOM');
             
             
             loadMTW7Data();
@@ -621,12 +624,16 @@
 
         
         function loadMTW7Data() {
+            console.log('🔄 Loading MTW7 data...');
             const apiUrl = 'https://wit.convoi.com.vn/wp-json/custom/v1/mtw7-contents';
             const contentDiv = document.querySelector('.mtw7-content');
             const loadingDiv = document.querySelector('.mtw7-loading');
             
+            console.log('📡 Fetching from:', apiUrl);
+            
             fetch(apiUrl)
                 .then(response => {
+                    console.log('📥 Response received:', response.status, response.statusText);
                     if (!response.ok) {
                         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                     }
