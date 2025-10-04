@@ -274,7 +274,7 @@ function hideWordPressHeader(iframe) {
             
             @media (max-width: 480px) {
                 .gt-post-header {
-                    margin-top: 10px !important;
+                    margin-top: 29% !important;
                 }
             }
         `;
