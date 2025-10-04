@@ -1,24 +1,8 @@
 {{ define "main" }}
 <div class="min-h-screen bg-gray-50">
-    <!-- Header Section -->
-    <div class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-gray-900 mb-4">
-                    🎯 Bài học MTW7
-                </h1>
-                <p class="text-xl text-gray-600 mb-6">
-                    Danh sách các bài học MTW7 từ WordPress
-                </p>
-            </div>
-        </div>
-    </div>
-
     <!-- Content Section -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="bg-white rounded-lg shadow-sm p-6">
-            {{ .Content }}
-        </div>
+        {{ .Content }}
     </div>
 </div>
 
