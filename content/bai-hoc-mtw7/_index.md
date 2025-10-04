@@ -131,12 +131,145 @@ function openMTW7Lesson(url, title) {
                 <button class="mtw7-iframe-close" onclick="closeMTW7Iframe()">&times;</button>
             </div>
             <div class="mtw7-iframe-body">
-                <iframe src="${url}" frameborder="0" class="mtw7-iframe"></iframe>
+                <iframe src="${url}" frameborder="0" class="mtw7-iframe" onload="hideWordPressHeader(this)"></iframe>
             </div>
         </div>
     `;
     
     document.body.appendChild(modal);
+}
+
+function hideWordPressHeader(iframe) {
+    console.log('🔍 Attempting to hide WordPress header...');
+    
+    // Tạo overlay để che header WordPress
+    const iframeContainer = iframe.parentNode;
+    iframeContainer.style.position = 'relative';
+    
+    // Tạo overlay che header
+    const headerOverlay = document.createElement('div');
+    headerOverlay.className = 'wordpress-header-overlay';
+    headerOverlay.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: white;
+        z-index: 1000;
+        pointer-events: none;
+        border-bottom: 1px solid #e5e7eb;
+    `;
+    
+    iframeContainer.appendChild(headerOverlay);
+    
+    // Điều chỉnh iframe để bỏ phần header
+    iframe.style.transform = 'translateY(-80px)';
+    iframe.style.height = 'calc(100% + 80px)';
+    
+    console.log('✅ WordPress header overlay created');
+    
+    // Thử inject CSS vào iframe (có thể bị CORS block)
+    try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        
+        const style = iframeDoc.createElement('style');
+        style.textContent = `
+            /* Ẩn header WordPress */
+            .gt-header,
+            .gt-mobile-header,
+            .gt-default,
+            .gt-header-main,
+            .gt-style-1,
+            .gt-light,
+            .gt-flex-container-full,
+            .gt-header-main-inner,
+            .gt-item-group,
+            .gt-item,
+            .gt-off-canvas-icon,
+            .gt-logo,
+            .gt-linked-item,
+            .gt-user-box,
+            .gt-search,
+            .gt-random-content,
+            header[class*="gt-"],
+            .site-header,
+            .wp-site-blocks > header,
+            .wp-block-template-part,
+            .wp-block-group:first-child,
+            .entry-header,
+            .page-header,
+            header[role="banner"],
+            .site-branding,
+            .main-navigation,
+            .site-navigation,
+            .menu-toggle,
+            .site-title,
+            .site-description,
+            .custom-logo-link,
+            .wp-block-navigation,
+            .wp-block-site-title,
+            .wp-block-site-tagline,
+            .wp-block-query-title,
+            .wp-block-post-title,
+            .wp-block-group__inner-container > header:first-child,
+            .wp-block-group:first-child header,
+            .wp-block-cover:first-child,
+            .wp-block-cover__inner-container > header:first-child {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                overflow: hidden !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            /* Ẩn mobile menu WordPress */
+            .mobile-menu,
+            .menu-toggle,
+            .hamburger,
+            .mobile-navigation,
+            .wp-block-navigation__responsive-container,
+            .wp-block-navigation__responsive-container-open {
+                display: none !important;
+            }
+            
+            /* Điều chỉnh body WordPress để bỏ margin/padding top */
+            body {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+            }
+            
+            /* Ẩn các element có thể là header WordPress */
+            .site-header,
+            .header,
+            .main-header,
+            .page-header,
+            .entry-header,
+            .post-header,
+            .article-header {
+                display: none !important;
+            }
+            
+            /* Ẩn navigation WordPress */
+            nav,
+            .navigation,
+            .main-navigation,
+            .site-navigation,
+            .primary-navigation,
+            .secondary-navigation {
+                display: none !important;
+            }
+        `;
+        
+        iframeDoc.head.appendChild(style);
+        iframeDoc.body.classList.add('mtw7-iframe-content');
+        
+        console.log('✅ CSS injected successfully into iframe');
+        
+    } catch (error) {
+        console.log('⚠️ CORS restriction - using overlay method only');
+    }
 }
 
 function closeMTW7Iframe() {
