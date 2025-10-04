@@ -422,10 +422,11 @@ function displayMTW7Error(error) {
 
 .mtw7-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-top: 1.5rem;
     width: 100%;
+    align-items: start;
 }
 
 .mtw7-card {
@@ -436,6 +437,11 @@ function displayMTW7Error(error) {
     transition: all 0.2s ease;
     width: 100%;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
 }
 
 .mtw7-card:hover {
@@ -457,6 +463,11 @@ function displayMTW7Error(error) {
     font-size: 0.875rem;
     line-height: 1.5;
     margin-bottom: 1rem;
+    flex-grow: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 }
 
 .mtw7-link {
