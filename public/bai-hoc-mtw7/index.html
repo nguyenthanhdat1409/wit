@@ -295,8 +295,23 @@ function displayMTW7Content(data) {
         return;
     }
     
-    const posts = data.data.contents.nodes;
+    let posts = data.data.contents.nodes;
     console.log(`📊 Found ${posts.length} MTW7 posts from WordPress`);
+    
+    // Sort posts by lesson number (Buổi XX)
+    posts = posts.sort((a, b) => {
+        const getLessonNumber = (title) => {
+            const match = title.match(/Buổi\s*(\d+)/i);
+            return match ? parseInt(match[1]) : 999; // Put items without number at end
+        };
+        
+        const numA = getLessonNumber(a.title || '');
+        const numB = getLessonNumber(b.title || '');
+        
+        return numA - numB; // Ascending order (01, 02, 03...)
+    });
+    
+    console.log('📚 Sorted lessons:', posts.map(p => p.title));
     
     let html = `
         <div class="mtw7-posts">
