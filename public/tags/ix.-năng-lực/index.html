@@ -89,7 +89,7 @@
                                     <a href="/bai-hoc/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
                                         📚 Bài học TVHL
                                     </a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600" onclick="showMTW7Popup()">
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600" onclick="showMTW7Popup(); return false;">
                                         🎯 Bài học MTW7
                                     </a>
                                 </div>
@@ -157,7 +157,7 @@
                             <a href="/bai-hoc/" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50">
                                 📚 Bài học TVHL
                             </a>
-                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50" onclick="showMTW7Popup()">
+                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50" onclick="showMTW7Popup(); return false;">
                                 🎯 Bài học MTW7
                             </a>
                         </div>
@@ -506,7 +506,18 @@
         });
 
         
-        function showMTW7Popup() {
+        function showMTW7Popup(event) {
+            
+            if (event) {
+                event.preventDefault();
+            }
+            
+            
+            const existingModal = document.getElementById('mtw7-modal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
             
             const modal = document.createElement('div');
             modal.id = 'mtw7-modal';
@@ -530,6 +541,8 @@
             
             
             loadMTW7Data();
+            
+            return false;
         }
 
         
