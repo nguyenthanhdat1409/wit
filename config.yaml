@@ -22,6 +22,22 @@ menu:
       name: Bài học
       url: /bai-hoc/
       weight: 15
+      hasChildren: true
+    - identifier: bai-hoc-tvhl
+      name: Bài học TVHL
+      url: /bai-hoc/
+      parent: bai-hoc
+      weight: 15
+    - identifier: bai-hoc-mtw7
+      name: Bài học MTW7
+      url: /bai-hoc-mtw7/
+      parent: bai-hoc
+      weight: 16
+    - identifier: bai-hoc-dao-tao-noi-tam
+      name: Bài học đào tạo nội tâm
+      url: /bai-hoc-dao-tao-noi-tam/
+      parent: bai-hoc
+      weight: 17
     - identifier: khoa-hoc
       name: Khóa học
       url: /khoa-hoc/
@@ -48,6 +64,8 @@ taxonomies:
 # Cấu hình sections chính
 mainSections:
   - "bai-hoc"
+  - "bai-hoc-mtw7"
+  - "bai-hoc-dao-tao-noi-tam"
   - "khoa-hoc"
   - "khai-niem-nguon"
   - "tu-khainiem"

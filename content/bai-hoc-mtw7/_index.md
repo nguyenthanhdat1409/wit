@@ -167,9 +167,9 @@ function hideWordPressHeader(iframe) {
     
     iframeContainer.appendChild(headerOverlay);
     
-    // Điều chỉnh iframe để bỏ phần header
-    iframe.style.transform = 'translateY(-80px)';
-    iframe.style.height = 'calc(100% + 80px)';
+    // Điều chỉnh iframe để bỏ phần header (thử với 0px nếu WordPress đã được làm sạch)
+    iframe.style.transform = 'translateY(0px)';
+    iframe.style.height = '100%';
     
     console.log('✅ WordPress header overlay created');
     
@@ -238,10 +238,35 @@ function hideWordPressHeader(iframe) {
                 display: none !important;
             }
             
-            /* Điều chỉnh body WordPress để bỏ margin/padding top và thêm margin-top cho header popup */
-            body {
-                margin-top: 60px !important;
-                padding-top: 0 !important;
+            /* Reset body và html trong iframe */
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow-x: hidden !important;
+            }
+            /* Ẩn admin bar nếu nó vẫn hiển thị */
+            #wpadminbar {
+                display: none !important;
+            }
+            /* Reset các container chính của nội dung WordPress */
+            .gt-main, .gt-page-wrapper, .gt-article {
+                margin-top: 0px !important;
+                padding-top: 0px !important;
+            }
+            /* Điều chỉnh tiêu đề bài học */
+            .gt-post-header {
+                margin-top: 0px !important;
+                padding-top: 20px !important;
+            }
+            .gt-post-header h1, h1.entry-title, .wp-block-post-title {
+                margin-top: 0px !important;
+                padding-top: 0px !important;
+                line-height: 1.2 !important;
+                font-size: 2.25rem !important;
+            }
+            /* Đảm bảo nội dung chính không bị che */
+            .gt-content-body {
+                margin-top: 20px !important;
             }
             
             /* Ẩn các element có thể là header WordPress */

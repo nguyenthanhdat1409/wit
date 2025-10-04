@@ -1,0 +1,451 @@
+{{ define "main" }}
+<div class="min-h-screen bg-gray-50">
+    <!-- Content Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {{ .Content }}
+    </div>
+</div>
+
+<style>
+.daotao-posts {
+    margin-top: 2rem;
+}
+
+.daotao-meta {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.daotao-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    width: 100%;
+    align-items: start;
+}
+
+.daotao-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 280px;
+    position: relative;
+    overflow: hidden;
+}
+
+.daotao-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: #10b981; /* Green color for đào tạo nội tâm */
+}
+
+.daotao-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #10b981 !important; /* Green color for đào tạo nội tâm */
+    margin: 0 0 1rem 0;
+    line-height: 1.4;
+}
+
+.daotao-excerpt {
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    max-height: 60px;
+}
+
+.daotao-link {
+    display: inline-flex;
+    align-items: center;
+    background: #10b981; /* Green color for đào tạo nội tâm */
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: auto;
+    align-self: flex-start;
+    flex-shrink: 0;
+}
+
+.daotao-link:hover {
+    background: #059669; /* Darker green on hover */
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.daotao-error {
+    text-align: center;
+    padding: 2rem;
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+}
+
+.daotao-error p {
+    margin-bottom: 0.5rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+}
+
+/* Đào tạo nội tâm Iframe Modal Styles */
+.daotao-iframe-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.daotao-iframe-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    max-width: 95vw;
+    max-height: 80vh;
+    width: 1000px;
+    height: 500px;
+    min-width: 800px;
+    min-height: 400px;
+    overflow: hidden;
+    animation: slideIn 0.3s ease;
+}
+
+.daotao-iframe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: linear-gradient(135deg, #10b981, #059669); /* Green gradient for đào tạo nội tâm */
+    color: white;
+}
+
+.daotao-iframe-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.daotao-iframe-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    padding: 0.25rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.daotao-iframe-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.daotao-iframe-body {
+    height: calc(100% - 60px);
+    padding: 0;
+    overflow: hidden;
+}
+
+    .daotao-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    
+    /* CSS cho WordPress structure */
+    .gt-post-header {
+        margin-top: 5% !important;
+    }
+    
+    .gt-flex-container {
+        width: 1440px !important;
+        max-width: 100% !important;
+        padding: 30px 60px !important;
+        margin: 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+    }
+    
+    /* Loại bỏ các đường line che chữ */
+    .gt-post-header::before,
+    .gt-post-header::after,
+    .gt-post-header h1::before,
+    .gt-post-header h1::after,
+    h1::before,
+    h1::after {
+        display: none !important;
+        content: none !important;
+    }
+    
+    /* Loại bỏ border và outline */
+    .gt-post-header,
+    .gt-post-header h1,
+    h1 {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+    }
+    
+    /* Đảm bảo tiêu đề không bị che */
+    .gt-post-header h1 {
+        position: relative !important;
+        z-index: 10 !important;
+        background: transparent !important;
+    }
+    
+    /* Reset body và html trong iframe */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+    }
+    /* Ẩn admin bar nếu nó vẫn hiển thị */
+    #wpadminbar {
+        display: none !important;
+    }
+    /* Reset các container chính của nội dung WordPress */
+    .gt-main, .gt-page-wrapper, .gt-article {
+        margin-top: 0px !important;
+        padding-top: 0px !important;
+    }
+    /* Điều chỉnh tiêu đề bài học */
+    .gt-post-header {
+        margin-top: 0px !important;
+        padding-top: 20px !important;
+    }
+    .gt-post-header h1, h1.entry-title, .wp-block-post-title {
+        margin-top: 0px !important;
+        padding-top: 0px !important;
+        line-height: 1.2 !important;
+        font-size: 2.25rem !important;
+    }
+    /* Đảm bảo nội dung chính không bị che */
+    .gt-content-body {
+        margin-top: 20px !important;
+    }
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .daotao-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .daotao-card {
+        padding: 1rem;
+        width: 100%;
+    }
+    
+    .daotao-iframe-content {
+        width: 98vw;
+        height: 95vh;
+        margin: 1vh;
+    }
+    
+    .daotao-iframe-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .daotao-iframe-header h3 {
+        font-size: 1rem;
+    }
+    
+    .daotao-iframe-body {
+        height: calc(95vh - 60px);
+    }
+}
+
+/* Tablet responsive */
+@media (max-width: 1024px) {
+    .daotao-iframe-content {
+        width: 90vw;
+        height: 70vh;
+        min-width: 600px;
+        min-height: 400px;
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .daotao-iframe-content {
+        width: 95vw;
+        height: 75vh;
+        min-width: 320px;
+        min-height: 350px;
+        margin: 0;
+        border-radius: 8px;
+    }
+    
+    .daotao-iframe-body {
+        height: calc(100% - 60px);
+    }
+    
+    .daotao-iframe-header h3 {
+        font-size: 1rem;
+    }
+}
+
+/* Mobile responsive for cards */
+@media (max-width: 768px) {
+    .daotao-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+    }
+    
+    .daotao-card {
+        height: 260px;
+        padding: 1rem;
+    }
+    
+    .daotao-title {
+        font-size: 1rem;
+    }
+    
+    .daotao-excerpt {
+        -webkit-line-clamp: 2;
+        max-height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .daotao-iframe-content {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+        min-width: 100vw;
+        min-height: 100vh;
+    }
+    
+    .daotao-iframe-body {
+        height: calc(100vh - 60px);
+        position: relative;
+    }
+    
+    /* Overlay để ẩn header WordPress trên mobile */
+    .daotao-iframe-body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px; /* Chiều cao header WordPress trên mobile */
+        background: white;
+        z-index: 1000;
+        pointer-events: none;
+    }
+    
+    /* Điều chỉnh iframe để bỏ phần header (thử với 0px nếu WordPress đã được làm sạch) */
+    .daotao-iframe {
+        transform: translateY(0px);
+        height: 100%;
+    }
+    
+    /* Overlay cho desktop cũng */
+    .wordpress-header-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: white;
+        z-index: 1000;
+        pointer-events: none;
+    }
+    
+    /* CSS để điều chỉnh nội dung trong iframe */
+    .daotao-iframe {
+        /* Thêm CSS để điều chỉnh nội dung bên trong iframe */
+    }
+    
+    /* Responsive margin-top cho post header trong iframe */
+    @media (max-width: 480px) {
+        .daotao-iframe {
+            /* Điều chỉnh iframe để tạo khoảng cách cho mobile (thử với 0px) */
+            transform: translateY(0px);
+        }
+        
+        /* Chỉ che header WordPress, không che nội dung bài học */
+        .daotao-iframe-body::before {
+            height: 0px;
+        }
+        
+        .wordpress-header-overlay {
+            height: 0px;
+        }
+    }
+    
+    .daotao-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .daotao-card {
+        height: 240px;
+        padding: 1rem;
+    }
+}
+</style>
+{{ end }}
