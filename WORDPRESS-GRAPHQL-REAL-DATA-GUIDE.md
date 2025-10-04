@@ -2,7 +2,7 @@
 
 ## Tình Trạng Hiện Tại
 
-✅ **GraphQL Endpoint hoạt động**: `https://wit.convoi.com.vn/graphql`  
+✅ **GraphQL Endpoint hoạt động**: `https://admin.wikiw.vn/graphql`  
 ✅ **Có dữ liệu thực tế**: 10 posts với nội dung phong phú  
 ❌ **Cần authentication**: API trả về empty array khi không có auth  
 
@@ -62,7 +62,7 @@ http://localhost:1313/admin/wordpress-integration.html
 
 ### 3. Cấu Hình Admin Panel
 
-- **WordPress URL**: `https://wit.convoi.com.vn`
+- **WordPress URL**: `https://admin.wikiw.vn`
 - **API Type**: Chọn "GraphQL (Recommended)"
 - **Endpoint**: Posts
 - **Username/Password**: (có thể cần để lấy dữ liệu)
@@ -80,7 +80,7 @@ Nếu GraphQL trả về empty array, có thể cần authentication:
 ### Phương Pháp 1: Application Password
 
 1. **Tạo Application Password**:
-   - Vào WordPress Admin: `https://wit.convoi.com.vn/wp-admin/`
+   - Vào WordPress Admin: `https://admin.wikiw.vn/wp-admin/`
    - Users > Profile > Application Passwords
    - Tạo password mới
 
@@ -92,7 +92,7 @@ Nếu GraphQL trả về empty array, có thể cần authentication:
 
 ```bash
 # Test với authentication
-curl -X POST "https://wit.convoi.com.vn/graphql" \
+curl -X POST "https://admin.wikiw.vn/graphql" \
   -H "Content-Type: application/json" \
   -H "Authorization: Basic $(echo -n 'username:password' | base64)" \
   -d '{"query":"{ contents { nodes { id title } } }"}'
@@ -111,7 +111,7 @@ GraphQL trả về data với format:
           "id": "cG9zdDo1OTc1",
           "title": "5 Sự so sánh",
           "content": "<div class=\"wp-block-columns\">...</div>",
-          "link": "https://wit.convoi.com.vn/content/5-su-so-sanh/"
+          "link": "https://admin.wikiw.vn/content/5-su-so-sanh/"
         }
       ]
     }

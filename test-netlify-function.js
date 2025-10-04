@@ -8,7 +8,7 @@ async function testNetlifyFunction() {
   console.log('🚀 Testing Netlify Function...\n');
   
   const functionUrl = 'http://localhost:8888/.netlify/functions/wordpress-graphql';
-  const wordpressUrl = 'https://wit.convoi.com.vn';
+  const wordpressUrl = 'https://admin.wikiw.vn';
   
   const requestData = {
     wordpressUrl: wordpressUrl,

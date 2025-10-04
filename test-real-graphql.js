@@ -123,7 +123,7 @@ async function testWithNetlifyFunction(wordpressUrl) {
 // Command line usage
 if (require.main === module) {
   const args = process.argv.slice(2);
-  const wordpressUrl = args[0] || 'https://wit.convoi.com.vn';
+  const wordpressUrl = args[0] || 'https://admin.wikiw.vn';
   
   (async () => {
     console.log('🚀 Testing Real WordPress GraphQL Integration\n');

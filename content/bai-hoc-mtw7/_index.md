@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function loadMTW7Data() {
     console.log('🔄 Loading MTW7 data...');
-    const apiUrl = 'https://wit.convoi.com.vn/wp-json/custom/v1/mtw7-contents';
+    const apiUrl = 'https://admin.wikiw.vn/wp-json/custom/v1/mtw7-contents';
     const contentDiv = document.getElementById('mtw7-content');
     
     console.log('📡 Fetching from:', apiUrl);
@@ -323,7 +323,7 @@ function displayMTW7Error(error) {
         <div class="mtw7-error">
             <p>❌ Lỗi khi tải dữ liệu MTW7</p>
             <p><strong>Chi tiết:</strong> ${error.message}</p>
-            <p><strong>URL:</strong> https://wit.convoi.com.vn/wp-json/custom/v1/mtw7-contents</p>
+            <p><strong>URL:</strong> https://admin.wikiw.vn/wp-json/custom/v1/mtw7-contents</p>
         </div>
     `;
 }

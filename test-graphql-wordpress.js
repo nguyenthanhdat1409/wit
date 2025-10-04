@@ -54,7 +54,7 @@ async function testGraphQLEndpoint(wordpressUrl) {
       if (response.status === 404) {
         console.log('❌ GraphQL endpoint not found (404)');
         console.log('📋 Cần cài đặt plugin GraphQL cho WordPress:');
-        console.log('   1. Vào WordPress Admin: https://wit.convoi.com.vn/wp-admin/');
+        console.log('   1. Vào WordPress Admin: https://admin.wikiw.vn/wp-admin/');
         console.log('   2. Plugins > Add New');
         console.log('   3. Tìm kiếm "WPGraphQL" hoặc "GraphQL"');
         console.log('   4. Cài đặt và kích hoạt plugin');
@@ -118,7 +118,7 @@ async function testRESTAPI(wordpressUrl) {
 // Command line usage
 if (require.main === module) {
   const args = process.argv.slice(2);
-  const wordpressUrl = args[0] || 'https://wit.convoi.com.vn';
+  const wordpressUrl = args[0] || 'https://admin.wikiw.vn';
   
   (async () => {
     console.log('🚀 Testing WordPress API Integration\n');

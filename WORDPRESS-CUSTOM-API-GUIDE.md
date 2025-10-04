@@ -2,7 +2,7 @@
 
 ## Tình Trạng Hiện Tại
 
-✅ **Custom API hoạt động**: `https://wit.convoi.com.vn/wp-json/custom/v1/contents`  
+✅ **Custom API hoạt động**: `https://admin.wikiw.vn/wp-json/custom/v1/contents`  
 ❌ **Chưa có posts**: API trả về `{"contents":{"nodes":[]}}`
 
 ## Custom API Code
@@ -56,7 +56,7 @@ function get_custom_contents(WP_REST_Request $request) {
 
 1. **Truy cập WordPress Admin**
    ```
-   https://wit.convoi.com.vn/wp-admin/
+   https://admin.wikiw.vn/wp-admin/
    ```
 
 2. **Tạo Posts**
@@ -121,7 +121,7 @@ function get_custom_contents(WP_REST_Request $request) {
 npm run wordpress:test-custom
 
 # Test trực tiếp
-curl "https://wit.convoi.com.vn/wp-json/custom/v1/contents"
+curl "https://admin.wikiw.vn/wp-json/custom/v1/contents"
 ```
 
 ### 2. Sử Dụng Admin Panel
@@ -134,7 +134,7 @@ http://localhost:1313/admin/wordpress-integration.html
 ```
 
 ### 3. Cấu Hình Admin Panel
-- **WordPress URL**: `https://wit.convoi.com.vn`
+- **WordPress URL**: `https://admin.wikiw.vn`
 - **API Type**: Chọn "Custom REST API"
 - **Endpoint**: Posts
 - **Username/Password**: (tùy chọn, nếu cần authentication)

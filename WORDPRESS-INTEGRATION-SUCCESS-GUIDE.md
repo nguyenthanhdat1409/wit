@@ -73,7 +73,7 @@ http://localhost:1313/admin/wordpress-integration.html
 
 ### 3. Cấu Hình Admin Panel
 
-1. **WordPress URL**: `https://wit.convoi.com.vn`
+1. **WordPress URL**: `https://admin.wikiw.vn`
 2. **API Type**: Chọn "GraphQL (Recommended)"
 3. **Endpoint**: Posts
 4. **Username/Password**: (không cần thiết vì đã lấy được dữ liệu)

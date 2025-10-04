@@ -2,14 +2,14 @@
 
 ## Tình Trạng Hiện Tại
 
-Hiện tại WordPress site `https://wit.convoi.com.vn` chưa có plugin GraphQL được cài đặt. Để sử dụng GraphQL API, bạn cần cài đặt plugin WPGraphQL.
+Hiện tại WordPress site `https://admin.wikiw.vn` chưa có plugin GraphQL được cài đặt. Để sử dụng GraphQL API, bạn cần cài đặt plugin WPGraphQL.
 
 ## Cách Cài Đặt Plugin GraphQL
 
 ### Phương Pháp 1: Cài Đặt Qua WordPress Admin (Khuyến Nghị)
 
 1. **Truy cập WordPress Admin**
-   - Vào: https://wit.convoi.com.vn/wp-admin/
+   - Vào: https://admin.wikiw.vn/wp-admin/
    - Đăng nhập với tài khoản admin
 
 2. **Cài Đặt Plugin**
@@ -20,7 +20,7 @@ Hiện tại WordPress site `https://wit.convoi.com.vn` chưa có plugin GraphQL
 
 3. **Kiểm Tra Cài Đặt**
    - Vào `GraphQL` > `GraphiQL IDE` trong admin menu
-   - Hoặc truy cập: https://wit.convoi.com.vn/wp-admin/admin.php?page=graphql-ide
+   - Hoặc truy cập: https://admin.wikiw.vn/wp-admin/admin.php?page=graphql-ide
 
 ### Phương Pháp 2: Cài Đặt Thủ Công
 
@@ -52,13 +52,13 @@ npm run dev
 npm run wordpress:test-graphql
 
 # Test với authentication
-npm run wordpress:test-auth https://wit.convoi.com.vn username password
+npm run wordpress:test-auth https://admin.wikiw.vn username password
 ```
 
 ### 3. Test Trực Tiếp
 ```bash
 # Test GraphQL endpoint
-curl -X POST "https://wit.convoi.com.vn/graphql" \
+curl -X POST "https://admin.wikiw.vn/graphql" \
   -H "Content-Type: application/json" \
   -d '{"query":"{ posts { nodes { id title } } }"}'
 ```
@@ -133,10 +133,10 @@ query GetCategories {
 
 Nếu GraphQL không khả dụng, hệ thống sẽ tự động fallback về REST API:
 
-- Posts: `https://wit.convoi.com.vn/wp-json/wp/v2/posts`
-- Pages: `https://wit.convoi.com.vn/wp-json/wp/v2/pages`
-- Categories: `https://wit.convoi.com.vn/wp-json/wp/v2/categories`
-- Tags: `https://wit.convoi.com.vn/wp-json/wp/v2/tags`
+- Posts: `https://admin.wikiw.vn/wp-json/wp/v2/posts`
+- Pages: `https://admin.wikiw.vn/wp-json/wp/v2/pages`
+- Categories: `https://admin.wikiw.vn/wp-json/wp/v2/categories`
+- Tags: `https://admin.wikiw.vn/wp-json/wp/v2/tags`
 
 ## Troubleshooting
 

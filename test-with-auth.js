@@ -145,7 +145,7 @@ async function testWithoutAuth(wordpressUrl) {
 // Command line usage
 if (require.main === module) {
   const args = process.argv.slice(2);
-  const wordpressUrl = args[0] || 'https://wit.convoi.com.vn';
+  const wordpressUrl = args[0] || 'https://admin.wikiw.vn';
   const username = args[1];
   const password = args[2];
   

@@ -20,13 +20,13 @@ CODE CŨ - COMMENT LẠI
   <tbody>
     <tr>
   <td class="kv-label">
-    <a class="title" href="https://wit.convoi.com.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" target="_blank" rel="noopener noreferrer">
+    <a class="title" href="https://admin.wikiw.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" target="_blank" rel="noopener noreferrer">
       3 Câu hỏi quan trọng trong đời người
     </a>
   </td>
   <td class="kv-content">
     <iframe 
-      src="https://wit.convoi.com.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" 
+      src="https://admin.wikiw.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" 
       width="100%" 
       height="600" 
       frameborder="0"
@@ -36,7 +36,7 @@ CODE CŨ - COMMENT LẠI
 </tr>
     <tr>
       <td class="kv-label">
-      <a class="title" href="https://wit.convoi.com.vn/index.php/content/4-dong-luc-sinh-ton/" target="_blank" rel="noopener noreferrer">
+      <a class="title" href="https://admin.wikiw.vn/index.php/content/4-dong-luc-sinh-ton/" target="_blank" rel="noopener noreferrer">
           4 Động Lực Sinh Tồn
         </a></td>
       <td class="kv-content">
@@ -45,7 +45,7 @@ CODE CŨ - COMMENT LẠI
     </tr>
     <tr>
       <td class="kv-label">
-      <a class="title" href="https://wit.convoi.com.vn/index.php/content/4-dong-luc-sinh-ton/" target="_blank" rel="noopener noreferrer">
+      <a class="title" href="https://admin.wikiw.vn/index.php/content/4-dong-luc-sinh-ton/" target="_blank" rel="noopener noreferrer">
           5 Sự so sánh
         </a></td>
       <td class="kv-content">
@@ -66,7 +66,7 @@ CODE CŨ - COMMENT LẠI
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const wordpressUrl = 'https://wit.convoi.com.vn';
+  const wordpressUrl = 'https://admin.wikiw.vn';
   const apiUrl = `${wordpressUrl}/wp-json/custom/v1/contents`;
   
   console.log('🚀 Loading WordPress data from:', apiUrl);
@@ -168,7 +168,7 @@ function displayError(error) {
       <h3>❌ Lỗi tải dữ liệu</h3>
       <p>Không thể tải dữ liệu từ WordPress API</p>
       <p><strong>Lỗi:</strong> ${error.message}</p>
-      <p><strong>URL:</strong> https://wit.convoi.com.vn/wp-json/custom/v1/contents</p>
+      <p><strong>URL:</strong> https://admin.wikiw.vn/wp-json/custom/v1/contents</p>
       <button onclick="location.reload()" style="margin-top: 10px; padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
         🔄 Thử lại
       </button>

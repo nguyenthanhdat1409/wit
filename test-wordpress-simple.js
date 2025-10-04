@@ -9,7 +9,7 @@ const https = require('https');
 async function testWordPressAPI() {
   console.log('🚀 Testing WordPress API...\n');
   
-  const wordpressUrl = 'https://wit.convoi.com.vn';
+  const wordpressUrl = 'https://admin.wikiw.vn';
   
   // Test 1: GraphQL API
   console.log('1️⃣ Testing GraphQL API...');

@@ -2,7 +2,7 @@
 
 ## Tình Trạng Hiện Tại
 
-WordPress site `https://wit.convoi.com.vn` hiện tại không thể truy cập qua REST API hoặc GraphQL API. Cả hai endpoint đều trả về lỗi 404.
+WordPress site `https://admin.wikiw.vn` hiện tại không thể truy cập qua REST API hoặc GraphQL API. Cả hai endpoint đều trả về lỗi 404.
 
 ## Nguyên Nhân Có Thể
 
@@ -25,7 +25,7 @@ URL structure có thể không đúng.
 
 1. **Truy cập WordPress Admin**
    ```
-   https://wit.convoi.com.vn/wp-admin/
+   https://admin.wikiw.vn/wp-admin/
    ```
 
 2. **Kiểm Tra Permalinks**
@@ -47,7 +47,7 @@ URL structure có thể không đúng.
 
 2. **Kiểm Tra GraphQL**
    - Vào `GraphQL` > `GraphiQL IDE`
-   - Hoặc truy cập: `https://wit.convoi.com.vn/wp-admin/admin.php?page=graphql-ide`
+   - Hoặc truy cập: `https://admin.wikiw.vn/wp-admin/admin.php?page=graphql-ide`
 
 ### Bước 3: Kiểm Tra Server Configuration
 
@@ -68,10 +68,10 @@ Sau khi cấu hình, test các endpoint:
 
 ```bash
 # Test REST API
-curl "https://wit.convoi.com.vn/wp-json/wp/v2/posts?per_page=1"
+curl "https://admin.wikiw.vn/wp-json/wp/v2/posts?per_page=1"
 
 # Test GraphQL
-curl -X POST "https://wit.convoi.com.vn/graphql" \
+curl -X POST "https://admin.wikiw.vn/graphql" \
   -H "Content-Type: application/json" \
   -d '{"query":"{ posts { nodes { id title } } }"}'
 ```
@@ -83,7 +83,7 @@ Nếu REST API không hoạt động, có thể sử dụng XML-RPC:
 
 ```bash
 # Test XML-RPC
-curl -X POST "https://wit.convoi.com.vn/xmlrpc.php" \
+curl -X POST "https://admin.wikiw.vn/xmlrpc.php" \
   -H "Content-Type: text/xml" \
   -d '<?xml version="1.0"?><methodCall><methodName>wp.getPosts</methodName><params><param><value><string>1</string></value></param><param><value><string>admin</string></value></param><param><value><string>password</string></value></param></params></methodCall>'
 ```
@@ -112,7 +112,7 @@ Sau khi cấu hình, sử dụng các script test:
 npm run wordpress:test-graphql
 
 # Test với authentication
-npm run wordpress:test-auth https://wit.convoi.com.vn username password
+npm run wordpress:test-auth https://admin.wikiw.vn username password
 
 # Test admin panel
 npm run dev

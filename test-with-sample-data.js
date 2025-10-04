@@ -13,19 +13,19 @@ const sampleData = {
           "id": "cG9zdDo1OTc1",
           "title": "5 Sự so sánh",
           "content": "\n<div class=\"wp-block-columns is-layout-flex wp-container-core-columns-is-layout-9d6595d7 wp-block-columns-is-layout-flex\">\n<div class=\"wp-block-column is-layout-flow wp-block-column-is-layout-flow\" style=\"flex-basis:25%\"></div>\n\n\n\n<div class=\"wp-block-column is-layout-flow wp-block-column-is-layout-flow\" style=\"flex-basis:50%\">\n<h4 class=\"wp-block-heading has-text-align-center\"><strong>Sức học tập</strong></h4>\n\n\n\n<h4 class=\"wp-block-heading has-text-align-center\"><strong>Cống hiến </strong>&#8211;<strong> gánh vác</strong></h4>\n\n\n\n<h4 class=\"wp-block-heading has-text-align-center\"><strong>Trân trọng </strong>&#8211;<strong> biết ơn</strong></h4>\n\n\n\n<h4 class=\"wp-block-heading has-text-align-center\"><strong>Kiên trì</strong></h4>\n\n\n\n<h4 class=\"wp-block-heading has-text-align-center\"><strong>Khiêm tốn</strong></h4>\n</div>\n\n\n\n<div class=\"wp-block-column is-layout-flow wp-block-column-is-layout-flow\" style=\"flex-basis:25%\"></div>\n</div>\n\n\n\n<p style=\"letter-spacing:1px;text-decoration:none\"></p>\n\n\n\n<p></p>\n",
-          "link": "https://wit.convoi.com.vn/content/5-su-so-sanh/"
+          "link": "https://admin.wikiw.vn/content/5-su-so-sanh/"
         },
         {
           "id": "cG9zdDo1OTcy",
           "title": "4 Động Lực Sinh Tồn",
           "content": "\n<p></p>\n\n\n\n<div class=\"wp-block-columns is-layout-flex wp-container-core-columns-is-layout-9d6595d7 wp-block-columns-is-layout-flex\">\n<div class=\"wp-block-column is-layout-flow wp-block-column-is-layout-flow\" style=\"flex-basis:25%\"></div>\n\n\n\n<div class=\"wp-block-column is-layout-flow wp-block-column-is-layout-flow\" style=\"flex-basis:50%\">\n<h4 class=\"wp-block-heading has-text-align-center\"><strong>Bản thân</strong></h4>\n\n\n\n<h4 class=\"wp-block-heading has-text-align-center\"><strong>Gia đình</strong></h4>\n\n\n\n<h4 class=\"wp-block-heading has-text-align-center\"><strong>Xã hội</strong></h4>\n\n\n\n<h4 class=\"wp-block-heading has-text-align-center\"><strong>Tổ chức</strong></h4>\n</div>\n\n\n\n<div class=\"wp-block-column is-layout-flow wp-block-column-is-layout-flow\" style=\"flex-basis:25%\"></div>\n</div>\n\n\n\n<p></p>\n",
-          "link": "https://wit.convoi.com.vn/content/4-dong-luc-sinh-ton/"
+          "link": "https://admin.wikiw.vn/content/4-dong-luc-sinh-ton/"
         },
         {
           "id": "cG9zdDo1OTUy",
           "title": "3 Câu Hỏi Quan Trọng Trong Đời Người",
           "content": "\n<div class=\"wp-block-columns is-layout-flex wp-container-core-columns-is-layout-9d6595d7 wp-block-columns-is-layout-flex\">\n<div class=\"wp-block-column is-layout-flow wp-block-column-is-layout-flow\" style=\"flex-basis:25%\"></div>\n\n\n\n<div class=\"wp-block-column is-layout-flow wp-block-column-is-layout-flow\" style=\"flex-basis:50%\">\n<p></p>\n\n\n\n<p></p>\n\n\n\n<p></p>\n\n\n\n<h5 class=\"wp-block-heading has-text-align-center has-text-color has-link-color wp-elements-e8f3d4f560c8877e1ed88dc948991376\" style=\"color:#0509e3\"><em>Ai là người quan trọng nhất?</em></h5>\n\n\n\n<h5 class=\"wp-block-heading has-text-align-center has-text-color has-link-color wp-elements-077a009d8fb0a2fdee695c5a0e16fc20\" style=\"color:#0509e3\"><em>Thời điểm nào là quan trọng nhất?</em></h5>\n\n\n\n<h5 class=\"wp-block-heading has-text-align-center has-text-color has-link-color wp-elements-dee7801a686209810c93071428201750\" style=\"color:#0509e3\"><em>Việc làm nào là quan trọng nhất?</em></h5>\n</div>\n\n\n\n<div class=\"wp-block-column is-layout-flow wp-block-column-is-layout-flow\" style=\"flex-basis:25%\"></div>\n</div>\n\n\n\n<p></p>\n",
-          "link": "https://wit.convoi.com.vn/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/"
+          "link": "https://admin.wikiw.vn/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/"
         }
       ]
     }

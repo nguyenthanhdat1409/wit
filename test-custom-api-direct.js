@@ -7,7 +7,7 @@
 async function testCustomAPI() {
   console.log('🚀 Testing Custom WordPress API...\n');
   
-  const wordpressUrl = 'https://wit.convoi.com.vn';
+  const wordpressUrl = 'https://admin.wikiw.vn';
   const customApiUrl = `${wordpressUrl}/wp-json/custom/v1/contents`;
   
   try {

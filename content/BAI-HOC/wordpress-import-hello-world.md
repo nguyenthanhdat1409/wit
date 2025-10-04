@@ -14,4 +14,4 @@ tableOfContents: true
 Welcome to WordPress. This is your first post. Edit or delete it, then start writing!
 
 ---
-*Imported from WordPress: https://wit.convoi.com.vn/hello-world/*
+*Imported from WordPress: https://admin.wikiw.vn/hello-world/*

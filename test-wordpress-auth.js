@@ -107,13 +107,13 @@ Usage: node test-wordpress-auth.js <wordpress-url> [username] [password]
 
 Examples:
   # Test public API only
-  node test-wordpress-auth.js https://wit.convoi.com.vn
+  node test-wordpress-auth.js https://admin.wikiw.vn
   
   # Test with authentication
-  node test-wordpress-auth.js https://wit.convoi.com.vn username app-password
+  node test-wordpress-auth.js https://admin.wikiw.vn username app-password
   
   # Test with Application Password
-  node test-wordpress-auth.js https://wit.convoi.com.vn admin abc123xyz789
+  node test-wordpress-auth.js https://admin.wikiw.vn admin abc123xyz789
     `);
     process.exit(1);
   }
