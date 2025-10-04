@@ -64,7 +64,7 @@ function displayMTW7Content(data) {
             <div class="mtw7-grid">
     `;
     
-    posts.forEach(post => {
+    posts.forEach((post, index) => {
         const title = post.title || 'Không có tiêu đề';
         const link = post.link || '#';
         const content = post.content ? post.content.substring(0, 200) + '...' : 'Không có nội dung';
@@ -73,9 +73,9 @@ function displayMTW7Content(data) {
             <div class="mtw7-card">
                 <h3 class="mtw7-title">${title}</h3>
                 <div class="mtw7-excerpt">${content}</div>
-                <a href="${link}" target="_blank" class="mtw7-link">
+                <button onclick="openMTW7Lesson('${link}', '${title}')" class="mtw7-link">
                     📖 Đọc thêm
-                </a>
+                </button>
             </div>
         `;
     });
@@ -87,6 +87,48 @@ function displayMTW7Content(data) {
     
     contentDiv.innerHTML = html;
 }
+
+function openMTW7Lesson(url, title) {
+    // Create modal for iframe
+    const modal = document.createElement('div');
+    modal.id = 'mtw7-iframe-modal';
+    modal.className = 'mtw7-iframe-overlay';
+    modal.innerHTML = `
+        <div class="mtw7-iframe-content">
+            <div class="mtw7-iframe-header">
+                <h3>${title}</h3>
+                <button class="mtw7-iframe-close" onclick="closeMTW7Iframe()">&times;</button>
+            </div>
+            <div class="mtw7-iframe-body">
+                <iframe src="${url}" frameborder="0" class="mtw7-iframe"></iframe>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function closeMTW7Iframe() {
+    const modal = document.getElementById('mtw7-iframe-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('mtw7-iframe-modal');
+    if (modal && event.target === modal) {
+        closeMTW7Iframe();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeMTW7Iframe();
+    }
+});
 
 function displayMTW7Error(error) {
     const contentDiv = document.getElementById('mtw7-content');
