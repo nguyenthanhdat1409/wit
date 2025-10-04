@@ -1,0 +1,122 @@
+{{ define "main" }}
+<div class="min-h-screen bg-gray-50">
+    <!-- Header Section -->
+    <div class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                    🎯 Bài học MTW7
+                </h1>
+                <p class="text-xl text-gray-600 mb-6">
+                    Danh sách các bài học MTW7 từ WordPress
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            {{ .Content }}
+        </div>
+    </div>
+</div>
+
+<style>
+.mtw7-posts {
+    margin-top: 2rem;
+}
+
+.mtw7-meta {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.mtw7-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.mtw7-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.mtw7-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: #f59e0b;
+}
+
+.mtw7-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 1rem 0;
+    line-height: 1.4;
+}
+
+.mtw7-excerpt {
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.mtw7-link {
+    display: inline-flex;
+    align-items: center;
+    color: #f59e0b;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+}
+
+.mtw7-link:hover {
+    color: #d97706;
+    text-decoration: underline;
+}
+
+.mtw7-error {
+    text-align: center;
+    padding: 2rem;
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+}
+
+.mtw7-error p {
+    margin-bottom: 0.5rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .mtw7-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .mtw7-card {
+        padding: 1rem;
+    }
+}
+</style>
+{{ end }}

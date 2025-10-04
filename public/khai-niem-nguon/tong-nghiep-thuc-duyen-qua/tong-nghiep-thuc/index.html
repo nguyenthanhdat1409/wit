@@ -89,7 +89,7 @@
                                     <a href="/bai-hoc/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
                                         📚 Bài học TVHL
                                     </a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600" onclick="console.log('Click detected!'); showMTW7Popup(); return false;">
+                                    <a href="/bai-hoc-mtw7/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
                                         🎯 Bài học MTW7
                                     </a>
                                 </div>
@@ -157,7 +157,7 @@
                             <a href="/bai-hoc/" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50">
                                 📚 Bài học TVHL
                             </a>
-                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50" onclick="console.log('Mobile click detected!'); showMTW7Popup(); return false;">
+                            <a href="/bai-hoc-mtw7/" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50">
                                 🎯 Bài học MTW7
                             </a>
                         </div>
@@ -455,161 +455,6 @@
             });
         });
 
-        
-        function showMTW7Popup(event) {
-            console.log('🎯 showMTW7Popup called!');
-            
-            
-            if (event) {
-                event.preventDefault();
-            }
-            
-            
-            const existingModal = document.getElementById('mtw7-modal');
-            if (existingModal) {
-                existingModal.remove();
-            }
-            
-            
-            const modal = document.createElement('div');
-            modal.id = 'mtw7-modal';
-            modal.className = 'mtw7-modal-overlay';
-            modal.innerHTML = `
-                <div class="mtw7-modal-content">
-                    <div class="mtw7-modal-header">
-                        <h2>🎯 Bài học MTW7</h2>
-                        <button class="mtw7-modal-close" onclick="closeMTW7Popup()">&times;</button>
-                    </div>
-                    <div class="mtw7-modal-body">
-                        <div class="mtw7-loading">
-                            <p>🔄 Đang tải dữ liệu từ WordPress...</p>
-                        </div>
-                        <div class="mtw7-content" style="display: none;"></div>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            console.log('✅ Modal created and added to DOM');
-            
-            
-            loadMTW7Data();
-            
-            return false;
-        }
-
-        
-        function loadMTW7Data() {
-            console.log('🔄 Loading MTW7 data...');
-            const apiUrl = 'https://wit.convoi.com.vn/wp-json/custom/v1/mtw7-contents';
-            const contentDiv = document.querySelector('.mtw7-content');
-            const loadingDiv = document.querySelector('.mtw7-loading');
-            
-            console.log('📡 Fetching from:', apiUrl);
-            
-            fetch(apiUrl)
-                .then(response => {
-                    console.log('📥 Response received:', response.status, response.statusText);
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('✅ MTW7 data loaded:', data);
-                    displayMTW7Content(data);
-                })
-                .catch(error => {
-                    console.error('❌ Error loading MTW7 data:', error);
-                    displayMTW7Error(error);
-                });
-        }
-
-        
-        function displayMTW7Content(data) {
-            const contentDiv = document.querySelector('.mtw7-content');
-            const loadingDiv = document.querySelector('.mtw7-loading');
-            
-            if (!data.data || !data.data.contents || !data.data.contents.nodes) {
-                contentDiv.innerHTML = '<p>❌ Không có dữ liệu từ WordPress</p>';
-                loadingDiv.style.display = 'none';
-                contentDiv.style.display = 'block';
-                return;
-            }
-            
-            const posts = data.data.contents.nodes;
-            console.log(`📊 Found ${posts.length} MTW7 posts from WordPress`);
-            
-            let html = `
-                <div class="mtw7-posts">
-                    <p class="mtw7-meta">📚 Đã tải ${posts.length} bài học MTW7 từ WordPress</p>
-                    <div class="mtw7-grid">
-            `;
-            
-            posts.forEach(post => {
-                const title = post.title || 'Không có tiêu đề';
-                const link = post.link || '#';
-                const content = post.content ? post.content.substring(0, 200) + '...' : 'Không có nội dung';
-                
-                html += `
-                    <div class="mtw7-card">
-                        <h3 class="mtw7-title">${title}</h3>
-                        <div class="mtw7-excerpt">${content}</div>
-                        <a href="${link}" target="_blank" class="mtw7-link">
-                            📖 Đọc thêm
-                        </a>
-                    </div>
-                `;
-            });
-            
-            html += `
-                    </div>
-                </div>
-            `;
-            
-            contentDiv.innerHTML = html;
-            loadingDiv.style.display = 'none';
-            contentDiv.style.display = 'block';
-        }
-
-        
-        function displayMTW7Error(error) {
-            const contentDiv = document.querySelector('.mtw7-content');
-            const loadingDiv = document.querySelector('.mtw7-loading');
-            
-            contentDiv.innerHTML = `
-                <div class="mtw7-error">
-                    <p>❌ Lỗi khi tải dữ liệu MTW7</p>
-                    <p><strong>Chi tiết:</strong> ${error.message}</p>
-                    <p><strong>URL:</strong> https://wit.convoi.com.vn/wp-json/custom/v1/mtw7-contents</p>
-                </div>
-            `;
-            loadingDiv.style.display = 'none';
-            contentDiv.style.display = 'block';
-        }
-
-        
-        function closeMTW7Popup() {
-            const modal = document.getElementById('mtw7-modal');
-            if (modal) {
-                modal.remove();
-            }
-        }
-
-        
-        document.addEventListener('click', function(event) {
-            const modal = document.getElementById('mtw7-modal');
-            if (modal && event.target === modal) {
-                closeMTW7Popup();
-            }
-        });
-
-        
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeMTW7Popup();
-            }
-        });
 
         
         function showDropdown(element) {
