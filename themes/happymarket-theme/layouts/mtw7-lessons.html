@@ -42,6 +42,7 @@
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-top: 1.5rem;
+    width: 100%;
 }
 
 .mtw7-card {
@@ -50,6 +51,8 @@
     border-radius: 8px;
     padding: 1.5rem;
     transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .mtw7-card:hover {
@@ -61,7 +64,7 @@
 .mtw7-title {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #f59e0b;
+    color: #f59e0b !important;
     margin: 0 0 1rem 0;
     line-height: 1.4;
 }
@@ -210,10 +213,12 @@
     .mtw7-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
+        margin-top: 1rem;
     }
     
     .mtw7-card {
         padding: 1rem;
+        width: 100%;
     }
     
     .mtw7-iframe-content {
