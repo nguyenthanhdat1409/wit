@@ -158,7 +158,6 @@ function hideWordPressHeader(iframe) {
         background: white;
         z-index: 1000;
         pointer-events: none;
-        border-bottom: 1px solid #e5e7eb;
     `;
     
     iframeContainer.appendChild(headerOverlay);
@@ -259,6 +258,24 @@ function hideWordPressHeader(iframe) {
             .primary-navigation,
             .secondary-navigation {
                 display: none !important;
+            }
+            
+            /* Thêm margin-top cho post header để đẩy nội dung xuống */
+            .gt-post-header {
+                margin-top: 20px !important;
+            }
+            
+            /* Responsive margin-top cho post header */
+            @media (max-width: 768px) {
+                .gt-post-header {
+                    margin-top: 15px !important;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .gt-post-header {
+                    margin-top: 10px !important;
+                }
             }
         `;
         
