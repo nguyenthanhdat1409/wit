@@ -71,9 +71,31 @@
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8 mx-auto">
                     {{ range .Site.Menus.main }}
-                    <a href="{{ .URL | relURL }}" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
-                        {{ .Name }}
-                    </a>
+                        {{ if eq .Name "Bài học" }}
+                        <!-- Dropdown menu for Bài học -->
+                        <div class="relative group">
+                            <button class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                                {{ .Name }}
+                                <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 dropdown-menu">
+                                <div class="py-1">
+                                    <a href="/bai-hoc/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
+                                        📚 Bài học TVHL
+                                    </a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600" onclick="showMTW7Popup()">
+                                        🎯 Bài học MTW7
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {{ else }}
+                        <a href="{{ .URL | relURL }}" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                            {{ .Name }}
+                        </a>
+                        {{ end }}
                     {{ end }}
                 </nav>
                 
@@ -92,9 +114,29 @@
         <div class="mobile-menu hidden md:hidden bg-white border-t border-gray-200">
             <div class="px-2 pt-2 pb-3 space-y-1">
                 {{ range .Site.Menus.main }}
-                <a href="{{ .URL | relURL }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
-                    {{ .Name }}
-                </a>
+                    {{ if eq .Name "Bài học" }}
+                    <!-- Mobile dropdown for Bài học -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-button w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 flex items-center justify-between">
+                            {{ .Name }}
+                            <svg class="h-4 w-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="mobile-dropdown-content hidden pl-4">
+                            <a href="/bai-hoc/" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50">
+                                📚 Bài học TVHL
+                            </a>
+                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50" onclick="showMTW7Popup()">
+                                🎯 Bài học MTW7
+                            </a>
+                        </div>
+                    </div>
+                    {{ else }}
+                    <a href="{{ .URL | relURL }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                        {{ .Name }}
+                    </a>
+                    {{ end }}
                 {{ end }}
             </div>
         </div>
@@ -344,7 +386,29 @@
                     }
                 });
             });
+
+            // Mobile dropdown functionality
+            const mobileDropdownButtons = document.querySelectorAll('.mobile-dropdown-button');
+            mobileDropdownButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const arrow = this.querySelector('svg');
+                    
+                    if (content.classList.contains('hidden')) {
+                        content.classList.remove('hidden');
+                        arrow.style.transform = 'rotate(180deg)';
+                    } else {
+                        content.classList.add('hidden');
+                        arrow.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
         });
+
+        // Function to show MTW7 popup (placeholder for now)
+        function showMTW7Popup() {
+            alert('Tính năng Bài học MTW7 sẽ được tích hợp với WordPress API trong thời gian tới!');
+        }
     </script>
     
     {{ block "scripts" . }}{{ end }}

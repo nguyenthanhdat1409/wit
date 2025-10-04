@@ -240,6 +240,40 @@ body {
     display: none;
 }
 
+/* Dropdown menu styles */
+.group:hover .group-hover\:opacity-100 {
+    opacity: 1;
+}
+
+.group:hover .group-hover\:visible {
+    visibility: visible;
+}
+
+/* Enhanced dropdown animation */
+.dropdown-menu {
+    transform: translateY(-10px);
+    transition: all 0.2s ease-in-out;
+}
+
+.group:hover .dropdown-menu {
+    transform: translateY(0);
+}
+
+/* Mobile dropdown styles */
+.mobile-dropdown-content {
+    transition: all 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.mobile-dropdown-content:not(.hidden) {
+    max-height: 200px;
+}
+
+.mobile-dropdown-button svg {
+    transition: transform 0.3s ease;
+}
+
 /* Dark mode styles */
 @media (prefers-color-scheme: dark) {
     .dark-mode {

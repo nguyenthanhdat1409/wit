@@ -69,29 +69,57 @@
                 
                 <nav class="hidden md:flex space-x-8 mx-auto">
                     
-                    <a href="/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
-                        Trang chủ
-                    </a>
+                        
+                        <a href="/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                            Trang chủ
+                        </a>
+                        
                     
-                    <a href="/bai-hoc/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
-                        Bài học
-                    </a>
+                        
+                        
+                        <div class="relative group">
+                            <button class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                                Bài học
+                                <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 dropdown-menu">
+                                <div class="py-1">
+                                    <a href="/bai-hoc/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
+                                        📚 Bài học TVHL
+                                    </a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600" onclick="showMTW7Popup()">
+                                        🎯 Bài học MTW7
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
                     
-                    <a href="/khoa-hoc/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
-                        Khóa học
-                    </a>
+                        
+                        <a href="/khoa-hoc/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                            Khóa học
+                        </a>
+                        
                     
-                    <a href="/khai-niem-nguon/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
-                        Khái niệm nguồn
-                    </a>
+                        
+                        <a href="/khai-niem-nguon/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                            Khái niệm nguồn
+                        </a>
+                        
                     
-                    <a href="/tu-khainiem/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
-                        Từ vựng - Khái niệm
-                    </a>
+                        
+                        <a href="/tu-khainiem/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                            Từ vựng - Khái niệm
+                        </a>
+                        
                     
-                    <a href="/hinh/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
-                        Hình ảnh
-                    </a>
+                        
+                        <a href="/hinh/" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
+                            Hình ảnh
+                        </a>
+                        
                     
                 </nav>
                 
@@ -110,29 +138,55 @@
         <div class="mobile-menu hidden md:hidden bg-white border-t border-gray-200">
             <div class="px-2 pt-2 pb-3 space-y-1">
                 
-                <a href="/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
-                    Trang chủ
-                </a>
+                    
+                    <a href="/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                        Trang chủ
+                    </a>
+                    
                 
-                <a href="/bai-hoc/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
-                    Bài học
-                </a>
+                    
+                    
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-button w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 flex items-center justify-between">
+                            Bài học
+                            <svg class="h-4 w-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="mobile-dropdown-content hidden pl-4">
+                            <a href="/bai-hoc/" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50">
+                                📚 Bài học TVHL
+                            </a>
+                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50" onclick="showMTW7Popup()">
+                                🎯 Bài học MTW7
+                            </a>
+                        </div>
+                    </div>
+                    
                 
-                <a href="/khoa-hoc/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
-                    Khóa học
-                </a>
+                    
+                    <a href="/khoa-hoc/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                        Khóa học
+                    </a>
+                    
                 
-                <a href="/khai-niem-nguon/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
-                    Khái niệm nguồn
-                </a>
+                    
+                    <a href="/khai-niem-nguon/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                        Khái niệm nguồn
+                    </a>
+                    
                 
-                <a href="/tu-khainiem/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
-                    Từ vựng - Khái niệm
-                </a>
+                    
+                    <a href="/tu-khainiem/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                        Từ vựng - Khái niệm
+                    </a>
+                    
                 
-                <a href="/hinh/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
-                    Hình ảnh
-                </a>
+                    
+                    <a href="/hinh/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                        Hình ảnh
+                    </a>
+                    
                 
             </div>
         </div>
@@ -814,7 +868,29 @@
                     }
                 });
             });
+
+            
+            const mobileDropdownButtons = document.querySelectorAll('.mobile-dropdown-button');
+            mobileDropdownButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const arrow = this.querySelector('svg');
+                    
+                    if (content.classList.contains('hidden')) {
+                        content.classList.remove('hidden');
+                        arrow.style.transform = 'rotate(180deg)';
+                    } else {
+                        content.classList.add('hidden');
+                        arrow.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
         });
+
+        
+        function showMTW7Popup() {
+            alert('Tính năng Bài học MTW7 sẽ được tích hợp với WordPress API trong thời gian tới!');
+        }
     </script>
     
     
