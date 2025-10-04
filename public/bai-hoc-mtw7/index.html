@@ -325,13 +325,27 @@ function displayMTW7Content(data) {
         title = title.replace(/TVHL\.?\s*/g, '').replace(/&#8211;/g, '–');
         
         const link = post.link || '#';
-        const content = post.content ? post.content.substring(0, 200) + '...' : 'Không có nội dung';
+        
+        // Lấy text thuần từ content, bỏ HTML tags
+        let content = 'Không có nội dung';
+        if (post.content) {
+            // Tạo một div tạm để parse HTML
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = post.content;
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+            content = textContent.trim().substring(0, 150) + (textContent.length > 150 ? '...' : '');
+        }
+        
+        // Escape HTML để tránh lỗi cấu trúc
+        const escapedTitle = title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const escapedContent = content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const escapedLink = link.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         
         html += `
             <div class="mtw7-card">
-                <h3 class="mtw7-title">${title}</h3>
-                <div class="mtw7-excerpt">${content}</div>
-                <button onclick="openMTW7Lesson('${link}', '${title}')" class="mtw7-link">
+                <h3 class="mtw7-title">${escapedTitle}</h3>
+                <div class="mtw7-excerpt">${escapedContent}</div>
+                <button onclick="openMTW7Lesson('${escapedLink}', '${escapedTitle}')" class="mtw7-link">
                     📖 Đọc thêm
                 </button>
             </div>
