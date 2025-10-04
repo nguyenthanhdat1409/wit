@@ -152,7 +152,7 @@ function hideWordPressHeader(iframe) {
     
     // Kiểm tra nếu là mobile để tăng chiều cao overlay
     const isMobile = window.innerWidth <= 480;
-    const overlayHeight = isMobile ? '80px' : '80px';
+    const overlayHeight = isMobile ? '10px' : '0px';
     
     headerOverlay.style.cssText = `
         position: absolute;
@@ -238,9 +238,9 @@ function hideWordPressHeader(iframe) {
                 display: none !important;
             }
             
-            /* Điều chỉnh body WordPress để bỏ margin/padding top */
+            /* Điều chỉnh body WordPress để bỏ margin/padding top và thêm margin-top cho header popup */
             body {
-                margin-top: 0 !important;
+                margin-top: 60px !important;
                 padding-top: 0 !important;
             }
             
