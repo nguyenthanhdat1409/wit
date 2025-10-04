@@ -392,7 +392,7 @@ function hideWordPressHeader(iframe) {
     
     // Kiểm tra nếu là mobile để tăng chiều cao overlay
     const isMobile = window.innerWidth <= 480;
-    const overlayHeight = isMobile ? 'calc(80px + 29%)' : '80px';
+    const overlayHeight = isMobile ? '80px' : '80px';
     
     headerOverlay.style.cssText = `
         position: absolute;
@@ -921,11 +921,11 @@ function displayMTW7Error(error) {
         
          
         .mtw7-iframe-body::before {
-            height: calc(80px + 29%);
+            height: 80px;
         }
         
         .wordpress-header-overlay {
-            height: calc(80px + 29%);
+            height: 80px;
         }
     }
     
