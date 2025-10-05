@@ -11,7 +11,8 @@ const AUTH_CONFIG = {
     useDirectAPI: true, // Set to false when Netlify Function is ready
     apiEndpoints: {
         login: '/wp-json/jwt-auth/v1/token', // Corrected endpoint for JWT
-        register: '/wp-json/wp/v2/users',
+        register: '/wp-json/wp/v2/users', // REST API (requires auth)
+        registerForm: '/wp-login.php?action=register', // WordPress registration form
         user: '/wp-json/wp/v2/users/me' // Endpoint to get user info
     },
     storageKeys: {
@@ -300,18 +301,20 @@ async function handleRegister(e) {
         if (AUTH_CONFIG.useDirectAPI) {
             // Use direct WordPress API for testing
             console.log('Using direct WordPress API for registration');
-            response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.register}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: email,
-                    email: email,
-                    password: password,
-                    name: name
-                })
-            });
+            
+            // For now, redirect to WordPress registration form
+            // TODO: Implement proper REST API registration with authentication
+            const registerUrl = `${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.registerForm}`;
+            console.log('Redirecting to WordPress registration form:', registerUrl);
+            
+            // Show message and redirect
+            showError('registerError', 'Vui lòng đăng ký tại WordPress trước. Đang chuyển hướng...');
+            
+            setTimeout(() => {
+                window.open(registerUrl, '_blank');
+            }, 2000);
+            
+            return; // Exit early
         } else {
             // Use Netlify Function for registration
             response = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
