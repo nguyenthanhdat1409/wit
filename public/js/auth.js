@@ -303,11 +303,16 @@ async function handleRegister(e) {
         let response;
         
         if (AUTH_CONFIG.useDirectAPI) {
-            // Use direct WordPress API for testing
+            // Use direct WordPress API with Application Password for registration
             console.log('Using direct WordPress API for registration');
+            
+            // Create basic auth header with Application Password
+            const authHeader = btoa(`admin:${AUTH_CONFIG.appPassword}`);
+            
             response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.register}`, {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Basic ${authHeader}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -356,7 +361,7 @@ async function handleRegister(e) {
         let userData = null;
         
         if (AUTH_CONFIG.useDirectAPI) {
-            // Direct WordPress API response format
+            // Direct WordPress API response format (Application Password)
             if (data.id) {
                 isSuccess = true;
                 userData = {
@@ -378,19 +383,20 @@ async function handleRegister(e) {
             // Auto login after successful registration
             let loginResponse;
             
-            if (AUTH_CONFIG.useDirectAPI) {
-                // Use direct WordPress API for login
-                console.log('Auto-login after registration using direct API');
-                loginResponse = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.login}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username: email,
-                        password: password
-                    })
-                });
+                   if (AUTH_CONFIG.useDirectAPI) {
+                       // Use direct WordPress API for login
+                       console.log('Auto-login after registration using direct API');
+                       
+                       // Create basic auth header with Application Password
+                       const loginAuthHeader = btoa(`${email}:${AUTH_CONFIG.appPassword}`);
+                       
+                       loginResponse = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.loginBasic}`, {
+                           method: 'GET',
+                           headers: {
+                               'Authorization': `Basic ${loginAuthHeader}`,
+                               'Content-Type': 'application/json'
+                           }
+                       });
             } else {
                 // Use Netlify Function for login
                 loginResponse = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
@@ -428,18 +434,18 @@ async function handleRegister(e) {
             let token = null;
             let finalUserData = null;
             
-            if (AUTH_CONFIG.useDirectAPI) {
-                // Direct WordPress API response format
-                if (loginData.token) {
-                    loginSuccess = true;
-                    token = loginData.token;
-                    finalUserData = {
-                        id: loginData.user_id || userData.id,
-                        name: loginData.user_display_name || userData.name,
-                        email: loginData.user_email || userData.email,
-                        display_name: loginData.user_display_name || userData.display_name
-                    };
-                }
+                   if (AUTH_CONFIG.useDirectAPI) {
+                       // Direct WordPress API response format (Application Password)
+                       if (loginData.id) {
+                           loginSuccess = true;
+                           token = 'app-password-auth'; // Simple token for Application Password
+                           finalUserData = {
+                               id: loginData.id || userData.id,
+                               name: loginData.name || userData.name,
+                               email: loginData.email || userData.email,
+                               display_name: loginData.name || userData.display_name
+                           };
+                       }
             } else {
                 // Netlify Function response format
                 if (loginData.success) {
