@@ -29,7 +29,7 @@ menu:
       parent: bai-hoc
       weight: 15
     - identifier: bai-hoc-mtw7
-      name: Bài học MTW7
+      name: Bài học Mentor Wit K07
       url: /bai-hoc-mtw7/
       parent: bai-hoc
       weight: 16
