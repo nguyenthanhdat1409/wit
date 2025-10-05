@@ -606,6 +606,141 @@ async function handleForgotPassword(e) {
     }
 }
 
+// User Profile Modal Functions
+function openUserProfileModal() {
+    const modal = document.getElementById('userProfileModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        
+        // Load user profile data
+        loadUserProfile();
+    }
+}
+
+function closeUserProfileModal() {
+    const modal = document.getElementById('userProfileModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        
+        // Hide error and loading states
+        hideError('profile-error');
+        hideLoading('profile-loading');
+    }
+}
+
+async function loadUserProfile() {
+    if (!currentUser || !authToken) {
+        showError('profile-error', 'Không có thông tin người dùng. Vui lòng đăng nhập lại.');
+        return;
+    }
+    
+    showLoading('profile-loading');
+    hideError('profile-error');
+    
+    try {
+        let userData = currentUser;
+        
+        // Try to fetch fresh user data from WordPress
+        if (AUTH_CONFIG.useDirectAPI) {
+            try {
+                const response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.user}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const freshData = await response.json();
+                    userData = freshData;
+                    console.log('Fresh user data loaded:', userData);
+                }
+            } catch (fetchError) {
+                console.log('Could not fetch fresh user data, using cached data:', fetchError);
+            }
+        }
+        
+        // Populate profile modal with user data
+        populateUserProfile(userData);
+        
+    } catch (error) {
+        console.error('Error loading user profile:', error);
+        showError('profile-error', 'Không thể tải thông tin người dùng. Vui lòng thử lại.');
+    } finally {
+        hideLoading('profile-loading');
+    }
+}
+
+function populateUserProfile(userData) {
+    // Basic info
+    const name = userData.name || userData.display_name || userData.user_display_name || 'Người dùng';
+    const email = userData.email || userData.user_email || 'N/A';
+    const avatar = name.charAt(0).toUpperCase();
+    
+    // Update avatar and basic info
+    document.getElementById('profile-avatar').textContent = avatar;
+    document.getElementById('profile-name').textContent = name;
+    document.getElementById('profile-email').textContent = email;
+    
+    // Update detailed info
+    document.getElementById('profile-id').textContent = userData.id || '-';
+    document.getElementById('profile-display-name').textContent = userData.display_name || userData.name || '-';
+    
+    // Role information
+    let roleText = 'Người dùng';
+    if (userData.roles && userData.roles.length > 0) {
+        const roles = userData.roles;
+        if (roles.includes('administrator')) roleText = 'Quản trị viên';
+        else if (roles.includes('editor')) roleText = 'Biên tập viên';
+        else if (roles.includes('author')) roleText = 'Tác giả';
+        else if (roles.includes('contributor')) roleText = 'Cộng tác viên';
+        else if (roles.includes('subscriber')) roleText = 'Thành viên';
+    }
+    document.getElementById('profile-role').textContent = roleText;
+    
+    // Registration date
+    if (userData.registered_date) {
+        const regDate = new Date(userData.registered_date);
+        document.getElementById('profile-registered').textContent = regDate.toLocaleDateString('vi-VN');
+    } else {
+        document.getElementById('profile-registered').textContent = '-';
+    }
+    
+    // Profile URL
+    if (userData.link) {
+        const profileUrl = document.getElementById('profile-url');
+        profileUrl.href = userData.link;
+        profileUrl.textContent = 'Xem profile';
+    } else {
+        document.getElementById('profile-url').textContent = '-';
+    }
+    
+    // Login time
+    const loginTime = new Date().toLocaleString('vi-VN');
+    document.getElementById('profile-login-time').textContent = loginTime;
+}
+
+function refreshUserProfile() {
+    loadUserProfile();
+}
+
+function showLoading(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.classList.remove('hidden');
+    }
+}
+
+function hideLoading(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.classList.add('hidden');
+    }
+}
+
 /**
  * Modal functions
  */
