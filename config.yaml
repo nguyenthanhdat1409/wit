@@ -54,6 +54,10 @@ menu:
       name: Hình ảnh
       url: /hinh/
       weight: 50
+    - identifier: dong-gop
+      name: Đóng góp
+      url: /dong-gop/
+      weight: 60
 
 # Cấu hình taxonomy
 taxonomies:
@@ -76,6 +80,8 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+    extensions:
+      typographer: false
   highlight:
     style: 'github'
     lineNos: true
