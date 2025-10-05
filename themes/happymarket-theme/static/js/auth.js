@@ -16,7 +16,8 @@ const AUTH_CONFIG = {
         loginBasic: '/wp-json/wp/v2/users/me', // Basic WordPress API
         register: '/wp-json/wp/v2/users', // REST API (requires auth)
         registerForm: '/wp-login.php?action=register', // WordPress registration form
-        user: '/wp-json/wp/v2/users/me' // Endpoint to get user info
+        user: '/wp-json/wp/v2/users/me', // Endpoint to get user info
+        forgotPassword: '/wp-login.php?action=lostpassword' // WordPress forgot password
     },
     storageKeys: {
         user: 'happymarket_user',
@@ -71,6 +72,12 @@ function setupEventListeners() {
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', handleRegister);
+    }
+    
+    // Forgot password form
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    if (forgotPasswordForm) {
+        forgotPasswordForm.addEventListener('submit', handleForgotPassword);
     }
     
     // Password confirmation
@@ -154,19 +161,34 @@ async function handleLogin(e) {
         let response;
         
         if (AUTH_CONFIG.useDirectAPI) {
-            // Use direct WordPress API with Application Password
+            // Try JWT first, then fallback to basic auth
             console.log('Using direct WordPress API for login');
             
-            // Create basic auth header with Application Password
-            const authHeader = btoa(`${email}:${AUTH_CONFIG.appPassword}`);
-            
-            response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.loginBasic}`, {
-                method: 'GET',
+            // First try JWT authentication
+            response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.login}`, {
+                method: 'POST',
                 headers: {
-                    'Authorization': `Basic ${authHeader}`,
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({
+                    username: email,
+                    password: password
+                })
             });
+            
+            // If JWT fails, try basic auth
+            if (!response.ok) {
+                console.log('JWT failed, trying basic auth...');
+                const authHeader = btoa(`${email}:${password}`);
+                
+                response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.loginBasic}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Basic ${authHeader}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+            }
         } else {
             // Use Netlify Function for authentication
             response = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
@@ -205,10 +227,21 @@ async function handleLogin(e) {
         let userData = null;
         
         if (AUTH_CONFIG.useDirectAPI) {
-            // Direct WordPress API response format (Application Password)
-            if (data.id) {
+            // Handle both JWT and Basic Auth responses
+            if (data.token) {
+                // JWT response format
                 isSuccess = true;
-                token = 'app-password-auth'; // Simple token for Application Password
+                token = data.token;
+                userData = {
+                    id: data.user_id || 1,
+                    name: data.user_display_name || email,
+                    email: data.user_email || email,
+                    display_name: data.user_display_name || email
+                };
+            } else if (data.id) {
+                // Basic Auth response format
+                isSuccess = true;
+                token = 'basic-auth-token'; // Simple token for Basic Auth
                 userData = {
                     id: data.id,
                     name: data.name || email,
@@ -339,13 +372,16 @@ async function handleRegister(e) {
             });
         }
         
-        // Check if response is ok and has content
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        
-        const responseText = await response.text();
-        console.log('Registration response:', responseText);
+            // Check if response is ok and has content
+            if (!response.ok) {
+                if (response.status === 500) {
+                    throw new Error('Email hoặc tên đăng nhập đã tồn tại. Vui lòng chọn thông tin khác.');
+                }
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const responseText = await response.text();
+            console.log('Registration response:', responseText);
         
         let data;
         try {
@@ -385,13 +421,24 @@ async function handleRegister(e) {
             showSuccessMessage('Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.');
             
             // Clear form
-            form.reset();
+            e.target.reset();
         } else {
             // Handle different error formats
             let errorMessage = 'Đăng ký thất bại';
             
             if (AUTH_CONFIG.useDirectAPI) {
-                errorMessage = data.message || data.code || 'Thông tin đăng ký không hợp lệ';
+                // Handle specific WordPress errors
+                if (data.code === 'existing_user_email') {
+                    errorMessage = 'Email này đã được sử dụng. Vui lòng chọn email khác hoặc đăng nhập.';
+                } else if (data.code === 'existing_user_login') {
+                    errorMessage = 'Tên đăng nhập này đã tồn tại. Vui lòng chọn tên khác.';
+                } else if (data.message) {
+                    errorMessage = data.message;
+                } else if (data.code) {
+                    errorMessage = `Lỗi: ${data.code}`;
+                } else {
+                    errorMessage = 'Thông tin đăng ký không hợp lệ';
+                }
             } else {
                 errorMessage = data.message || 'Đăng ký thất bại';
             }
@@ -521,6 +568,50 @@ function logout() {
     showSuccessMessage('Đã đăng xuất thành công!');
 }
 
+// Forgot password function
+async function handleForgotPassword(e) {
+    e.preventDefault();
+    hideError('forgotPasswordError');
+    
+    const form = e.target;
+    const email = form.email.value;
+    
+    if (!email) {
+        showError('forgotPasswordError', 'Vui lòng nhập email của bạn.');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Đang gửi...';
+    submitBtn.disabled = true;
+    submitBtn.classList.add('auth-btn-loading');
+    
+    try {
+        // Redirect to WordPress forgot password page
+        const forgotPasswordUrl = `${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.forgotPassword}&user_login=${encodeURIComponent(email)}`;
+        
+        // Open in new tab
+        window.open(forgotPasswordUrl, '_blank');
+        
+        // Show success message
+        showSuccessMessage('Đã mở trang đặt lại mật khẩu. Vui lòng kiểm tra email của bạn.');
+        
+        // Close modal
+        closeForgotPasswordModal();
+        
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        showError('forgotPasswordError', 'Có lỗi xảy ra. Vui lòng thử lại.');
+    } finally {
+        // Reset button state
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('auth-btn-loading');
+    }
+}
+
 /**
  * Modal functions
  */
@@ -544,6 +635,22 @@ function closeRegisterModal() {
     document.getElementById('registerModal').classList.add('hidden');
     document.body.style.overflow = 'auto';
     clearForm('registerForm');
+}
+
+function openForgotPasswordModal() {
+    const modal = document.getElementById('forgotPasswordModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeForgotPasswordModal() {
+    const modal = document.getElementById('forgotPasswordModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
 }
 
 function closeAllModals() {
