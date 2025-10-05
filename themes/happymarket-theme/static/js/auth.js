@@ -589,20 +589,11 @@ async function handleForgotPassword(e) {
     submitBtn.classList.add('auth-btn-loading');
     
     try {
-        // Show loading message
-        showSuccessMessage('Đang chuyển hướng đến trang đặt lại mật khẩu...');
+        // Show warning about email configuration
+        showError('forgotPasswordError', 'Lưu ý: WordPress chưa được cấu hình để gửi email tự động. Vui lòng chọn một trong các giải pháp bên dưới.');
         
-        // Close modal first
-        closeForgotPasswordModal();
-        
-        // Redirect to WordPress forgot password page with email pre-filled
-        const forgotPasswordUrl = `${AUTH_CONFIG.wordpressUrl}/wp-login.php?action=lostpassword&user_login=${encodeURIComponent(email)}`;
-        
-        // Open in new tab
-        window.open(forgotPasswordUrl, '_blank');
-        
-        // Show success message
-        showSuccessMessage('Đã mở trang đặt lại mật khẩu. Vui lòng làm theo hướng dẫn trên trang mới.');
+        // Don't redirect to WordPress since email won't work
+        // Instead, show helpful alternatives
         
     } catch (error) {
         console.error('Forgot password error:', error);
