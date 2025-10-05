@@ -589,21 +589,31 @@ async function handleForgotPassword(e) {
     submitBtn.classList.add('auth-btn-loading');
     
     try {
-        // Redirect to WordPress forgot password page
-        const forgotPasswordUrl = `${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.forgotPassword}&user_login=${encodeURIComponent(email)}`;
+        // Try to send reset email via WordPress API
+        const response = await fetch(`${AUTH_CONFIG.wordpressUrl}/wp-json/wp/v2/users/lost-password`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_login: email
+            })
+        });
         
-        // Open in new tab
-        window.open(forgotPasswordUrl, '_blank');
-        
-        // Show success message
-        showSuccessMessage('Đã mở trang đặt lại mật khẩu. Vui lòng kiểm tra email của bạn.');
-        
-        // Close modal
-        closeForgotPasswordModal();
+        if (response.ok) {
+            // Success - show message
+            showSuccessMessage('Đã gửi link đặt lại mật khẩu đến email của bạn. Vui lòng kiểm tra hộp thư.');
+            closeForgotPasswordModal();
+            form.reset();
+        } else {
+            // If API fails, show alternative solution
+            showError('forgotPasswordError', 'Không thể gửi email tự động. Vui lòng liên hệ admin hoặc tạo tài khoản mới.');
+        }
         
     } catch (error) {
         console.error('Forgot password error:', error);
-        showError('forgotPasswordError', 'Có lỗi xảy ra. Vui lòng thử lại.');
+        // Show alternative solution
+        showError('forgotPasswordError', 'Không thể gửi email tự động. Vui lòng liên hệ admin để được hỗ trợ đặt lại mật khẩu.');
     } finally {
         // Reset button state
         submitBtn.textContent = originalText;
