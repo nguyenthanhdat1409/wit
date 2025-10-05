@@ -1,5 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bai-Hoc on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title><link>https://happymarketdocs.com/tags/bai-hoc/</link><description>Recent content in Bai-Hoc on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description><generator>Hugo</generator><language>vi-VN</language><lastBuildDate>Mon, 29 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://happymarketdocs.com/tags/bai-hoc/index.xml" rel="self" type="application/rss+xml"/><item><title>Bai Hoc Test</title><link>https://happymarketdocs.com/tu-khainiem/bai-hoc-test/</link><pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate><guid>https://happymarketdocs.com/tu-khainiem/bai-hoc-test/</guid><description>&lt;h1 id="bai-hoc-test"&gt;Bai Hoc Test&lt;/h1&gt;
-&lt;!-- **Mã:** 
-**Nhóm:** --&gt;
-&lt;h2 id="khái-niệm"&gt;Khái Niệm&lt;/h2&gt;
-&lt;p&gt;Đây là bài học test được tạo qua API. Nội dung này sẽ được lưu trong file _index.md và có thể truy cập qua URL.&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bai-Hoc on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
+    <link>http://localhost:1313/tags/bai-hoc/</link>
+    <description>Recent content in Bai-Hoc on HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</description>
+    <generator>Hugo</generator>
+    <language>vi-VN</language>
+    <lastBuildDate>Mon, 29 Sep 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/bai-hoc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bai Hoc Test</title>
+      <link>http://localhost:1313/tu-khainiem/bai-hoc-test/</link>
+      <pubDate>Mon, 29 Sep 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tu-khainiem/bai-hoc-test/</guid>
+      <description>&lt;h1 id=&#34;bai-hoc-test&#34;&gt;Bai Hoc Test&lt;/h1&gt;&#xA;&lt;!-- **Mã:** &#xA;**Nhóm:**  --&gt;&#xA;&lt;h2 id=&#34;khái-niệm&#34;&gt;Khái Niệm&lt;/h2&gt;&#xA;&lt;p&gt;Đây là bài học test được tạo qua API. Nội dung này sẽ được lưu trong file _index.md và có thể truy cập qua URL.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
