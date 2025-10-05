@@ -3,7 +3,7 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TVHL Giàu Năng Lực. - HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
+    <title>TVHL Giàu Năng Lực - HappyMarketDocs - Phát triển Nội tâm &amp; Huấn luyện</title>
     <meta name="description" content="Tài liệu toàn diện về phát triển nội tâm, huấn luyện tư vấn và phát triển bản thân. Kiến thức chuyên sâu từ A-Z để phát triển toàn diện và thành công trong cuộc sống.">
     
     
@@ -23,15 +23,15 @@
     <meta name="author" content="HappyMarket Team">
     
     
-    <meta property="og:title" content="TVHL Giàu Năng Lực.">
+    <meta property="og:title" content="TVHL Giàu Năng Lực">
     <meta property="og:description" content="Tài liệu toàn diện về phát triển nội tâm, huấn luyện tư vấn và phát triển bản thân. Kiến thức chuyên sâu từ A-Z để phát triển toàn diện và thành công trong cuộc sống.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://localhost:1313/categories/tvhl-gi%C3%A0u-n%C4%83ng-l%E1%BB%B1c./">
+    <meta property="og:url" content="http://localhost:1313/categories/tvhl-gi%C3%A0u-n%C4%83ng-l%E1%BB%B1c/">
     <meta property="og:image" content="/images/og-image.jpg">
     
     
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="TVHL Giàu Năng Lực.">
+    <meta name="twitter:title" content="TVHL Giàu Năng Lực">
     <meta name="twitter:description" content="Tài liệu toàn diện về phát triển nội tâm, huấn luyện tư vấn và phát triển bản thân. Kiến thức chuyên sâu từ A-Z để phát triển toàn diện và thành công trong cuộc sống.">
     <meta name="twitter:image" content="/images/og-image.jpg">
     
@@ -284,7 +284,7 @@
 <div class="mb-8">
     
     <header class="mb-8">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">TVHL Giàu Năng Lực.</h1>
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">TVHL Giàu Năng Lực</h1>
         
     </header>
 
@@ -297,7 +297,7 @@
         
         <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
             <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                <a href="/tu-khainiem/nang-luc-chuyen-mon/" class="hover:text-orange-500">Năng lực chuyên môn</a>
+                <a href="/tu-khainiem/nguoi-truong-thanh/" class="hover:text-orange-500">Người trưởng thành</a>
             </h3>
             
             <div class="text-sm text-gray-500">
@@ -307,17 +307,7 @@
         
         <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
             <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                <a href="/tu-khainiem/nang-luc-quan-niem/" class="hover:text-orange-500">Năng lực quan niệm</a>
-            </h3>
-            
-            <div class="text-sm text-gray-500">
-                0 bài viết
-            </div>
-        </div>
-        
-        <div class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                <a href="/tu-khainiem/nang-luc-xa-hoi/" class="hover:text-orange-500">Năng lực xã hội</a>
+                <a href="/tu-khainiem/nguoi-giau-nang-luc/" class="hover:text-orange-500">Người giàu năng lực</a>
             </h3>
             
             <div class="text-sm text-gray-500">
@@ -336,7 +326,7 @@
                     <div class="flex justify-between items-center">
                         <div class="text-sm text-gray-500">
                             
-                            Cập nhật lần cuối: 22/09/2025
+                            Cập nhật lần cuối: 23/09/2025
                             
                         </div>
                         <div class="flex space-x-4">
@@ -447,7 +437,7 @@
                             <input type="checkbox" id="rememberMe" class="rounded border-gray-300 text-orange-500 focus:ring-orange-500">
                             <span class="ml-2 text-sm text-gray-600">Ghi nhớ đăng nhập</span>
                         </label>
-                        <a href="#" class="text-sm text-orange-500 hover:text-orange-600">Quên mật khẩu?</a>
+                        <button type="button" onclick="closeLoginModal(); openForgotPasswordModal();" class="text-sm text-orange-500 hover:text-orange-600">Quên mật khẩu?</button>
                     </div>
                     
                     <div id="loginError" class="hidden bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm"></div>
@@ -531,6 +521,77 @@
     </div>
 
     
+    <div id="forgotPasswordModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Quên mật khẩu</h2>
+                    <button onclick="closeForgotPasswordModal()" class="text-gray-400 hover:text-gray-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="forgotPasswordForm" class="space-y-4">
+                    <div>
+                        <label for="forgotEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="forgotEmail" name="email" required 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                               placeholder="Nhập email của bạn">
+                    </div>
+                    
+                    <div id="forgotPasswordError" class="hidden bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm"></div>
+                    
+                    <button type="submit" class="modal-submit-btn">
+                        Thử gửi link đặt lại mật khẩu
+                    </button>
+                    
+                    <div class="mt-3">
+                        <button type="button" onclick="closeForgotPasswordModal(); openRegisterModal();" 
+                                class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
+                            🆕 Tạo tài khoản mới (Khuyến nghị)
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="mt-6 text-center space-y-2">
+                    <p class="text-sm text-gray-600">
+                        Nhớ mật khẩu? 
+                        <button onclick="closeForgotPasswordModal(); openLoginModal();" class="text-orange-500 hover:text-orange-600 font-medium">Đăng nhập ngay</button>
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        Chưa có tài khoản? 
+                        <button onclick="closeForgotPasswordModal(); openRegisterModal();" class="text-orange-500 hover:text-orange-600 font-medium">Tạo tài khoản mới</button>
+                    </p>
+                </div>
+                
+                <div class="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                    <h3 class="text-sm font-medium text-yellow-900 mb-2">⚠️ Lưu ý quan trọng</h3>
+                    <p class="text-xs text-yellow-800 mb-3">WordPress chưa được cấu hình để gửi email tự động. Vui lòng chọn giải pháp thay thế:</p>
+                    
+                    <div class="space-y-2">
+                        <div class="p-3 bg-white rounded border border-yellow-200">
+                            <h4 class="text-xs font-medium text-yellow-900 mb-1">🆕 Giải pháp 1: Tạo tài khoản mới</h4>
+                            <p class="text-xs text-yellow-700">Sử dụng email khác để tạo tài khoản mới</p>
+                        </div>
+                        
+                        <div class="p-3 bg-white rounded border border-yellow-200">
+                            <h4 class="text-xs font-medium text-yellow-900 mb-1">📞 Giải pháp 2: Liên hệ admin</h4>
+                            <p class="text-xs text-yellow-700">Admin sẽ hỗ trợ đặt lại mật khẩu</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3 pt-3 border-t border-yellow-200">
+                        <p class="text-xs text-yellow-800 mb-1">📧 Email admin: admin@wikiw.vn</p>
+                        <p class="text-xs text-yellow-800">📱 Hotline: 0123-456-789</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
     <script src="/js/main.js"></script>
@@ -582,6 +643,23 @@
                 dropdown.style.opacity = '1';
                 dropdown.style.visibility = 'visible';
                 dropdown.style.transform = 'translateY(0)';
+            }
+        }
+
+        function hideDropdown(element) {
+            const dropdown = element.querySelector('.dropdown-content');
+            if (dropdown) {
+                dropdown.style.opacity = '0';
+                dropdown.style.visibility = 'hidden';
+                dropdown.style.transform = 'translateY(-10px)';
+            }
+        }
+    </script>
+    
+    
+</body>
+</html>
+le.transform = 'translateY(0)';
             }
         }
 

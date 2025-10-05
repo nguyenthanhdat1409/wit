@@ -590,7 +590,7 @@ async function handleForgotPassword(e) {
     
     try {
         // Show warning about email configuration
-        showError('forgotPasswordError', 'Lưu ý: WordPress chưa được cấu hình để gửi email tự động. Vui lòng chọn một trong các giải pháp bên dưới.');
+        showError('forgotPasswordError', 'Lưu ý: Wiki chưa được cấu hình để gửi email tự động. Vui lòng chọn một trong các giải pháp bên dưới.');
         
         // Don't redirect to WordPress since email won't work
         // Instead, show helpful alternatives
