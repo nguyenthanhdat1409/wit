@@ -701,6 +701,23 @@ function populateUserProfile(userData) {
     }
     document.getElementById('profile-role').textContent = roleText;
     
+    // Membership tier information
+    let membershipTier = '🌱 Học viên mới'; // Default tier
+    if (userData.meta && userData.meta.membership_tier) {
+        const tier = userData.meta.membership_tier;
+        const tierMap = {
+            'new_learner': '🌱 Học viên mới',
+            'active_learner': '📖 Học viên tích cực',
+            'dedicated_learner': '🎯 Học viên chuyên cần',
+            'excellent_learner': '🏆 Học viên xuất sắc',
+            'mentor': '👨‍🏫 Mentor',
+            'expert': '🌟 Chuyên gia',
+            'master': '💎 Master'
+        };
+        membershipTier = tierMap[tier] || '🌱 Học viên mới';
+    }
+    document.getElementById('profile-membership-tier').textContent = membershipTier;
+    
     // Registration date
     if (userData.registered_date) {
         const regDate = new Date(userData.registered_date);

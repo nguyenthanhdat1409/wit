@@ -599,6 +599,53 @@ button[type="submit"].bg-orange-500 {
     text-decoration: underline !important;
 }
 
+/* Membership tier styling */
+#profile-membership-tier {
+    background: linear-gradient(135deg, #f97316, #ea580c) !important;
+    color: white !important;
+    padding: 4px 12px !important;
+    border-radius: 20px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    display: inline-block !important;
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+#profile-membership-tier:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4) !important;
+}
+
+/* Special styling for different membership tiers */
+#profile-membership-tier:contains("🌱") {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+}
+
+#profile-membership-tier:contains("📖") {
+    background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+#profile-membership-tier:contains("🎯") {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+}
+
+#profile-membership-tier:contains("🏆") {
+    background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+}
+
+#profile-membership-tier:contains("👨‍🏫") {
+    background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+}
+
+#profile-membership-tier:contains("🌟") {
+    background: linear-gradient(135deg, #f97316, #ea580c) !important;
+}
+
+#profile-membership-tier:contains("💎") {
+    background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+}
+
 /* Profile modal responsive */
 @media (max-width: 640px) {
     #userProfileModal .bg-white {
