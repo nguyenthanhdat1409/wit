@@ -158,7 +158,22 @@ async function handleLogin(e) {
             })
         });
         
-        const data = await response.json();
+        // Check if response is ok and has content
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const responseText = await response.text();
+        console.log('Login response:', responseText);
+        
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (parseError) {
+            console.error('JSON parse error:', parseError);
+            console.error('Response text:', responseText);
+            throw new Error('Server response is not valid JSON. Please check server configuration.');
+        }
         
         if (data.success) {
             // Store authentication data
@@ -241,7 +256,22 @@ async function handleRegister(e) {
             })
         });
         
-        const data = await response.json();
+        // Check if response is ok and has content
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const responseText = await response.text();
+        console.log('Registration response:', responseText);
+        
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (parseError) {
+            console.error('JSON parse error:', parseError);
+            console.error('Response text:', responseText);
+            throw new Error('Server response is not valid JSON. Please check server configuration.');
+        }
         
         if (data.success) {
             // Auto login after successful registration
@@ -257,7 +287,22 @@ async function handleRegister(e) {
                 })
             });
             
-            const loginData = await loginResponse.json();
+            // Check login response
+            if (!loginResponse.ok) {
+                throw new Error(`Login failed: HTTP ${loginResponse.status}`);
+            }
+            
+            const loginResponseText = await loginResponse.text();
+            console.log('Login response:', loginResponseText);
+            
+            let loginData;
+            try {
+                loginData = JSON.parse(loginResponseText);
+            } catch (parseError) {
+                console.error('Login JSON parse error:', parseError);
+                console.error('Login response text:', loginResponseText);
+                throw new Error('Login response is not valid JSON.');
+            }
             
             if (loginData.success) {
                 authToken = loginData.token;

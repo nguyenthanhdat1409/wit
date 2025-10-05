@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Netlify Function</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">🔍 Debug Netlify Function</h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">🧪 Test Netlify Function</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-medium mb-3">Test Registration</h3>
+                    <button onclick="testRegistration()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                        Test Registration
+                    </button>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium mb-3">Test Login</h3>
+                    <button onclick="testLogin()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                        Test Login
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">📊 Debug Results</h2>
+            <div id="debugResults" class="space-y-4">
+                <p class="text-gray-500">Click a test button to see debug information...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const NETLIFY_FUNCTION_URL = '/.netlify/functions/auth';
+        
+        function addDebugResult(message, type = 'info') {
+            const resultsDiv = document.getElementById('debugResults');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            const colors = {
+                success: 'bg-green-100 border-green-300 text-green-800',
+                error: 'bg-red-100 border-red-300 text-red-800',
+                warning: 'bg-yellow-100 border-yellow-300 text-yellow-800',
+                info: 'bg-blue-100 border-blue-300 text-blue-800'
+            };
+            
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `p-4 rounded-lg border ${colors[type]}`;
+            resultDiv.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="font-medium">${message}</span>
+                    <span class="text-sm opacity-75">${timestamp}</span>
+                </div>
+            `;
+            
+            resultsDiv.appendChild(resultDiv);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+        
+        function clearResults() {
+            document.getElementById('debugResults').innerHTML = '';
+        }
+        
+        async function testRegistration() {
+            clearResults();
+            addDebugResult('🔄 Testing Registration...', 'info');
+            
+            const testData = {
+                action: 'register',
+                username: `testuser_${Date.now()}`,
+                email: `test_${Date.now()}@example.com`,
+                password: 'testpassword123',
+                name: 'Test User'
+            };
+            
+            addDebugResult(`📤 Sending data: ${JSON.stringify(testData, null, 2)}`, 'info');
+            
+            try {
+                const response = await fetch(NETLIFY_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                addDebugResult(`📡 Response status: ${response.status} ${response.statusText}`, 'info');
+                addDebugResult(`📡 Response headers: ${JSON.stringify([...response.headers.entries()])}`, 'info');
+                
+                const responseText = await response.text();
+                addDebugResult(`📥 Raw response: ${responseText}`, 'info');
+                
+                if (response.ok) {
+                    try {
+                        const data = JSON.parse(responseText);
+                        addDebugResult(`✅ Parsed JSON: ${JSON.stringify(data, null, 2)}`, 'success');
+                    } catch (parseError) {
+                        addDebugResult(`❌ JSON Parse Error: ${parseError.message}`, 'error');
+                        addDebugResult(`📄 Response text: ${responseText}`, 'error');
+                    }
+                } else {
+                    addDebugResult(`❌ HTTP Error: ${response.status} ${response.statusText}`, 'error');
+                }
+                
+            } catch (error) {
+                addDebugResult(`❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testLogin() {
+            clearResults();
+            addDebugResult('🔄 Testing Login...', 'info');
+            
+            const testData = {
+                action: 'login',
+                username: 'test@example.com',
+                password: 'testpassword123'
+            };
+            
+            addDebugResult(`📤 Sending data: ${JSON.stringify(testData, null, 2)}`, 'info');
+            
+            try {
+                const response = await fetch(NETLIFY_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                addDebugResult(`📡 Response status: ${response.status} ${response.statusText}`, 'info');
+                addDebugResult(`📡 Response headers: ${JSON.stringify([...response.headers.entries()])}`, 'info');
+                
+                const responseText = await response.text();
+                addDebugResult(`📥 Raw response: ${responseText}`, 'info');
+                
+                if (response.ok) {
+                    try {
+                        const data = JSON.parse(responseText);
+                        addDebugResult(`✅ Parsed JSON: ${JSON.stringify(data, null, 2)}`, 'success');
+                    } catch (parseError) {
+                        addDebugResult(`❌ JSON Parse Error: ${parseError.message}`, 'error');
+                        addDebugResult(`📄 Response text: ${responseText}`, 'error');
+                    }
+                } else {
+                    addDebugResult(`❌ HTTP Error: ${response.status} ${response.statusText}`, 'error');
+                }
+                
+            } catch (error) {
+                addDebugResult(`❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Test on page load
+        window.onload = function() {
+            addDebugResult('🚀 Debug tool loaded. Ready to test Netlify Function.', 'info');
+        };
+    </script>
+</body>
+</html>

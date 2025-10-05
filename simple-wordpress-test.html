@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple WordPress Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .info { background: #d1ecf1; border-color: #bee5eb; color: #0c5460; }
+        button { background: #007cba; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #005a87; }
+        input { padding: 8px; margin: 5px; border: 1px solid #ddd; border-radius: 4px; width: 200px; }
+        .result { margin-top: 10px; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Simple WordPress API Test</h1>
+        
+        <div class="test-section">
+            <h3>⚙️ Configuration</h3>
+            <p>WordPress URL: <input type="text" id="wpUrl" value="https://admin.wikiw.vn" placeholder="https://your-wordpress-site.com"></p>
+            <p>Test Username: <input type="text" id="username" placeholder="your-username"></p>
+            <p>Test Password: <input type="password" id="password" placeholder="your-password"></p>
+        </div>
+        
+        <div class="test-section">
+            <h3>🧪 Quick Tests</h3>
+            <button onclick="testBasicAPI()">Test Basic API</button>
+            <button onclick="testJWTLogin()">Test JWT Login</button>
+            <button onclick="testUserRegistration()">Test Registration</button>
+            <button onclick="testAll()">Test All</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>📊 Results</h3>
+            <div id="results">
+                <p>Click a test button to see results...</p>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📋 Setup Checklist</h3>
+            <ul>
+                <li>✅ Install "JWT Authentication for WP REST API" plugin</li>
+                <li>✅ Install "Code Snippets" plugin</li>
+                <li>✅ Add JWT configuration via Code Snippets</li>
+                <li>✅ Add CORS headers via Code Snippets</li>
+                <li>✅ Enable "Anyone can register" in Settings > General</li>
+                <li>✅ Test API endpoints</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function getConfig() {
+            return {
+                url: document.getElementById('wpUrl').value,
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            };
+        }
+        
+        function addResult(message, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong> - ${message}`;
+            results.appendChild(div);
+            results.scrollTop = results.scrollHeight;
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+        
+        async function testBasicAPI() {
+            clearResults();
+            const config = getConfig();
+            addResult('🔄 Testing WordPress REST API...', 'info');
+            
+            try {
+                const response = await fetch(`${config.url}/wp-json/wp/v2/`);
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult(`✅ REST API Working! Site: ${data.name}`, 'success');
+                } else {
+                    addResult(`❌ REST API Failed: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testJWTLogin() {
+            clearResults();
+            const config = getConfig();
+            
+            if (!config.username || !config.password) {
+                addResult('⚠️ Please enter username and password', 'error');
+                return;
+            }
+            
+            addResult('🔄 Testing JWT Authentication...', 'info');
+            
+            try {
+                const response = await fetch(`${config.url}/wp-json/jwt-auth/v1/token`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: config.username,
+                        password: config.password
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult(`✅ JWT Login Successful! User: ${data.user_display_name}`, 'success');
+                    
+                    // Test protected endpoint
+                    const userResponse = await fetch(`${config.url}/wp-json/wp/v2/users/me`, {
+                        headers: { 'Authorization': `Bearer ${data.token}` }
+                    });
+                    
+                    if (userResponse.ok) {
+                        const userData = await userResponse.json();
+                        addResult(`✅ Protected Endpoint Working! User ID: ${userData.id}`, 'success');
+                    } else {
+                        addResult(`❌ Protected Endpoint Failed: ${userResponse.status}`, 'error');
+                    }
+                } else {
+                    const errorData = await response.json();
+                    addResult(`❌ JWT Login Failed: ${errorData.message || 'Invalid credentials'}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testUserRegistration() {
+            clearResults();
+            const config = getConfig();
+            addResult('🔄 Testing User Registration...', 'info');
+            
+            const testUser = {
+                username: `testuser_${Date.now()}`,
+                email: `test_${Date.now()}@example.com`,
+                password: 'testpassword123',
+                name: 'Test User'
+            };
+            
+            try {
+                const response = await fetch(`${config.url}/wp-json/wp/v2/users`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testUser)
+                });
+                
+                if (response.ok) {
+                    const userData = await response.json();
+                    addResult(`✅ User Registration Successful! User ID: ${userData.id}`, 'success');
+                } else {
+                    const errorData = await response.json();
+                    addResult(`❌ Registration Failed: ${errorData.message || response.statusText}`, 'error');
+                }
+            } catch (error) {
+                addResult(`❌ Network Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testAll() {
+            clearResults();
+            addResult('🚀 Running All Tests...', 'info');
+            
+            await testBasicAPI();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testJWTLogin();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testUserRegistration();
+            
+            addResult('✅ All tests completed!', 'success');
+        }
+        
+        // Auto-test on page load
+        window.onload = function() {
+            setTimeout(testBasicAPI, 1000);
+        };
+    </script>
+</body>
+</html>
