@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Navigation Auth - HappyMarketDocs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .button {
+            background: #FF9900;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .button:hover {
+            background: #e68900;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .warning { background: #fff3cd; color: #856404; }
+        #console-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .navigation-test {
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Navigation Auth</h1>
+        
+        <div id="auth-status" class="status info">
+            Đang kiểm tra trạng thái đăng nhập...
+        </div>
+        
+        <div class="navigation-test">
+            <h3>🔗 Test Navigation Links</h3>
+            <p>Click các link sau để test chuyển trang:</p>
+            <a href="/hinh/" class="button">📸 Trang Hình ảnh</a>
+            <a href="/tu-khainiem/" class="button">📚 Trang Từ khái niệm</a>
+            <a href="/khai-niem-nguon/" class="button">💡 Trang Khái niệm nguồn</a>
+            <a href="/" class="button">🏠 Trang chủ</a>
+        </div>
+        
+        <div>
+            <button class="button" onclick="startLogoutMonitoring()">🔍 Bắt đầu Monitor Logout</button>
+            <button class="button" onclick="simulateLogin()">🔑 Simulate Login</button>
+            <button class="button" onclick="checkAuthState()">📊 Check Auth State</button>
+            <button class="button" onclick="clearConsole()">🧹 Clear Console</button>
+        </div>
+        
+        <div id="console-output"></div>
+    </div>
+
+    <script>
+        // Auth configuration
+        const AUTH_CONFIG = {
+            storageKeys: {
+                user: 'happymarket_user',
+                token: 'happymarket_token',
+                remember: 'happymarket_remember'
+            }
+        };
+
+        let currentUser = null;
+        let authToken = null;
+        let logoutMonitorActive = false;
+        let originalLogout = null;
+        let logoutCallCount = 0;
+
+        // Load auth state
+        function loadAuthState() {
+            let savedUser = localStorage.getItem(AUTH_CONFIG.storageKeys.user);
+            let savedToken = localStorage.getItem(AUTH_CONFIG.storageKeys.token);
+            
+            if (!savedUser || !savedToken) {
+                savedUser = sessionStorage.getItem(AUTH_CONFIG.storageKeys.user);
+                savedToken = sessionStorage.getItem(AUTH_CONFIG.storageKeys.token);
+            }
+            
+            if (savedUser && savedToken) {
+                currentUser = JSON.parse(savedUser);
+                authToken = savedToken;
+                return true;
+            }
+            return false;
+        }
+
+        // Start monitoring logout calls
+        function startLogoutMonitoring() {
+            if (logoutMonitorActive) {
+                log('⚠️ Logout monitoring already active');
+                return;
+            }
+
+            log('🔍 Starting logout monitoring...');
+            logoutMonitorActive = true;
+            logoutCallCount = 0;
+
+            // Override logout function to monitor calls
+            originalLogout = window.logout;
+            
+            window.logout = function() {
+                logoutCallCount++;
+                log(`🚨 LOGOUT CALLED #${logoutCallCount}`);
+                log('Stack trace:');
+                console.trace();
+                
+                // Call original logout
+                if (originalLogout) {
+                    originalLogout.apply(this, arguments);
+                }
+            };
+
+            // Auto-stop monitoring after 30 seconds
+            setTimeout(() => {
+                stopLogoutMonitoring();
+            }, 30000);
+
+            log('✅ Logout monitoring started (will auto-stop in 30s)');
+        }
+
+        // Stop monitoring logout calls
+        function stopLogoutMonitoring() {
+            if (!logoutMonitorActive) return;
+
+            log('🛑 Stopping logout monitoring...');
+            logoutMonitorActive = false;
+
+            // Restore original logout function
+            if (originalLogout) {
+                window.logout = originalLogout;
+            }
+
+            log(`📊 Total logout calls detected: ${logoutCallCount}`);
+            
+            if (logoutCallCount > 0) {
+                log('⚠️ Unwanted logout calls detected!');
+            } else {
+                log('✅ No unwanted logout calls detected');
+            }
+        }
+
+        // Simulate login
+        function simulateLogin() {
+            log('🔑 Simulating login...');
+            
+            currentUser = {
+                id: '3',
+                display_name: 'Dat',
+                user_email: 'nguyenthanhdat1491@gmail.com'
+            };
+            
+            authToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.simulated.token';
+            
+            // Save to sessionStorage
+            sessionStorage.setItem(AUTH_CONFIG.storageKeys.user, JSON.stringify(currentUser));
+            sessionStorage.setItem(AUTH_CONFIG.storageKeys.token, authToken);
+            sessionStorage.setItem(AUTH_CONFIG.storageKeys.remember, 'false');
+            
+            log('✅ Simulated login successful');
+            updateAuthStatus();
+        }
+
+        // Check auth state
+        function checkAuthState() {
+            log('📊 Checking auth state...');
+            
+            loadAuthState();
+            
+            log('currentUser: ' + (currentUser ? JSON.stringify(currentUser) : 'null'));
+            log('authToken: ' + (authToken ? 'Present' : 'Missing'));
+            log('localStorage user: ' + (localStorage.getItem(AUTH_CONFIG.storageKeys.user) ? 'Present' : 'Missing'));
+            log('sessionStorage user: ' + (sessionStorage.getItem(AUTH_CONFIG.storageKeys.user) ? 'Present' : 'Missing'));
+            
+            updateAuthStatus();
+        }
+
+        // Update auth status display
+        function updateAuthStatus() {
+            const statusEl = document.getElementById('auth-status');
+            
+            if (currentUser && authToken) {
+                statusEl.className = 'status success';
+                statusEl.textContent = '✅ Đã đăng nhập: ' + (currentUser.display_name || currentUser.name || 'User');
+            } else {
+                statusEl.className = 'status error';
+                statusEl.textContent = '❌ Chưa đăng nhập';
+            }
+        }
+
+        // Clear console
+        function clearConsole() {
+            document.getElementById('console-output').textContent = '';
+        }
+
+        // Log function
+        function log(message) {
+            const output = document.getElementById('console-output');
+            const timestamp = new Date().toLocaleTimeString();
+            output.textContent += `[${timestamp}] ${message}\n`;
+            output.scrollTop = output.scrollHeight;
+            
+            // Also log to browser console
+            console.log(`[AUTH-TEST] ${message}`);
+        }
+
+        // Test navigation by simulating page changes
+        function testNavigation() {
+            log('🧪 Testing navigation...');
+            
+            // Simulate what happens when navigating to different pages
+            log('Simulating page load...');
+            
+            // This would normally trigger checkAuthStatus()
+            loadAuthState();
+            updateAuthStatus();
+            
+            log('Navigation test complete');
+        }
+
+        // Initialize
+        window.addEventListener('load', function() {
+            log('🧪 Navigation Auth Test loaded');
+            checkAuthState();
+            
+            // Test navigation immediately
+            setTimeout(testNavigation, 1000);
+        });
+
+        // Monitor page visibility changes (simulates navigation)
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                log('📄 Page became visible (navigation detected)');
+                testNavigation();
+            }
+        });
+
+        // Monitor beforeunload (page leaving)
+        window.addEventListener('beforeunload', function() {
+            log('🚪 Page is leaving...');
+        });
+    </script>
+</body>
+</html>

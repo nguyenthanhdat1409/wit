@@ -37,25 +37,38 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAuth();
     setupEventListeners();
     checkAuthStatus();
+    
+    // Force refresh UI state when page loads
+    setTimeout(() => {
+        if (currentUser && authToken) {
+            updateUIForLoggedInUser();
+        }
+        // Don't force updateUIForLoggedOutUser() to avoid unwanted messages
+    }, 100);
 });
 
 /**
  * Initialize authentication
  */
 function initializeAuth() {
-    // Load saved user data
-    const savedUser = localStorage.getItem(AUTH_CONFIG.storageKeys.user);
-    const savedToken = localStorage.getItem(AUTH_CONFIG.storageKeys.token);
-    const rememberMe = localStorage.getItem(AUTH_CONFIG.storageKeys.remember);
+    // Load saved user data from localStorage first
+    let savedUser = localStorage.getItem(AUTH_CONFIG.storageKeys.user);
+    let savedToken = localStorage.getItem(AUTH_CONFIG.storageKeys.token);
+    let rememberMe = localStorage.getItem(AUTH_CONFIG.storageKeys.remember);
     
-    if (savedUser && savedToken && rememberMe === 'true') {
+    // If not in localStorage, check sessionStorage
+    if (!savedUser || !savedToken) {
+        savedUser = sessionStorage.getItem(AUTH_CONFIG.storageKeys.user);
+        savedToken = sessionStorage.getItem(AUTH_CONFIG.storageKeys.token);
+        rememberMe = sessionStorage.getItem(AUTH_CONFIG.storageKeys.remember);
+    }
+    
+    if (savedUser && savedToken) {
         currentUser = JSON.parse(savedUser);
         authToken = savedToken;
         updateUIForLoggedInUser();
-    } else {
-        // Ensure UI shows logged out state on page load
-        updateUIForLoggedOutUser();
     }
+    // Don't force updateUIForLoggedOutUser() here to avoid unwanted messages
 }
 
 /**
@@ -105,7 +118,13 @@ function setupEventListeners() {
  * Check authentication status
  */
 async function checkAuthStatus() {
-    if (authToken) {
+    // Only check if we have both user and token
+    if (authToken && currentUser) {
+        // For now, just update UI without server validation
+        // This prevents unwanted logout messages when navigating pages
+        updateUIForLoggedInUser();
+        
+        // Optional: Validate token in background without affecting UI
         try {
             const response = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
                 method: 'POST',
@@ -120,18 +139,18 @@ async function checkAuthStatus() {
             
             if (response.ok) {
                 const data = await response.json();
-                if (data.success) {
-                    currentUser = data.user;
-                    updateUIForLoggedInUser();
-                } else {
-                    logout();
+                if (!data.success) {
+                    // Only logout silently if token is truly invalid
+                    console.warn('Token validation failed, clearing auth silently');
+                    logoutSilently();
                 }
             } else {
-                logout();
+                // Only logout silently if server is unreachable
+                console.warn('Auth server unreachable, keeping session for now');
             }
         } catch (error) {
-            console.error('Auth check failed:', error);
-            logout();
+            console.warn('Auth check failed, keeping session:', error);
+            // Don't logout on network errors
         }
     }
 }
@@ -273,6 +292,11 @@ async function handleLogin(e) {
                 localStorage.setItem(AUTH_CONFIG.storageKeys.user, JSON.stringify(currentUser));
                 localStorage.setItem(AUTH_CONFIG.storageKeys.token, authToken);
                 localStorage.setItem(AUTH_CONFIG.storageKeys.remember, 'true');
+            } else {
+                // Save to sessionStorage for current session only
+                sessionStorage.setItem(AUTH_CONFIG.storageKeys.user, JSON.stringify(currentUser));
+                sessionStorage.setItem(AUTH_CONFIG.storageKeys.token, authToken);
+                sessionStorage.setItem(AUTH_CONFIG.storageKeys.remember, 'false');
             }
             
             // Update UI
@@ -549,13 +573,87 @@ function updateUIForLoggedOutUser() {
 }
 
 /**
- * Logout user
+ * Debug function to check auth state
  */
-function logout() {
-    // Clear stored data
+function debugAuthState() {
+    console.log('=== AUTH DEBUG ===');
+    console.log('currentUser:', currentUser);
+    console.log('authToken:', authToken ? 'Present' : 'Missing');
+    console.log('localStorage user:', localStorage.getItem(AUTH_CONFIG.storageKeys.user) ? 'Present' : 'Missing');
+    console.log('sessionStorage user:', sessionStorage.getItem(AUTH_CONFIG.storageKeys.user) ? 'Present' : 'Missing');
+    console.log('auth-buttons element:', document.getElementById('auth-buttons'));
+    console.log('user-menu element:', document.getElementById('user-menu'));
+    console.log('==================');
+}
+
+// Make debug function available globally
+window.debugAuthState = debugAuthState;
+
+/**
+ * Test function to check if logout is being called unexpectedly
+ */
+function testLogoutTriggers() {
+    console.log('=== TESTING LOGOUT TRIGGERS ===');
+    
+    // Override logout function temporarily to log calls
+    const originalLogout = window.logout;
+    let logoutCallCount = 0;
+    
+    window.logout = function() {
+        logoutCallCount++;
+        console.warn(`🚨 LOGOUT CALLED #${logoutCallCount} - Stack trace:`);
+        console.trace();
+        
+        // Call original logout
+        originalLogout.apply(this, arguments);
+    };
+    
+    // Test navigation
+    console.log('Testing navigation...');
+    
+    // Restore original after 10 seconds
+    setTimeout(() => {
+        window.logout = originalLogout;
+        console.log(`=== TEST COMPLETE - Logout was called ${logoutCallCount} times ===`);
+    }, 10000);
+}
+
+// Make test function available globally
+window.testLogoutTriggers = testLogoutTriggers;
+
+/**
+ * Logout user silently (without showing message)
+ */
+function logoutSilently() {
+    // Clear stored data from both localStorage and sessionStorage
     localStorage.removeItem(AUTH_CONFIG.storageKeys.user);
     localStorage.removeItem(AUTH_CONFIG.storageKeys.token);
     localStorage.removeItem(AUTH_CONFIG.storageKeys.remember);
+    
+    sessionStorage.removeItem(AUTH_CONFIG.storageKeys.user);
+    sessionStorage.removeItem(AUTH_CONFIG.storageKeys.token);
+    sessionStorage.removeItem(AUTH_CONFIG.storageKeys.remember);
+    
+    // Clear global state
+    currentUser = null;
+    authToken = null;
+    
+    // Update UI
+    updateUIForLoggedOutUser();
+}
+
+/**
+ * Logout user
+ */
+function logout() {
+    // Clear stored data from both localStorage and sessionStorage
+    localStorage.removeItem(AUTH_CONFIG.storageKeys.user);
+    localStorage.removeItem(AUTH_CONFIG.storageKeys.token);
+    localStorage.removeItem(AUTH_CONFIG.storageKeys.remember);
+    
+    sessionStorage.removeItem(AUTH_CONFIG.storageKeys.user);
+    sessionStorage.removeItem(AUTH_CONFIG.storageKeys.token);
+    sessionStorage.removeItem(AUTH_CONFIG.storageKeys.remember);
     
     // Clear global state
     currentUser = null;

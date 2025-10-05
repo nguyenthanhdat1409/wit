@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Auth Debug - HappyMarketDocs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .button {
+            background: #FF9900;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .button:hover {
+            background: #e68900;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        #console-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Auth Debug Tool</h1>
+        
+        <div id="auth-status" class="status info">
+            Đang kiểm tra trạng thái đăng nhập...
+        </div>
+        
+        <div>
+            <button class="button" onclick="checkAuthState()">Kiểm tra Auth State</button>
+            <button class="button" onclick="forceUpdateUI()">Force Update UI</button>
+            <button class="button" onclick="clearAllStorage()">Xóa tất cả Storage</button>
+            <button class="button" onclick="simulateLogin()">Simulate Login</button>
+            <button class="button" onclick="simulateLogout()">Simulate Logout</button>
+        </div>
+        
+        <div id="console-output"></div>
+    </div>
+
+    <script>
+        // Auth configuration
+        const AUTH_CONFIG = {
+            storageKeys: {
+                user: 'happymarket_user',
+                token: 'happymarket_token',
+                remember: 'happymarket_remember'
+            }
+        };
+
+        let currentUser = null;
+        let authToken = null;
+
+        // Load auth state
+        function loadAuthState() {
+            // Check localStorage first
+            let savedUser = localStorage.getItem(AUTH_CONFIG.storageKeys.user);
+            let savedToken = localStorage.getItem(AUTH_CONFIG.storageKeys.token);
+            
+            // If not in localStorage, check sessionStorage
+            if (!savedUser || !savedToken) {
+                savedUser = sessionStorage.getItem(AUTH_CONFIG.storageKeys.user);
+                savedToken = sessionStorage.getItem(AUTH_CONFIG.storageKeys.token);
+            }
+            
+            if (savedUser && savedToken) {
+                currentUser = JSON.parse(savedUser);
+                authToken = savedToken;
+                return true;
+            }
+            return false;
+        }
+
+        // Check auth state
+        function checkAuthState() {
+            log('=== KIỂM TRA AUTH STATE ===');
+            
+            loadAuthState();
+            
+            log('currentUser: ' + (currentUser ? JSON.stringify(currentUser) : 'null'));
+            log('authToken: ' + (authToken ? 'Present (' + authToken.substring(0, 20) + '...)' : 'Missing'));
+            log('localStorage user: ' + (localStorage.getItem(AUTH_CONFIG.storageKeys.user) ? 'Present' : 'Missing'));
+            log('sessionStorage user: ' + (sessionStorage.getItem(AUTH_CONFIG.storageKeys.user) ? 'Present' : 'Missing'));
+            
+            // Check DOM elements
+            const authButtons = document.getElementById('auth-buttons');
+            const userMenu = document.getElementById('user-menu');
+            
+            log('auth-buttons element: ' + (authButtons ? 'Found' : 'Not found'));
+            log('user-menu element: ' + (userMenu ? 'Found' : 'Not found'));
+            
+            if (authButtons) {
+                log('auth-buttons display: ' + getComputedStyle(authButtons).display);
+                log('auth-buttons classes: ' + authButtons.className);
+            }
+            
+            if (userMenu) {
+                log('user-menu display: ' + getComputedStyle(userMenu).display);
+                log('user-menu classes: ' + userMenu.className);
+            }
+            
+            // Update status
+            const statusEl = document.getElementById('auth-status');
+            if (currentUser && authToken) {
+                statusEl.className = 'status success';
+                statusEl.textContent = '✅ Đã đăng nhập: ' + (currentUser.display_name || currentUser.name || 'User');
+            } else {
+                statusEl.className = 'status error';
+                statusEl.textContent = '❌ Chưa đăng nhập';
+            }
+            
+            log('==================');
+        }
+
+        // Force update UI
+        function forceUpdateUI() {
+            log('=== FORCE UPDATE UI ===');
+            
+            loadAuthState();
+            
+            if (currentUser && authToken) {
+                log('Updating UI for logged in user...');
+                updateUIForLoggedInUser();
+            } else {
+                log('Updating UI for logged out user...');
+                updateUIForLoggedOutUser();
+            }
+            
+            log('==================');
+        }
+
+        // Update UI for logged in user
+        function updateUIForLoggedInUser() {
+            const authButtons = document.getElementById('auth-buttons');
+            const mobileAuthButtons = document.getElementById('mobile-auth-buttons');
+            
+            if (authButtons) {
+                authButtons.classList.add('hidden');
+                authButtons.style.display = 'none';
+                log('Hidden auth buttons');
+            }
+            if (mobileAuthButtons) {
+                mobileAuthButtons.classList.add('hidden');
+                mobileAuthButtons.style.display = 'none';
+                log('Hidden mobile auth buttons');
+            }
+            
+            const userMenu = document.getElementById('user-menu');
+            const mobileUserMenu = document.getElementById('mobile-user-menu');
+            
+            if (userMenu) {
+                userMenu.classList.remove('hidden');
+                userMenu.style.display = 'flex';
+                log('Showed user menu');
+            }
+            if (mobileUserMenu) {
+                mobileUserMenu.classList.remove('hidden');
+                mobileUserMenu.style.display = 'block';
+                log('Showed mobile user menu');
+            }
+        }
+
+        // Update UI for logged out user
+        function updateUIForLoggedOutUser() {
+            const authButtons = document.getElementById('auth-buttons');
+            const mobileAuthButtons = document.getElementById('mobile-auth-buttons');
+            
+            if (authButtons) {
+                authButtons.classList.remove('hidden');
+                authButtons.style.display = 'flex';
+                log('Showed auth buttons');
+            }
+            if (mobileAuthButtons) {
+                mobileAuthButtons.classList.remove('hidden');
+                mobileAuthButtons.style.display = 'block';
+                log('Showed mobile auth buttons');
+            }
+            
+            const userMenu = document.getElementById('user-menu');
+            const mobileUserMenu = document.getElementById('mobile-user-menu');
+            
+            if (userMenu) {
+                userMenu.classList.add('hidden');
+                userMenu.style.display = 'none';
+                log('Hidden user menu');
+            }
+            if (mobileUserMenu) {
+                mobileUserMenu.classList.add('hidden');
+                mobileUserMenu.style.display = 'none';
+                log('Hidden mobile user menu');
+            }
+        }
+
+        // Clear all storage
+        function clearAllStorage() {
+            log('=== XÓA TẤT CẢ STORAGE ===');
+            
+            localStorage.removeItem(AUTH_CONFIG.storageKeys.user);
+            localStorage.removeItem(AUTH_CONFIG.storageKeys.token);
+            localStorage.removeItem(AUTH_CONFIG.storageKeys.remember);
+            
+            sessionStorage.removeItem(AUTH_CONFIG.storageKeys.user);
+            sessionStorage.removeItem(AUTH_CONFIG.storageKeys.token);
+            sessionStorage.removeItem(AUTH_CONFIG.storageKeys.remember);
+            
+            currentUser = null;
+            authToken = null;
+            
+            log('Đã xóa tất cả storage');
+            updateUIForLoggedOutUser();
+            
+            log('==================');
+        }
+
+        // Simulate login
+        function simulateLogin() {
+            log('=== SIMULATE LOGIN ===');
+            
+            currentUser = {
+                id: '3',
+                display_name: 'Dat',
+                user_email: 'nguyenthanhdat1491@gmail.com'
+            };
+            
+            authToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.simulated.token';
+            
+            // Save to sessionStorage
+            sessionStorage.setItem(AUTH_CONFIG.storageKeys.user, JSON.stringify(currentUser));
+            sessionStorage.setItem(AUTH_CONFIG.storageKeys.token, authToken);
+            sessionStorage.setItem(AUTH_CONFIG.storageKeys.remember, 'false');
+            
+            log('Simulated login successful');
+            updateUIForLoggedInUser();
+            
+            log('==================');
+        }
+
+        // Simulate logout
+        function simulateLogout() {
+            log('=== SIMULATE LOGOUT ===');
+            
+            clearAllStorage();
+            log('Simulated logout successful');
+            
+            log('==================');
+        }
+
+        // Log function
+        function log(message) {
+            const output = document.getElementById('console-output');
+            const timestamp = new Date().toLocaleTimeString();
+            output.textContent += `[${timestamp}] ${message}\n`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // Initialize
+        window.addEventListener('load', function() {
+            log('Auth Debug Tool loaded');
+            checkAuthState();
+        });
+    </script>
+</body>
+</html>

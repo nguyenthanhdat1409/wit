@@ -145,6 +145,10 @@
     gap: 12px;
 }
 
+.user-menu-container.hidden {
+    display: none !important;
+}
+
 .user-avatar {
     width: 32px !important;
     height: 32px !important;
@@ -192,6 +196,10 @@
     padding: 16px;
     border-top: 1px solid #e5e7eb;
     margin-top: 12px;
+}
+
+.mobile-user-menu-container.hidden {
+    display: none !important;
 }
 
 .mobile-user-info {
