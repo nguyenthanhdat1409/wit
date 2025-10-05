@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check JWT Status</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">🔍 Check JWT Status</h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">🧪 Test JWT Endpoints</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <button onclick="testJWTEndpoint()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                    Test JWT Endpoint
+                </button>
+                <button onclick="testBasicAPI()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                    Test Basic API
+                </button>
+            </div>
+            
+            <div class="bg-yellow-100 border border-yellow-300 text-yellow-800 px-4 py-3 rounded mb-4">
+                <strong>⚠️ Lưu ý:</strong> Lỗi 403 có thể do:
+                <ul class="mt-2 ml-4">
+                    <li>• JWT Plugin chưa được cài đặt</li>
+                    <li>• JWT Secret Key chưa được cấu hình</li>
+                    <li>• CORS headers chưa được thêm</li>
+                    <li>• WordPress settings chưa đúng</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">🔧 WordPress Setup Checklist</h2>
+            
+            <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                    <input type="checkbox" id="jwt-plugin" class="mt-1">
+                    <div>
+                        <label for="jwt-plugin" class="font-medium">JWT Authentication Plugin</label>
+                        <p class="text-sm text-gray-600">Cài đặt plugin "JWT Authentication for WP REST API"</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <input type="checkbox" id="jwt-secret" class="mt-1">
+                    <div>
+                        <label for="jwt-secret" class="font-medium">JWT Secret Key</label>
+                        <p class="text-sm text-gray-600">Thêm JWT_AUTH_SECRET_KEY vào wp-config.php</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <input type="checkbox" id="cors-headers" class="mt-1">
+                    <div>
+                        <label for="cors-headers" class="font-medium">CORS Headers</label>
+                        <p class="text-sm text-gray-600">Thêm CORS headers vào functions.php</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <input type="checkbox" id="user-registration" class="mt-1">
+                    <div>
+                        <label for="user-registration" class="font-medium">User Registration</label>
+                        <p class="text-sm text-gray-600">Enable "Anyone can register" trong Settings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">📊 Test Results</h2>
+            <div id="testResults" class="space-y-4">
+                <p class="text-gray-500">Click a test button to see results...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addResult(message, type = 'info') {
+            const resultsDiv = document.getElementById('testResults');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            const colors = {
+                success: 'bg-green-100 border-green-300 text-green-800',
+                error: 'bg-red-100 border-red-300 text-red-800',
+                warning: 'bg-yellow-100 border-yellow-300 text-yellow-800',
+                info: 'bg-blue-100 border-blue-300 text-blue-800'
+            };
+            
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `p-4 rounded-lg border ${colors[type]}`;
+            resultDiv.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="font-medium">${message}</span>
+                    <span class="text-sm opacity-75">${timestamp}</span>
+                </div>
+            `;
+            
+            resultsDiv.appendChild(resultDiv);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+        
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '';
+        }
+        
+        async function testJWTEndpoint() {
+            clearResults();
+            addResult('🔄 Testing JWT endpoint...', 'info');
+            
+            try {
+                const response = await fetch('https://admin.wikiw.vn/wp-json/jwt-auth/v1/token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: 'test@example.com',
+                        password: 'testpassword123'
+                    })
+                });
+                
+                addResult(`📡 JWT Response status: ${response.status} ${response.statusText}`, 'info');
+                
+                const responseText = await response.text();
+                addResult(`📥 JWT Raw response: ${responseText}`, 'info');
+                
+                if (response.ok) {
+                    const data = JSON.parse(responseText);
+                    addResult(`✅ JWT endpoint working!`, 'success');
+                    addResult(`🔑 Token: ${data.token ? data.token.substring(0, 20) + '...' : 'No token'}`, 'success');
+                } else {
+                    addResult(`❌ JWT endpoint failed: ${response.status}`, 'error');
+                    
+                    if (response.status === 403) {
+                        addResult(`💡 403 Forbidden - JWT plugin may not be configured`, 'warning');
+                    } else if (response.status === 404) {
+                        addResult(`💡 404 Not Found - JWT plugin may not be installed`, 'warning');
+                    }
+                }
+                
+            } catch (error) {
+                addResult(`❌ JWT Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testBasicAPI() {
+            clearResults();
+            addResult('🔄 Testing basic WordPress API...', 'info');
+            
+            try {
+                const response = await fetch('https://admin.wikiw.vn/wp-json/wp/v2/');
+                
+                addResult(`📡 Basic API Response status: ${response.status} ${response.statusText}`, 'info');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult(`✅ Basic WordPress API working!`, 'success');
+                    addResult(`📝 Site: ${data.name}`, 'success');
+                    addResult(`🔗 API URL: ${data.url}`, 'success');
+                } else {
+                    addResult(`❌ Basic API failed: ${response.status}`, 'error');
+                }
+                
+            } catch (error) {
+                addResult(`❌ Basic API Error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Auto-test on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(testBasicAPI, 1000);
+        });
+    </script>
+</body>
+</html>

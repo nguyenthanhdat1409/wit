@@ -9,8 +9,11 @@ const AUTH_CONFIG = {
     netlifyFunctionUrl: '/.netlify/functions/auth',
     // Use Netlify Function for production, direct API for testing
     useDirectAPI: true, // Set to true for testing direct WordPress API
+    // WordPress Application Password for authentication
+    appPassword: 'YJhl 3GV0 nX5O 64fe Lq7o h7J3', // Application Password for Hugo Website Auth
     apiEndpoints: {
-        login: '/wp-json/jwt-auth/v1/token', // Corrected endpoint for JWT
+        login: '/wp-json/jwt-auth/v1/token', // JWT endpoint
+        loginBasic: '/wp-json/wp/v2/users/me', // Basic WordPress API
         register: '/wp-json/wp/v2/users', // REST API (requires auth)
         registerForm: '/wp-login.php?action=register', // WordPress registration form
         user: '/wp-json/wp/v2/users/me' // Endpoint to get user info
@@ -151,17 +154,18 @@ async function handleLogin(e) {
         let response;
         
         if (AUTH_CONFIG.useDirectAPI) {
-            // Use direct WordPress API for testing
+            // Use direct WordPress API with Application Password
             console.log('Using direct WordPress API for login');
-            response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.login}`, {
-                method: 'POST',
+            
+            // Create basic auth header with Application Password
+            const authHeader = btoa(`${email}:${AUTH_CONFIG.appPassword}`);
+            
+            response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.loginBasic}`, {
+                method: 'GET',
                 headers: {
+                    'Authorization': `Basic ${authHeader}`,
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: email,
-                    password: password
-                })
+                }
             });
         } else {
             // Use Netlify Function for authentication
@@ -201,15 +205,15 @@ async function handleLogin(e) {
         let userData = null;
         
         if (AUTH_CONFIG.useDirectAPI) {
-            // Direct WordPress API response format
-            if (data.token) {
+            // Direct WordPress API response format (Application Password)
+            if (data.id) {
                 isSuccess = true;
-                token = data.token;
+                token = 'app-password-auth'; // Simple token for Application Password
                 userData = {
-                    id: data.user_id || 1,
-                    name: data.user_display_name || email,
-                    email: data.user_email || email,
-                    display_name: data.user_display_name || email
+                    id: data.id,
+                    name: data.name || email,
+                    email: data.email || email,
+                    display_name: data.name || email
                 };
             }
         } else {
