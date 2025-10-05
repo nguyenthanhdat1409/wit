@@ -45,6 +45,9 @@ function initializeAuth() {
         currentUser = JSON.parse(savedUser);
         authToken = savedToken;
         updateUIForLoggedInUser();
+    } else {
+        // Ensure UI shows logged out state on page load
+        updateUIForLoggedOutUser();
     }
 }
 
@@ -315,15 +318,27 @@ function updateUIForLoggedInUser() {
     const authButtons = document.getElementById('auth-buttons');
     const mobileAuthButtons = document.getElementById('mobile-auth-buttons');
     
-    if (authButtons) authButtons.classList.add('hidden');
-    if (mobileAuthButtons) mobileAuthButtons.classList.add('hidden');
+    if (authButtons) {
+        authButtons.classList.add('hidden');
+        authButtons.style.display = 'none';
+    }
+    if (mobileAuthButtons) {
+        mobileAuthButtons.classList.add('hidden');
+        mobileAuthButtons.style.display = 'none';
+    }
     
     // Show user menu
     const userMenu = document.getElementById('user-menu');
     const mobileUserMenu = document.getElementById('mobile-user-menu');
     
-    if (userMenu) userMenu.classList.remove('hidden');
-    if (mobileUserMenu) mobileUserMenu.classList.remove('hidden');
+    if (userMenu) {
+        userMenu.classList.remove('hidden');
+        userMenu.style.display = 'flex';
+    }
+    if (mobileUserMenu) {
+        mobileUserMenu.classList.remove('hidden');
+        mobileUserMenu.style.display = 'block';
+    }
     
     // Update user info
     const userName = document.getElementById('user-name');
@@ -348,15 +363,27 @@ function updateUIForLoggedOutUser() {
     const authButtons = document.getElementById('auth-buttons');
     const mobileAuthButtons = document.getElementById('mobile-auth-buttons');
     
-    if (authButtons) authButtons.classList.remove('hidden');
-    if (mobileAuthButtons) mobileAuthButtons.classList.remove('hidden');
+    if (authButtons) {
+        authButtons.classList.remove('hidden');
+        authButtons.style.display = 'flex';
+    }
+    if (mobileAuthButtons) {
+        mobileAuthButtons.classList.remove('hidden');
+        mobileAuthButtons.style.display = 'block';
+    }
     
     // Hide user menu
     const userMenu = document.getElementById('user-menu');
     const mobileUserMenu = document.getElementById('mobile-user-menu');
     
-    if (userMenu) userMenu.classList.add('hidden');
-    if (mobileUserMenu) mobileUserMenu.classList.add('hidden');
+    if (userMenu) {
+        userMenu.classList.add('hidden');
+        userMenu.style.display = 'none';
+    }
+    if (mobileUserMenu) {
+        mobileUserMenu.classList.add('hidden');
+        mobileUserMenu.style.display = 'none';
+    }
 }
 
 /**

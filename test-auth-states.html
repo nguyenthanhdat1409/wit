@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Authentication States - HappyMarketDocs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="themes/happymarket-theme/static/css/auth-buttons.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">🔄 Test Authentication States</h1>
+            
+            <!-- Current State Display -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📊 Current State</h2>
+                <div class="flex items-center space-x-4 mb-4">
+                    <span class="text-sm text-gray-600">Trạng thái hiện tại:</span>
+                    <span id="current-state" class="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm font-medium">
+                        Chưa đăng nhập
+                    </span>
+                </div>
+                
+                <!-- Desktop Header Simulation -->
+                <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                    <h3 class="text-lg font-medium mb-3">🖥️ Desktop Header</h3>
+                    <div class="flex justify-between items-center">
+                        <div class="text-lg font-bold text-gray-900">HappyMarketDocs</div>
+                        <div class="flex items-center space-x-3">
+                            <!-- Auth Buttons (shown when logged out) -->
+                            <div id="auth-buttons" class="auth-buttons-container">
+                                <button class="auth-login-btn" onclick="simulateLogin()">
+                                    Đăng nhập
+                                </button>
+                                <button class="auth-register-btn" onclick="simulateRegister()">
+                                    Đăng ký
+                                </button>
+                            </div>
+                            
+                            <!-- User Menu (hidden when logged out) -->
+                            <div id="user-menu" class="hidden user-menu-container" style="display: none !important;">
+                                <div class="flex items-center space-x-2">
+                                    <div class="user-avatar" id="user-avatar">U</div>
+                                    <span class="user-name" id="user-name">User</span>
+                                </div>
+                                <button class="logout-btn" onclick="simulateLogout()">
+                                    Đăng xuất
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile Header Simulation -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-lg font-medium mb-3">📱 Mobile Header</h3>
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="text-lg font-bold text-gray-900">HappyMarketDocs</div>
+                        <button class="text-gray-700">☰</button>
+                    </div>
+                    
+                    <!-- Mobile Menu Content -->
+                    <div class="border-t border-gray-200 pt-3">
+                        <div class="space-y-2 mb-4">
+                            <div class="text-sm text-gray-600">Menu items...</div>
+                        </div>
+                        
+                        <!-- Mobile Auth Buttons -->
+                        <div class="mobile-auth-buttons-container">
+                            <div id="mobile-auth-buttons" class="space-y-2">
+                                <button class="mobile-auth-login-btn" onclick="simulateLogin()">
+                                    Đăng nhập
+                                </button>
+                                <button class="mobile-auth-register-btn" onclick="simulateRegister()">
+                                    Đăng ký
+                                </button>
+                            </div>
+                            
+                            <!-- Mobile User Menu (hidden when logged out) -->
+                            <div id="mobile-user-menu" class="hidden mobile-user-menu-container" style="display: none !important;">
+                                <div class="mobile-user-info">
+                                    <div class="mobile-user-avatar" id="mobile-user-avatar">U</div>
+                                    <span class="mobile-user-name" id="mobile-user-name">User</span>
+                                </div>
+                                <button class="mobile-logout-btn" onclick="simulateLogout()">
+                                    Đăng xuất
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test Controls -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🎮 Test Controls</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button onclick="simulateLogin()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium">
+                        🔐 Simulate Login
+                    </button>
+                    <button onclick="simulateLogout()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium">
+                        🚪 Simulate Logout
+                    </button>
+                    <button onclick="resetState()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium">
+                        🔄 Reset State
+                    </button>
+                </div>
+            </div>
+            
+            <!-- State Information -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">ℹ️ State Information</h2>
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+                        <span class="text-sm text-gray-700">
+                            <strong>Đăng nhập:</strong> Hiển thị nút "Đăng nhập" và "Đăng ký"
+                        </span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-blue-500 rounded-full"></div>
+                        <span class="text-sm text-gray-700">
+                            <strong>Đã đăng nhập:</strong> Hiển thị avatar, tên user và nút "Đăng xuất"
+                        </span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-orange-500 rounded-full"></div>
+                        <span class="text-sm text-gray-700">
+                            <strong>Responsive:</strong> Desktop và mobile có layout khác nhau
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isLoggedIn = false;
+        let currentUser = null;
+        
+        function updateStateDisplay() {
+            const stateElement = document.getElementById('current-state');
+            if (isLoggedIn) {
+                stateElement.textContent = 'Đã đăng nhập';
+                stateElement.className = 'px-3 py-1 bg-green-200 text-green-800 rounded-full text-sm font-medium';
+            } else {
+                stateElement.textContent = 'Chưa đăng nhập';
+                stateElement.className = 'px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-sm font-medium';
+            }
+        }
+        
+        function updateUIForLoggedInUser() {
+            // Hide auth buttons
+            const authButtons = document.getElementById('auth-buttons');
+            const mobileAuthButtons = document.getElementById('mobile-auth-buttons');
+            
+            if (authButtons) {
+                authButtons.classList.add('hidden');
+                authButtons.style.display = 'none';
+            }
+            if (mobileAuthButtons) {
+                mobileAuthButtons.classList.add('hidden');
+                mobileAuthButtons.style.display = 'none';
+            }
+            
+            // Show user menu
+            const userMenu = document.getElementById('user-menu');
+            const mobileUserMenu = document.getElementById('mobile-user-menu');
+            
+            if (userMenu) {
+                userMenu.classList.remove('hidden');
+                userMenu.style.display = 'flex';
+            }
+            if (mobileUserMenu) {
+                mobileUserMenu.classList.remove('hidden');
+                mobileUserMenu.style.display = 'block';
+            }
+            
+            // Update user info
+            const userName = document.getElementById('user-name');
+            const mobileUserName = document.getElementById('mobile-user-name');
+            const userAvatar = document.getElementById('user-avatar');
+            const mobileUserAvatar = document.getElementById('mobile-user-avatar');
+            
+            const displayName = currentUser?.name || 'Nguyễn Văn A';
+            const avatarText = displayName.charAt(0).toUpperCase();
+            
+            if (userName) userName.textContent = displayName;
+            if (mobileUserName) mobileUserName.textContent = displayName;
+            if (userAvatar) userAvatar.textContent = avatarText;
+            if (mobileUserAvatar) mobileUserAvatar.textContent = avatarText;
+        }
+        
+        function updateUIForLoggedOutUser() {
+            // Show auth buttons
+            const authButtons = document.getElementById('auth-buttons');
+            const mobileAuthButtons = document.getElementById('mobile-auth-buttons');
+            
+            if (authButtons) {
+                authButtons.classList.remove('hidden');
+                authButtons.style.display = 'flex';
+            }
+            if (mobileAuthButtons) {
+                mobileAuthButtons.classList.remove('hidden');
+                mobileAuthButtons.style.display = 'block';
+            }
+            
+            // Hide user menu
+            const userMenu = document.getElementById('user-menu');
+            const mobileUserMenu = document.getElementById('mobile-user-menu');
+            
+            if (userMenu) {
+                userMenu.classList.add('hidden');
+                userMenu.style.display = 'none';
+            }
+            if (mobileUserMenu) {
+                mobileUserMenu.classList.add('hidden');
+                mobileUserMenu.style.display = 'none';
+            }
+        }
+        
+        function simulateLogin() {
+            isLoggedIn = true;
+            currentUser = {
+                name: 'Nguyễn Văn A',
+                email: 'nguyenvana@example.com'
+            };
+            
+            updateUIForLoggedInUser();
+            updateStateDisplay();
+            
+            // Show success message
+            showMessage('Đăng nhập thành công!', 'success');
+        }
+        
+        function simulateLogout() {
+            isLoggedIn = false;
+            currentUser = null;
+            
+            updateUIForLoggedOutUser();
+            updateStateDisplay();
+            
+            // Show success message
+            showMessage('Đã đăng xuất!', 'info');
+        }
+        
+        function simulateRegister() {
+            showMessage('Chức năng đăng ký sẽ mở modal form', 'info');
+        }
+        
+        function resetState() {
+            simulateLogout();
+            showMessage('Đã reset về trạng thái ban đầu', 'info');
+        }
+        
+        function showMessage(message, type) {
+            const colors = {
+                success: 'bg-green-500',
+                error: 'bg-red-500',
+                info: 'bg-blue-500'
+            };
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50`;
+            messageDiv.textContent = message;
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUIForLoggedOutUser();
+            updateStateDisplay();
+        });
+    </script>
+</body>
+</html>
