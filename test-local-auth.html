@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Local Authentication</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">🧪 Test Local Authentication</h1>
+            
+            <div class="bg-yellow-100 border border-yellow-300 text-yellow-800 px-4 py-3 rounded mb-8">
+                <strong>⚠️ Lưu ý:</strong> Netlify Function không chạy được trên localhost. Đang test trực tiếp với WordPress API.
+            </div>
+            
+            <!-- Test Configuration -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">⚙️ Test Configuration</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">WordPress URL</label>
+                        <input type="text" id="wordpressUrl" value="https://admin.wikiw.vn" 
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Test Mode</label>
+                        <select id="testMode" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                            <option value="direct">Direct WordPress API</option>
+                            <option value="netlify">Netlify Function (will fail on localhost)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Test Forms -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Login Test -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4">🔐 Test Login</h2>
+                    
+                    <form id="loginForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email/Username</label>
+                            <input type="text" id="loginEmail" placeholder="test@example.com" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input type="password" id="loginPassword" placeholder="password" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium">
+                            Test Login
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Registration Test -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4">📝 Test Registration</h2>
+                    
+                    <form id="registerForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <input type="text" id="registerName" placeholder="Test User" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" id="registerEmail" placeholder="test@example.com" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input type="password" id="registerPassword" placeholder="password" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium">
+                            Test Registration
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Results -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+                <h2 class="text-xl font-semibold mb-4">📊 Test Results</h2>
+                <div id="testResults" class="space-y-4">
+                    <p class="text-gray-500">Click a test button to see results...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addResult(message, type = 'info') {
+            const resultsDiv = document.getElementById('testResults');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            const colors = {
+                success: 'bg-green-100 border-green-300 text-green-800',
+                error: 'bg-red-100 border-red-300 text-red-800',
+                warning: 'bg-yellow-100 border-yellow-300 text-yellow-800',
+                info: 'bg-blue-100 border-blue-300 text-blue-800'
+            };
+            
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `p-4 rounded-lg border ${colors[type]}`;
+            resultDiv.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="font-medium">${message}</span>
+                    <span class="text-sm opacity-75">${timestamp}</span>
+                </div>
+            `;
+            
+            resultsDiv.appendChild(resultDiv);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+        
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '';
+        }
+        
+        // Test Login
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            clearResults();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const testMode = document.getElementById('testMode').value;
+            const wordpressUrl = document.getElementById('wordpressUrl').value;
+            
+            if (!email || !password) {
+                addResult('⚠️ Please enter email and password', 'warning');
+                return;
+            }
+            
+            addResult('🔄 Testing login...', 'info');
+            
+            try {
+                let response;
+                
+                if (testMode === 'direct') {
+                    // Direct WordPress API
+                    addResult('📡 Using direct WordPress API', 'info');
+                    response = await fetch(`${wordpressUrl}/wp-json/jwt-auth/v1/token`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: email,
+                            password: password
+                        })
+                    });
+                } else {
+                    // Netlify Function (will fail on localhost)
+                    addResult('📡 Using Netlify Function (will fail on localhost)', 'warning');
+                    response = await fetch('/.netlify/functions/auth', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            action: 'login',
+                            username: email,
+                            password: password
+                        })
+                    });
+                }
+                
+                addResult(`📡 Response status: ${response.status} ${response.statusText}`, 'info');
+                
+                const responseText = await response.text();
+                addResult(`📥 Raw response: ${responseText}`, 'info');
+                
+                if (response.ok) {
+                    const data = JSON.parse(responseText);
+                    addResult(`✅ Login successful!`, 'success');
+                    addResult(`👤 User: ${data.user_display_name || data.user}`, 'success');
+                    addResult(`🔑 Token: ${data.token ? data.token.substring(0, 20) + '...' : 'No token'}`, 'success');
+                } else {
+                    addResult(`❌ Login failed: ${response.status} ${response.statusText}`, 'error');
+                }
+                
+            } catch (error) {
+                addResult(`❌ Error: ${error.message}`, 'error');
+                if (error.message.includes('CORS')) {
+                    addResult(`💡 CORS Error - This is expected when testing from localhost`, 'warning');
+                }
+            }
+        });
+        
+        // Test Registration
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            clearResults();
+            
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const testMode = document.getElementById('testMode').value;
+            const wordpressUrl = document.getElementById('wordpressUrl').value;
+            
+            if (!name || !email || !password) {
+                addResult('⚠️ Please fill all fields', 'warning');
+                return;
+            }
+            
+            addResult('🔄 Testing registration...', 'info');
+            
+            try {
+                let response;
+                
+                if (testMode === 'direct') {
+                    // Direct WordPress API
+                    addResult('📡 Using direct WordPress API', 'info');
+                    response = await fetch(`${wordpressUrl}/wp-json/wp/v2/users`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: email,
+                            email: email,
+                            password: password,
+                            name: name
+                        })
+                    });
+                } else {
+                    // Netlify Function (will fail on localhost)
+                    addResult('📡 Using Netlify Function (will fail on localhost)', 'warning');
+                    response = await fetch('/.netlify/functions/auth', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            action: 'register',
+                            username: email,
+                            email: email,
+                            password: password,
+                            name: name
+                        })
+                    });
+                }
+                
+                addResult(`📡 Response status: ${response.status} ${response.statusText}`, 'info');
+                
+                const responseText = await response.text();
+                addResult(`📥 Raw response: ${responseText}`, 'info');
+                
+                if (response.ok) {
+                    const data = JSON.parse(responseText);
+                    addResult(`✅ Registration successful!`, 'success');
+                    addResult(`👤 User ID: ${data.id}`, 'success');
+                    addResult(`📧 Email: ${data.email}`, 'success');
+                } else {
+                    addResult(`❌ Registration failed: ${response.status} ${response.statusText}`, 'error');
+                }
+                
+            } catch (error) {
+                addResult(`❌ Error: ${error.message}`, 'error');
+                if (error.message.includes('CORS')) {
+                    addResult(`💡 CORS Error - This is expected when testing from localhost`, 'warning');
+                }
+            }
+        });
+        
+        // Auto-fill test data
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loginEmail').value = 'test@example.com';
+            document.getElementById('loginPassword').value = 'testpassword123';
+            document.getElementById('registerName').value = 'Test User';
+            document.getElementById('registerEmail').value = `test_${Date.now()}@example.com`;
+            document.getElementById('registerPassword').value = 'testpassword123';
+        });
+    </script>
+</body>
+</html>

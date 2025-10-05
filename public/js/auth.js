@@ -8,7 +8,7 @@ const AUTH_CONFIG = {
     wordpressUrl: 'https://admin.wikiw.vn',
     netlifyFunctionUrl: '/.netlify/functions/auth',
     // Use Netlify Function for production, direct API for testing
-    useDirectAPI: false, // Set to true for testing direct WordPress API
+    useDirectAPI: true, // Set to true for testing direct WordPress API
     apiEndpoints: {
         login: '/wp-json/jwt-auth/v1/token', // Corrected endpoint for JWT
         register: '/wp-json/wp/v2/users', // REST API (requires auth)
