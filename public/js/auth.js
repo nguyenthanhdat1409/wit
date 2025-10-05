@@ -589,31 +589,24 @@ async function handleForgotPassword(e) {
     submitBtn.classList.add('auth-btn-loading');
     
     try {
-        // Try to send reset email via WordPress API
-        const response = await fetch(`${AUTH_CONFIG.wordpressUrl}/wp-json/wp/v2/users/lost-password`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                user_login: email
-            })
-        });
+        // Show loading message
+        showSuccessMessage('Đang chuyển hướng đến trang đặt lại mật khẩu...');
         
-        if (response.ok) {
-            // Success - show message
-            showSuccessMessage('Đã gửi link đặt lại mật khẩu đến email của bạn. Vui lòng kiểm tra hộp thư.');
-            closeForgotPasswordModal();
-            form.reset();
-        } else {
-            // If API fails, show alternative solution
-            showError('forgotPasswordError', 'Không thể gửi email tự động. Vui lòng liên hệ admin hoặc tạo tài khoản mới.');
-        }
+        // Close modal first
+        closeForgotPasswordModal();
+        
+        // Redirect to WordPress forgot password page with email pre-filled
+        const forgotPasswordUrl = `${AUTH_CONFIG.wordpressUrl}/wp-login.php?action=lostpassword&user_login=${encodeURIComponent(email)}`;
+        
+        // Open in new tab
+        window.open(forgotPasswordUrl, '_blank');
+        
+        // Show success message
+        showSuccessMessage('Đã mở trang đặt lại mật khẩu. Vui lòng làm theo hướng dẫn trên trang mới.');
         
     } catch (error) {
         console.error('Forgot password error:', error);
-        // Show alternative solution
-        showError('forgotPasswordError', 'Không thể gửi email tự động. Vui lòng liên hệ admin để được hỗ trợ đặt lại mật khẩu.');
+        showError('forgotPasswordError', 'Có lỗi xảy ra. Vui lòng thử lại.');
     } finally {
         // Reset button state
         submitBtn.textContent = originalText;
