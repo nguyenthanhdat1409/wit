@@ -295,20 +295,39 @@ async function handleRegister(e) {
     submitBtn.classList.add('auth-btn-loading');
     
     try {
-        // Use Netlify Function for registration
-        const response = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                action: 'register',
-                username: email,
-                email: email,
-                password: password,
-                name: name
-            })
-        });
+        let response;
+        
+        if (AUTH_CONFIG.useDirectAPI) {
+            // Use direct WordPress API for testing
+            console.log('Using direct WordPress API for registration');
+            response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.register}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: email,
+                    email: email,
+                    password: password,
+                    name: name
+                })
+            });
+        } else {
+            // Use Netlify Function for registration
+            response = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'register',
+                    username: email,
+                    email: email,
+                    password: password,
+                    name: name
+                })
+            });
+        }
         
         // Check if response is ok and has content
         if (!response.ok) {
@@ -327,19 +346,60 @@ async function handleRegister(e) {
             throw new Error('Server response is not valid JSON. Please check server configuration.');
         }
         
-        if (data.success) {
+        // Handle different response formats
+        let isSuccess = false;
+        let userData = null;
+        
+        if (AUTH_CONFIG.useDirectAPI) {
+            // Direct WordPress API response format
+            if (data.id) {
+                isSuccess = true;
+                userData = {
+                    id: data.id,
+                    name: data.name || name,
+                    email: data.email || email,
+                    display_name: data.name || name
+                };
+            }
+        } else {
+            // Netlify Function response format
+            if (data.success) {
+                isSuccess = true;
+                userData = data.user;
+            }
+        }
+        
+        if (isSuccess) {
             // Auto login after successful registration
-            const loginResponse = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    action: 'login',
-                    username: email,
-                    password: password
-                })
-            });
+            let loginResponse;
+            
+            if (AUTH_CONFIG.useDirectAPI) {
+                // Use direct WordPress API for login
+                console.log('Auto-login after registration using direct API');
+                loginResponse = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.login}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: email,
+                        password: password
+                    })
+                });
+            } else {
+                // Use Netlify Function for login
+                loginResponse = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'login',
+                        username: email,
+                        password: password
+                    })
+                });
+            }
             
             // Check login response
             if (!loginResponse.ok) {
@@ -358,14 +418,40 @@ async function handleRegister(e) {
                 throw new Error('Login response is not valid JSON.');
             }
             
-            if (loginData.success) {
-                authToken = loginData.token;
-                currentUser = {
-                    id: loginData.user?.id || 1,
-                    name: loginData.user || name,
-                    email: loginData.email || email,
-                    display_name: loginData.user || name
-                };
+            // Handle different login response formats
+            let loginSuccess = false;
+            let token = null;
+            let finalUserData = null;
+            
+            if (AUTH_CONFIG.useDirectAPI) {
+                // Direct WordPress API response format
+                if (loginData.token) {
+                    loginSuccess = true;
+                    token = loginData.token;
+                    finalUserData = {
+                        id: loginData.user_id || userData.id,
+                        name: loginData.user_display_name || userData.name,
+                        email: loginData.user_email || userData.email,
+                        display_name: loginData.user_display_name || userData.display_name
+                    };
+                }
+            } else {
+                // Netlify Function response format
+                if (loginData.success) {
+                    loginSuccess = true;
+                    token = loginData.token;
+                    finalUserData = {
+                        id: loginData.user?.id || userData.id,
+                        name: loginData.user || userData.name,
+                        email: loginData.email || userData.email,
+                        display_name: loginData.user || userData.display_name
+                    };
+                }
+            }
+            
+            if (loginSuccess) {
+                authToken = token;
+                currentUser = finalUserData;
                 
                 // Save to localStorage
                 localStorage.setItem(AUTH_CONFIG.storageKeys.user, JSON.stringify(currentUser));
@@ -380,7 +466,16 @@ async function handleRegister(e) {
                 throw new Error('Đăng ký thành công nhưng đăng nhập tự động thất bại');
             }
         } else {
-            throw new Error(data.message || 'Đăng ký thất bại');
+            // Handle different error formats
+            let errorMessage = 'Đăng ký thất bại';
+            
+            if (AUTH_CONFIG.useDirectAPI) {
+                errorMessage = data.message || data.code || 'Thông tin đăng ký không hợp lệ';
+            } else {
+                errorMessage = data.message || 'Đăng ký thất bại';
+            }
+            
+            throw new Error(errorMessage);
         }
     } catch (error) {
         console.error('Register error:', error);
