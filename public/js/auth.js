@@ -7,10 +7,12 @@
 const AUTH_CONFIG = {
     wordpressUrl: 'https://admin.wikiw.vn',
     netlifyFunctionUrl: '/.netlify/functions/auth',
+    // Temporary: Use direct WordPress API for testing
+    useDirectAPI: true, // Set to false when Netlify Function is ready
     apiEndpoints: {
-        login: '/wp-json/wp/v2/users/me',
+        login: '/wp-json/jwt-auth/v1/token', // Corrected endpoint for JWT
         register: '/wp-json/wp/v2/users',
-        nonce: '/wp-json/wp/v2/users/me'
+        user: '/wp-json/wp/v2/users/me' // Endpoint to get user info
     },
     storageKeys: {
         user: 'happymarket_user',
@@ -145,18 +147,35 @@ async function handleLogin(e) {
     submitBtn.classList.add('auth-btn-loading');
     
     try {
-        // Use Netlify Function for authentication
-        const response = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                action: 'login',
-                username: email,
-                password: password
-            })
-        });
+        let response;
+        
+        if (AUTH_CONFIG.useDirectAPI) {
+            // Use direct WordPress API for testing
+            console.log('Using direct WordPress API for login');
+            response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.login}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: email,
+                    password: password
+                })
+            });
+        } else {
+            // Use Netlify Function for authentication
+            response = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'login',
+                    username: email,
+                    password: password
+                })
+            });
+        }
         
         // Check if response is ok and has content
         if (!response.ok) {
@@ -175,15 +194,41 @@ async function handleLogin(e) {
             throw new Error('Server response is not valid JSON. Please check server configuration.');
         }
         
-        if (data.success) {
+        // Handle different response formats
+        let isSuccess = false;
+        let token = null;
+        let userData = null;
+        
+        if (AUTH_CONFIG.useDirectAPI) {
+            // Direct WordPress API response format
+            if (data.token) {
+                isSuccess = true;
+                token = data.token;
+                userData = {
+                    id: data.user_id || 1,
+                    name: data.user_display_name || email,
+                    email: data.user_email || email,
+                    display_name: data.user_display_name || email
+                };
+            }
+        } else {
+            // Netlify Function response format
+            if (data.success) {
+                isSuccess = true;
+                token = data.token;
+                userData = {
+                    id: data.user?.id || 1,
+                    name: data.user || email,
+                    email: data.email || email,
+                    display_name: data.user || email
+                };
+            }
+        }
+        
+        if (isSuccess) {
             // Store authentication data
-            authToken = data.token;
-            currentUser = {
-                id: data.user?.id || 1,
-                name: data.user || email,
-                email: data.email || email,
-                display_name: data.user || email
-            };
+            authToken = token;
+            currentUser = userData;
             
             // Save to localStorage if remember me is checked
             if (rememberMe) {
@@ -199,7 +244,16 @@ async function handleLogin(e) {
             // Show success message
             showSuccessMessage('Đăng nhập thành công!');
         } else {
-            throw new Error(data.message || 'Đăng nhập thất bại');
+            // Handle different error formats
+            let errorMessage = 'Đăng nhập thất bại';
+            
+            if (AUTH_CONFIG.useDirectAPI) {
+                errorMessage = data.message || data.code || 'Thông tin đăng nhập không hợp lệ';
+            } else {
+                errorMessage = data.message || 'Đăng nhập thất bại';
+            }
+            
+            throw new Error(errorMessage);
         }
     } catch (error) {
         console.error('Login error:', error);
