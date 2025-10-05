@@ -349,3 +349,141 @@
         transform: none !important;
     }
 }
+
+/* ===== MODAL FORM SUBMIT BUTTONS ===== */
+
+/* Modal submit buttons - Override any conflicting styles */
+.modal-submit-btn {
+    width: 100% !important;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.2), 0 2px 4px -1px rgba(249, 115, 22, 0.1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    z-index: 1000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 48px !important;
+    margin-top: 16px !important;
+}
+
+.modal-submit-btn:hover {
+    background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.3), 0 4px 6px -2px rgba(249, 115, 22, 0.2) !important;
+}
+
+.modal-submit-btn:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.2), 0 2px 4px -1px rgba(249, 115, 22, 0.1) !important;
+}
+
+.modal-submit-btn:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.5), 0 4px 6px -1px rgba(249, 115, 22, 0.2) !important;
+}
+
+.modal-submit-btn:disabled {
+    background: #9ca3af !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Loading state for modal buttons */
+.modal-submit-btn.auth-btn-loading {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+    position: relative !important;
+    color: transparent !important;
+}
+
+.modal-submit-btn.auth-btn-loading::after {
+    content: '' !important;
+    position: absolute !important;
+    width: 20px !important;
+    height: 20px !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin-left: -10px !important;
+    margin-top: -10px !important;
+    border: 2px solid transparent !important;
+    border-top: 2px solid white !important;
+    border-radius: 50% !important;
+    animation: spin 1s linear infinite !important;
+}
+
+/* Override any potential conflicts with Tailwind or other CSS */
+#loginForm button[type="submit"],
+#registerForm button[type="submit"] {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+    color: white !important;
+    border: none !important;
+    width: 100% !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.2) !important;
+    z-index: 1000 !important;
+    position: relative !important;
+    margin-top: 16px !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+#loginForm button[type="submit"]:hover,
+#registerForm button[type="submit"]:hover {
+    background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.3) !important;
+}
+
+#loginForm button[type="submit"]:focus,
+#registerForm button[type="submit"]:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.5), 0 4px 6px -1px rgba(249, 115, 22, 0.2) !important;
+}
+
+/* Ensure modal buttons are above everything */
+#loginModal button[type="submit"],
+#registerModal button[type="submit"] {
+    z-index: 1000 !important;
+    position: relative !important;
+}
+
+/* Mobile responsive for modal buttons */
+@media (max-width: 640px) {
+    .modal-submit-btn,
+    #loginForm button[type="submit"],
+    #registerForm button[type="submit"] {
+        font-size: 16px !important;
+        padding: 14px 24px !important;
+        min-height: 52px !important;
+    }
+}
+
+/* Additional safety overrides */
+button[type="submit"].w-full {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+    color: white !important;
+    border: none !important;
+}
+
+button[type="submit"].bg-orange-500 {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+    color: white !important;
+    border: none !important;
+}
