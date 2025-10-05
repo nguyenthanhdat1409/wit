@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Authentication Buttons - HappyMarketDocs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="themes/happymarket-theme/static/css/auth-buttons.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">🎨 Test Authentication Buttons</h1>
+            
+            <!-- Desktop Buttons -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🖥️ Desktop Buttons</h2>
+                <div class="flex items-center space-x-4">
+                    <div class="auth-buttons-container">
+                        <button class="auth-login-btn" onclick="testLogin()">
+                            Đăng nhập
+                        </button>
+                        <button class="auth-register-btn" onclick="testRegister()">
+                            Đăng ký
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Buttons -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📱 Mobile Buttons</h2>
+                <div class="max-w-sm">
+                    <div class="mobile-auth-buttons-container">
+                        <div class="space-y-2">
+                            <button class="mobile-auth-login-btn" onclick="testLogin()">
+                                Đăng nhập
+                            </button>
+                            <button class="mobile-auth-register-btn" onclick="testRegister()">
+                                Đăng ký
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Menu -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">👤 User Menu</h2>
+                <div class="flex items-center space-x-4">
+                    <div class="user-menu-container">
+                        <div class="flex items-center space-x-2">
+                            <div class="user-avatar">N</div>
+                            <span class="user-name">Nguyễn Văn A</span>
+                        </div>
+                        <button class="logout-btn" onclick="testLogout()">
+                            Đăng xuất
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile User Menu -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📱 Mobile User Menu</h2>
+                <div class="max-w-sm">
+                    <div class="mobile-user-menu-container">
+                        <div class="mobile-user-info">
+                            <div class="mobile-user-avatar">N</div>
+                            <span class="mobile-user-name">Nguyễn Văn A</span>
+                        </div>
+                        <button class="mobile-logout-btn" onclick="testLogout()">
+                            Đăng xuất
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Button States -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🔄 Button States</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-medium mb-3">Loading State</h3>
+                        <div class="auth-buttons-container">
+                            <button class="auth-login-btn auth-btn-loading" disabled>
+                                Đăng nhập
+                            </button>
+                            <button class="auth-register-btn auth-btn-loading" disabled>
+                                Đăng ký
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium mb-3">Hover Effects</h3>
+                        <div class="auth-buttons-container">
+                            <button class="auth-login-btn" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+                                Đăng nhập
+                            </button>
+                            <button class="auth-register-btn" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">
+                                Đăng ký
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Color Variations -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🎨 Color Variations</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <h3 class="text-lg font-medium mb-3">Primary (Orange)</h3>
+                        <div class="auth-buttons-container">
+                            <button class="auth-login-btn">Đăng nhập</button>
+                            <button class="auth-register-btn">Đăng ký</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium mb-3">Custom Blue</h3>
+                        <div class="auth-buttons-container">
+                            <button class="auth-login-btn" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important; box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2) !important;">
+                                Đăng nhập
+                            </button>
+                            <button class="auth-register-btn" style="color: #3b82f6 !important; border-color: #3b82f6 !important;">
+                                Đăng ký
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium mb-3">Custom Green</h3>
+                        <div class="auth-buttons-container">
+                            <button class="auth-login-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2) !important;">
+                                Đăng nhập
+                            </button>
+                            <button class="auth-register-btn" style="color: #10b981 !important; border-color: #10b981 !important;">
+                                Đăng ký
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Responsive Test -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">📱 Responsive Test</h2>
+                <p class="text-gray-600 mb-4">Resize your browser window to see how buttons adapt to different screen sizes.</p>
+                <div class="border-2 border-dashed border-gray-300 p-4 rounded-lg">
+                    <div class="auth-buttons-container">
+                        <button class="auth-login-btn">Đăng nhập</button>
+                        <button class="auth-register-btn">Đăng ký</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function testLogin() {
+            alert('Login button clicked!');
+        }
+        
+        function testRegister() {
+            alert('Register button clicked!');
+        }
+        
+        function testLogout() {
+            alert('Logout button clicked!');
+        }
+        
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.auth-login-btn, .auth-register-btn, .mobile-auth-login-btn, .mobile-auth-register-btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Add click animation
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 100);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

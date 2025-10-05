@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/auth-buttons.css" rel="stylesheet">
     
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -128,26 +129,24 @@
                 
                 
                 <div class="hidden md:flex items-center space-x-3">
-                    <div id="auth-buttons" class="flex items-center space-x-2">
+                    <div id="auth-buttons" class="auth-buttons-container">
                         
-                        <button onclick="openLoginModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <button onclick="openLoginModal()" class="auth-login-btn">
                             Đăng nhập
                         </button>
                         
-                        <button onclick="openRegisterModal()" class="border border-orange-500 text-orange-500 hover:bg-orange-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <button onclick="openRegisterModal()" class="auth-register-btn">
                             Đăng ký
                         </button>
                     </div>
                     
                     
-                    <div id="user-menu" class="hidden flex items-center space-x-3">
+                    <div id="user-menu" class="hidden user-menu-container">
                         <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                                <span class="text-white text-sm font-medium" id="user-avatar">U</span>
-                            </div>
-                            <span class="text-sm text-gray-700" id="user-name">User</span>
+                            <div class="user-avatar" id="user-avatar">U</div>
+                            <span class="user-name" id="user-name">User</span>
                         </div>
-                        <button onclick="logout()" class="text-gray-500 hover:text-gray-700 text-sm">
+                        <button onclick="logout()" class="logout-btn">
                             Đăng xuất
                         </button>
                     </div>
@@ -223,25 +222,23 @@
                 
                 
                 
-                <div class="border-t border-gray-200 pt-3 mt-3">
+                <div class="mobile-auth-buttons-container">
                     <div id="mobile-auth-buttons" class="space-y-2">
-                        <button onclick="openLoginModal()" class="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <button onclick="openLoginModal()" class="mobile-auth-login-btn">
                             Đăng nhập
                         </button>
-                        <button onclick="openRegisterModal()" class="w-full border border-orange-500 text-orange-500 hover:bg-orange-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <button onclick="openRegisterModal()" class="mobile-auth-register-btn">
                             Đăng ký
                         </button>
                     </div>
                     
                     
-                    <div id="mobile-user-menu" class="hidden space-y-2">
-                        <div class="flex items-center space-x-2 px-3 py-2">
-                            <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                                <span class="text-white text-sm font-medium" id="mobile-user-avatar">U</span>
-                            </div>
-                            <span class="text-sm text-gray-700" id="mobile-user-name">User</span>
+                    <div id="mobile-user-menu" class="hidden mobile-user-menu-container">
+                        <div class="mobile-user-info">
+                            <div class="mobile-user-avatar" id="mobile-user-avatar">U</div>
+                            <span class="mobile-user-name" id="mobile-user-name">User</span>
                         </div>
-                        <button onclick="logout()" class="w-full text-left px-3 py-2 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-50">
+                        <button onclick="logout()" class="mobile-logout-btn">
                             Đăng xuất
                         </button>
                     </div>

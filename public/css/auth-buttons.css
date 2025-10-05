@@ -1,0 +1,351 @@
+/**
+ * Authentication Buttons Styles
+ * Custom CSS for login and register buttons
+ */
+
+/* Desktop Authentication Buttons */
+.auth-buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Login Button - Primary Style */
+.auth-login-btn {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    min-width: 100px !important;
+    text-align: center !important;
+    line-height: 1.4 !important;
+}
+
+.auth-login-btn:hover {
+    background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3) !important;
+}
+
+.auth-login-btn:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2) !important;
+}
+
+.auth-login-btn:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3) !important;
+}
+
+/* Register Button - Secondary Style */
+.auth-register-btn {
+    background: white !important;
+    color: #f97316 !important;
+    border: 2px solid #f97316 !important;
+    padding: 8px 20px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    position: relative !important;
+    overflow: hidden !important;
+    min-width: 100px !important;
+    text-align: center !important;
+    line-height: 1.4 !important;
+}
+
+.auth-register-btn:hover {
+    background: #f97316 !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2) !important;
+}
+
+.auth-register-btn:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.1) !important;
+}
+
+.auth-register-btn:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2) !important;
+}
+
+/* Mobile Authentication Buttons */
+.mobile-auth-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 12px;
+}
+
+.mobile-auth-login-btn {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 20px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2) !important;
+    width: 100% !important;
+    text-align: center !important;
+    line-height: 1.4 !important;
+}
+
+.mobile-auth-login-btn:hover {
+    background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3) !important;
+}
+
+.mobile-auth-register-btn {
+    background: white !important;
+    color: #f97316 !important;
+    border: 2px solid #f97316 !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    text-align: center !important;
+    line-height: 1.4 !important;
+}
+
+.mobile-auth-register-btn:hover {
+    background: #f97316 !important;
+    color: white !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2) !important;
+}
+
+/* User Menu Styles */
+.user-menu-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: white !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2) !important;
+}
+
+.user-name {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #374151 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.logout-btn {
+    color: #6b7280 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    border: none !important;
+    background: none !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.logout-btn:hover {
+    color: #374151 !important;
+    background: #f3f4f6 !important;
+}
+
+/* Mobile User Menu */
+.mobile-user-menu-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 12px;
+}
+
+.mobile-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.mobile-user-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: white !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2) !important;
+}
+
+.mobile-user-name {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #374151 !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+.mobile-logout-btn {
+    color: #6b7280 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    padding: 8px 0 !important;
+    text-align: left !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    border: none !important;
+    background: none !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    width: 100% !important;
+}
+
+.mobile-logout-btn:hover {
+    color: #374151 !important;
+    background: #f3f4f6 !important;
+    border-radius: 4px !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .auth-buttons-container {
+        display: none !important;
+    }
+    
+    .user-menu-container {
+        display: none !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-auth-buttons-container {
+        display: none !important;
+    }
+    
+    .mobile-user-menu-container {
+        display: none !important;
+    }
+}
+
+/* Animation for button press effect */
+@keyframes buttonPress {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.98);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.auth-login-btn:active,
+.auth-register-btn:active,
+.mobile-auth-login-btn:active,
+.mobile-auth-register-btn:active {
+    animation: buttonPress 0.1s ease-in-out;
+}
+
+/* Loading state for buttons */
+.auth-btn-loading {
+    position: relative !important;
+    color: transparent !important;
+}
+
+.auth-btn-loading::after {
+    content: "" !important;
+    position: absolute !important;
+    width: 16px !important;
+    height: 16px !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin-left: -8px !important;
+    margin-top: -8px !important;
+    border: 2px solid transparent !important;
+    border-top-color: currentColor !important;
+    border-radius: 50% !important;
+    animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Focus styles for accessibility */
+.auth-login-btn:focus-visible,
+.auth-register-btn:focus-visible,
+.mobile-auth-login-btn:focus-visible,
+.mobile-auth-register-btn:focus-visible {
+    outline: 2px solid #f97316 !important;
+    outline-offset: 2px !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .auth-login-btn {
+        border: 2px solid #000 !important;
+    }
+    
+    .auth-register-btn {
+        border: 2px solid #000 !important;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .auth-login-btn,
+    .auth-register-btn,
+    .mobile-auth-login-btn,
+    .mobile-auth-register-btn {
+        transition: none !important;
+    }
+    
+    .auth-login-btn:hover,
+    .auth-register-btn:hover,
+    .mobile-auth-login-btn:hover,
+    .mobile-auth-register-btn:hover {
+        transform: none !important;
+    }
+}

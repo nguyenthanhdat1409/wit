@@ -139,6 +139,7 @@ async function handleLogin(e) {
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Đang đăng nhập...';
     submitBtn.disabled = true;
+    submitBtn.classList.add('auth-btn-loading');
     
     try {
         // Use Netlify Function for authentication
@@ -189,6 +190,7 @@ async function handleLogin(e) {
         // Reset button state
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
+        submitBtn.classList.remove('auth-btn-loading');
     }
 }
 
@@ -218,6 +220,7 @@ async function handleRegister(e) {
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Đang đăng ký...';
     submitBtn.disabled = true;
+    submitBtn.classList.add('auth-btn-loading');
     
     try {
         // Use Netlify Function for registration
@@ -284,6 +287,7 @@ async function handleRegister(e) {
         // Reset button state
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
+        submitBtn.classList.remove('auth-btn-loading');
     }
 }
 
