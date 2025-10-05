@@ -380,102 +380,12 @@ async function handleRegister(e) {
         }
         
         if (isSuccess) {
-            // Auto login after successful registration
-            let loginResponse;
+            // Registration successful - show success message and close modal
+            closeRegisterModal();
+            showSuccessMessage('Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.');
             
-                   if (AUTH_CONFIG.useDirectAPI) {
-                       // Use direct WordPress API for login
-                       console.log('Auto-login after registration using direct API');
-                       
-                       // Create basic auth header with Application Password
-                       const loginAuthHeader = btoa(`${email}:${AUTH_CONFIG.appPassword}`);
-                       
-                       loginResponse = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.loginBasic}`, {
-                           method: 'GET',
-                           headers: {
-                               'Authorization': `Basic ${loginAuthHeader}`,
-                               'Content-Type': 'application/json'
-                           }
-                       });
-            } else {
-                // Use Netlify Function for login
-                loginResponse = await fetch(AUTH_CONFIG.netlifyFunctionUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        action: 'login',
-                        username: email,
-                        password: password
-                    })
-                });
-            }
-            
-            // Check login response
-            if (!loginResponse.ok) {
-                throw new Error(`Login failed: HTTP ${loginResponse.status}`);
-            }
-            
-            const loginResponseText = await loginResponse.text();
-            console.log('Login response:', loginResponseText);
-            
-            let loginData;
-            try {
-                loginData = JSON.parse(loginResponseText);
-            } catch (parseError) {
-                console.error('Login JSON parse error:', parseError);
-                console.error('Login response text:', loginResponseText);
-                throw new Error('Login response is not valid JSON.');
-            }
-            
-            // Handle different login response formats
-            let loginSuccess = false;
-            let token = null;
-            let finalUserData = null;
-            
-                   if (AUTH_CONFIG.useDirectAPI) {
-                       // Direct WordPress API response format (Application Password)
-                       if (loginData.id) {
-                           loginSuccess = true;
-                           token = 'app-password-auth'; // Simple token for Application Password
-                           finalUserData = {
-                               id: loginData.id || userData.id,
-                               name: loginData.name || userData.name,
-                               email: loginData.email || userData.email,
-                               display_name: loginData.name || userData.display_name
-                           };
-                       }
-            } else {
-                // Netlify Function response format
-                if (loginData.success) {
-                    loginSuccess = true;
-                    token = loginData.token;
-                    finalUserData = {
-                        id: loginData.user?.id || userData.id,
-                        name: loginData.user || userData.name,
-                        email: loginData.email || userData.email,
-                        display_name: loginData.user || userData.display_name
-                    };
-                }
-            }
-            
-            if (loginSuccess) {
-                authToken = token;
-                currentUser = finalUserData;
-                
-                // Save to localStorage
-                localStorage.setItem(AUTH_CONFIG.storageKeys.user, JSON.stringify(currentUser));
-                localStorage.setItem(AUTH_CONFIG.storageKeys.token, authToken);
-                localStorage.setItem(AUTH_CONFIG.storageKeys.remember, 'true');
-                
-                // Update UI
-                updateUIForLoggedInUser();
-                closeRegisterModal();
-                showSuccessMessage('Đăng ký thành công! Chào mừng bạn đến với HappyMarketDocs!');
-            } else {
-                throw new Error('Đăng ký thành công nhưng đăng nhập tự động thất bại');
-            }
+            // Clear form
+            form.reset();
         } else {
             // Handle different error formats
             let errorMessage = 'Đăng ký thất bại';
