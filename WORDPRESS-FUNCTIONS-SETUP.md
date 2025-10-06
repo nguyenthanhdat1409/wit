@@ -116,6 +116,7 @@ function add_custom_user_fields($response, $user, $request) {
     $response->data['first_name'] = $user->first_name;
     $response->data['last_name'] = $user->last_name;
     $response->data['avatar_url'] = get_avatar_url($user->ID);
+    $response->data['phone'] = get_user_meta($user->ID, 'phone', true);
     
     return $response;
 }
@@ -504,6 +505,97 @@ Tạo file `test-wordpress-api.html` để test:
 - [ ] Rate limiting enabled
 - [ ] Error logging enabled
 - [ ] Regular backups configured
+
+## 📱 Phone Field Setup
+
+### Thêm Phone Field vào WordPress
+
+Để thêm trường số điện thoại vào form đăng ký, bạn cần thêm code sau vào `functions.php` của theme hoặc sử dụng Code Snippets plugin:
+
+```php
+// Thêm phone field vào user profile
+function add_phone_field($user) {
+    $phone = get_user_meta($user->ID, 'phone', true);
+    ?>
+    <h3>📞 Thông Tin Liên Hệ</h3>
+    <table class="form-table">
+        <tr>
+            <th><label for="phone">Số điện thoại</label></th>
+            <td>
+                <input type="tel" name="phone" id="phone" value="<?php echo esc_attr($phone); ?>" 
+                       class="regular-text" pattern="[0-9]{10,11}" 
+                       placeholder="Nhập số điện thoại (10-11 chữ số)" />
+                <p class="description">Ví dụ: 0123456789 hoặc 0987654321</p>
+            </td>
+        </tr>
+    </table>
+    <?php
+}
+
+// Lưu phone field
+function save_phone_field($user_id) {
+    if (!current_user_can('edit_user', $user_id)) {
+        return false;
+    }
+    
+    if (isset($_POST['phone'])) {
+        $phone = sanitize_text_field($_POST['phone']);
+        
+        // Validate phone number
+        if (!empty($phone) && !preg_match('/^[0-9]{10,11}$/', $phone)) {
+            add_action('user_profile_update_errors', function($errors) {
+                $errors->add('phone_error', 'Số điện thoại phải có 10-11 chữ số');
+            });
+            return false;
+        }
+        
+        update_user_meta($user_id, 'phone', $phone);
+    }
+}
+
+// Hook vào user profile
+add_action('show_user_profile', 'add_phone_field');
+add_action('edit_user_profile', 'add_phone_field');
+add_action('personal_options_update', 'save_phone_field');
+add_action('edit_user_profile_update', 'save_phone_field');
+
+// Thêm phone vào REST API
+function add_phone_to_rest_api($response, $user, $request) {
+    $response->data['phone'] = get_user_meta($user->ID, 'phone', true);
+    return $response;
+}
+add_filter('rest_prepare_user', 'add_phone_to_rest_api', 10, 3);
+```
+
+### Test Phone Field
+
+1. **Test Registration với Phone**:
+```bash
+curl -X POST "https://admin.wikiw.vn/wp-json/wp/v2/users" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "testuser",
+    "email": "test@example.com",
+    "password": "password123",
+    "name": "Test User",
+    "meta": {
+      "phone": "0123456789"
+    }
+  }'
+```
+
+2. **Test Get User với Phone**:
+```bash
+curl -X GET "https://admin.wikiw.vn/wp-json/wp/v2/users/USER_ID" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+### Files cần cập nhật
+
+1. **Frontend**: `themes/happymarket-theme/layouts/_default/baseof.html` ✅
+2. **JavaScript**: `themes/happymarket-theme/static/js/auth.js` ✅
+3. **Netlify Function**: `netlify/functions/auth.js` ✅
+4. **WordPress**: `wordpress-phone-field-setup.php` ✅
 
 ## 📞 Support
 

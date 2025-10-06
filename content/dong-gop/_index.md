@@ -32,7 +32,7 @@ Mọi đóng góp của bạn sẽ được sử dụng để:
 Nếu bạn có bất kỳ thắc mắc nào về việc đóng góp, vui lòng liên hệ:
 
 - **Email**: support@wikiw.vn
-- **Hotline**: 0123456789
+- **Hotline**: 0931117931
 - **Thời gian**: 8:00 - 17:00 (Thứ 2 - Thứ 6)
 
 ---

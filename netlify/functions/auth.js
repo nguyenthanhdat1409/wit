@@ -154,7 +154,7 @@ async function handleLogin(data, headers) {
  * Handle user registration
  */
 async function handleRegister(data, headers) {
-    const { username, email, password, name } = data;
+    const { username, email, password, name, phone } = data;
 
     if (!username || !email || !password) {
         return {
@@ -167,19 +167,39 @@ async function handleRegister(data, headers) {
         };
     }
 
+    // Validate phone number if provided
+    if (phone && !phone.match(/^[0-9]{10,11}$/)) {
+        return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({
+                success: false,
+                message: 'Phone number must be 10-11 digits'
+            })
+        };
+    }
+
     try {
+        const requestBody = {
+            username,
+            email,
+            password,
+            name: name || username,
+            roles: ['subscriber'],
+            phone: phone || '',
+            meta: {
+                phone: phone || ''
+            }
+        };
+        
+        console.log('Sending to WordPress:', JSON.stringify(requestBody, null, 2));
+        
         const response = await fetch(`${WORDPRESS_URL}/wp-json/wp/v2/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                username,
-                email,
-                password,
-                name: name || username,
-                roles: ['subscriber']
-            })
+            body: JSON.stringify(requestBody)
         });
 
         if (response.ok) {

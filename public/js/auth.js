@@ -8,7 +8,7 @@ const AUTH_CONFIG = {
     wordpressUrl: 'https://admin.wikiw.vn',
     netlifyFunctionUrl: '/.netlify/functions/auth',
     // Use Netlify Function for production, direct API for testing
-    useDirectAPI: true, // Set to true for testing direct WordPress API
+    useDirectAPI: true, // Set to true for direct WordPress API
     // WordPress Application Password for authentication
     appPassword: 'YJhl 3GV0 nX5O 64fe Lq7o h7J3', // Application Password for Hugo Website Auth
     apiEndpoints: {
@@ -337,11 +337,21 @@ async function handleRegister(e) {
     const formData = new FormData(e.target);
     const name = formData.get('name');
     const email = formData.get('email');
+    const phone = formData.get('phone');
     const password = formData.get('password');
     const confirmPassword = formData.get('confirmPassword');
     
     // Clear previous errors
     hideError('registerError');
+    
+    // Debug phone value
+    console.log('Phone from form:', phone);
+    
+    // Validate phone number
+    if (!phone || !phone.match(/^[0-9]{10,11}$/)) {
+        showError('registerError', 'Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số)');
+        return;
+    }
     
     // Validate passwords match
     if (password !== confirmPassword) {
@@ -366,18 +376,23 @@ async function handleRegister(e) {
             // Create basic auth header with Application Password
             const authHeader = btoa(`admin:${AUTH_CONFIG.appPassword}`);
             
+            const requestBody = {
+                username: email,
+                email: email,
+                password: password,
+                name: name,
+                phone: phone
+            };
+            
+            console.log('Sending to WordPress:', JSON.stringify(requestBody, null, 2));
+            
             response = await fetch(`${AUTH_CONFIG.wordpressUrl}${AUTH_CONFIG.apiEndpoints.register}`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Basic ${authHeader}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    username: email,
-                    email: email,
-                    password: password,
-                    name: name
-                })
+                body: JSON.stringify(requestBody)
             });
         } else {
             // Use Netlify Function for registration
@@ -391,7 +406,8 @@ async function handleRegister(e) {
                     username: email,
                     email: email,
                     password: password,
-                    name: name
+                    name: name,
+                    phone: phone
                 })
             });
         }
