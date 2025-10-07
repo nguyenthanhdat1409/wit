@@ -73,8 +73,8 @@
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8 mx-auto">
                     {{ range .Site.Menus.main }}
-                        {{ if eq .Name "Bài học" }}
-                        <!-- Dropdown menu for Bài học -->
+                        {{ if .HasChildren }}
+                        <!-- Dropdown menu for parent items -->
                         <div class="relative group" onmouseenter="showDropdown(this)" onmouseleave="hideDropdown(this)">
                             <button class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors flex items-center">
                                 {{ .Name }}
@@ -82,21 +82,18 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                            <div class="dropdown-content absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible transition-all duration-200 z-50" style="transform: translateY(-10px);">
+                            <div class="dropdown-content absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg opacity-0 invisible transition-all duration-200 z-50" style="transform: translateY(-10px);">
                                 <div class="py-1">
-                                    <a href="/bai-hoc/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
-                                        📚 Bài học TVHL
+                                    {{ range .Children }}
+                                    <a href="{{ .URL | relURL }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
+                                        {{ .Name }}
                                     </a>
-                                    <a href="/bai-hoc-mtw7/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
-                                        🎯 Bài học Mentor Wit K07
-                                    </a>
-                                    <a href="/bai-hoc-dao-tao-noi-tam/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600">
-                                        🧘 Bài học đào tạo nội tâm
-                                    </a>
+                                    {{ end }}
                                 </div>
                             </div>
                         </div>
-                        {{ else }}
+                        {{ else if not .Parent }}
+                        <!-- Regular menu item (not parent, not child) -->
                         <a href="{{ .URL | relURL }}" class="text-gray-700 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors">
                             {{ .Name }}
                         </a>
@@ -144,8 +141,8 @@
         <div class="mobile-menu hidden md:hidden bg-white border-t border-gray-200">
             <div class="px-2 pt-2 pb-3 space-y-1">
                 {{ range .Site.Menus.main }}
-                    {{ if eq .Name "Bài học" }}
-                    <!-- Mobile dropdown for Bài học -->
+                    {{ if .HasChildren }}
+                    <!-- Mobile dropdown for parent items -->
                     <div class="mobile-dropdown">
                         <button class="mobile-dropdown-button w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 flex items-center justify-between">
                             {{ .Name }}
@@ -154,18 +151,15 @@
                             </svg>
                         </button>
                         <div class="mobile-dropdown-content hidden pl-4">
-                            <a href="/bai-hoc/" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50">
-                                📚 Bài học TVHL
+                            {{ range .Children }}
+                            <a href="{{ .URL | relURL }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50">
+                                {{ .Name }}
                             </a>
-                            <a href="/bai-hoc-mtw7/" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50">
-                                🎯 Bài học Mentor Wit K07
-                            </a>
-                            <a href="/bai-hoc-dao-tao-noi-tam/" class="block px-3 py-2 text-sm text-gray-600 hover:text-orange-500 hover:bg-gray-50">
-                                🧘 Bài học đào tạo nội tâm
-                            </a>
+                            {{ end }}
                         </div>
                     </div>
-                    {{ else }}
+                    {{ else if not .Parent }}
+                    <!-- Regular menu item (not parent, not child) -->
                     <a href="{{ .URL | relURL }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
                         {{ .Name }}
                     </a>

@@ -24,40 +24,75 @@ menu:
       weight: 15
       hasChildren: true
     - identifier: bai-hoc-tvhl
-      name: Bài học TVHL
+      name: 📚 Bài học TVHL
       url: /bai-hoc/
       parent: bai-hoc
       weight: 15
     - identifier: bai-hoc-mtw7
-      name: Bài học Mentor Wit K07
+      name: 🎯 Bài học Mentor Wit K07
       url: /bai-hoc-mtw7/
       parent: bai-hoc
       weight: 16
     - identifier: bai-hoc-dao-tao-noi-tam
-      name: Bài học đào tạo nội tâm
+      name: 🧘 Bài học đào tạo nội tâm
       url: /bai-hoc-dao-tao-noi-tam/
       parent: bai-hoc
       weight: 17
-    - identifier: khoa-hoc
-      name: Khóa học
-      url: /khoa-hoc/
-      weight: 20
-    - identifier: khai-niem-nguon
-      name: Khái niệm nguồn
-      url: /khai-niem-nguon/
+    # - identifier: khoa-hoc
+    #   name: Khóa học
+    #   url: /khoa-hoc/
+    #   weight: 20
+    - identifier: khai-niem
+      name: Khái niệm
+      url: /khai-niem/
       weight: 30
+      hasChildren: true
+    - identifier: khai-niem-nguon
+      name: 📚 Khái niệm nguồn
+      url: /khai-niem-nguon/
+      parent: khai-niem
+      weight: 31
+    # - identifier: thu-vien
+    #   name: 📖 Thư viện
+    #   url: /thu-vien/
+    #   parent: khai-niem
+    #   weight: 32
+    - identifier: trang-do-hinh
+      name: 🎨 Trang đồ hình
+      url: /hinh/
+      parent: khai-niem
+      weight: 33
     - identifier: tu-khainiem
-      name: Từ vựng - Khái niệm
+      name: 📖 Từ vựng - Khái niệm
       url: /tu-khainiem/
       weight: 40
-    - identifier: hinh
-      name: Hình ảnh
-      url: /hinh/
-      weight: 50
+      parent: khai-niem
+    - identifier: thong-tin
+      name: Thông tin
+      url: /thong-tin/
+      weight: 60
+      hasChildren: true
+    - identifier: cau-tam-dac
+      name: Câu tâm đắc
+      url: /cau-tam-dac/
+      weight: 60
+      parent: thong-tin
+    - identifier: nghi-van
+      name: Nghi vấn
+      url: /nghi-van/
+      weight: 60
+      parent: thong-tin
+    - identifier: chuyen-hien-thuc
+      name: Chuyển hiện thực
+      url: /chuyen-hien-thuc/
+      weight: 60
+      parent: thong-tin
     - identifier: dong-gop
-      name: Đóng góp
+      name: 💝 Đóng góp
       url: /dong-gop/
       weight: 60
+      parent: thong-tin
+    
 
 # Cấu hình taxonomy
 taxonomies:
