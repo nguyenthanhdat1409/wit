@@ -107,7 +107,7 @@ menu:
     #   weight: 20
     - identifier: khai-niem
       name: Khái niệm
-      url: /khai-niem/
+      url: /
       weight: 30
       hasChildren: true
     - identifier: khai-niem-nguon

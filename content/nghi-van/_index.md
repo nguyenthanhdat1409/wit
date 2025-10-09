@@ -33,10 +33,20 @@ fetch('https://admin.wikiw.vn/wp-json/custom/v1/nghivan-contents')
         displayNghiVanError(error);
     });
 
-function displayNghiVanContent(posts) {
+function displayNghiVanContent(data) {
     const contentDiv = document.getElementById('nghivan-content');
     
-    if (!posts || posts.length === 0) {
+    // Debug: Log data structure
+    console.log('🔍 Nghi vấn data structure:', data);
+    
+    // Extract posts array from data object
+    let posts = data;
+    if (data && typeof data === 'object' && !Array.isArray(data)) {
+        // Try different possible keys
+        posts = data.posts || data.data || data.items || data.results || Object.values(data)[0];
+    }
+    
+    if (!posts || !Array.isArray(posts) || posts.length === 0) {
         contentDiv.innerHTML = '<div class="nghivan-error"><p>Không có dữ liệu nghi vấn nào.</p></div>';
         return;
     }

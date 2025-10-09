@@ -99,39 +99,55 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Tamdac Rectangle Popup Styles - tham khảo từ hình */
-.tamdac-popup-rectangle {
-    display: flex;
-    align-items: center;
-    background: #f5f5dc; /* Light beige color như trong hình */
-    border-radius: 8px;
-    padding: 1rem 1.5rem;
-    margin-bottom: 1rem;
-    cursor: pointer;
+/* Tamdac Card Container - hiển thị trực tiếp content */
+.tamdac-card-container {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-height: 60px;
 }
 
-.tamdac-popup-rectangle:hover {
-    background: #f0f0d6;
+.tamdac-card-container:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tamdac-header {
+    display: flex;
+    align-items: center;
+    background: #fef3c7; /* Light orange/amber color như trong hình */
+    padding: 1.5rem;
+    border-bottom: 1px solid #f59e0b;
 }
 
 .tamdac-star-icon {
     font-size: 1.5rem;
     margin-right: 1rem;
     flex-shrink: 0;
-    color: #4a5568;
+    color: #92400e;
+}
+
+.tamdac-title {
+    color: #92400e;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.tamdac-content {
+    padding: 1.5rem;
+    background: #ffffff;
 }
 
 .tamdac-content-text {
-    color: #4a5568;
+    color: #374151;
     font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.4;
-    flex: 1;
+    line-height: 1.6;
+    margin: 0;
 }
 
 .tamdac-error {
@@ -366,19 +382,35 @@
     }
     
     .tamdac-grid {
-        gap: 0.75rem;
+        gap: 1.5rem;
         margin-left: 1rem;
         margin-right: 1rem;
     }
     
-    .tamdac-card {
-        height: 240px;
+    .tamdac-card-container {
+        margin-bottom: 1.5rem;
+    }
+    
+    .tamdac-header {
         padding: 1rem;
     }
     
-    .tamdac-popup-rectangle {
-        padding: 0.75rem 1rem;
-        min-height: 50px;
+    .tamdac-content {
+        padding: 1rem;
+    }
+    
+    .tamdac-star-icon {
+        font-size: 1.25rem;
+        margin-right: 0.75rem;
+    }
+    
+    .tamdac-title {
+        font-size: 1.1rem;
+    }
+    
+    .tamdac-content-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
     }
     
     .tamdac-star-icon {
