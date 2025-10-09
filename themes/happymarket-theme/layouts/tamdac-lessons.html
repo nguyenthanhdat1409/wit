@@ -310,6 +310,23 @@
         position: relative;
     }
     
+    /* Bỏ overlay che nội dung bài học - tham khảo từ khainiem-lessons */
+    .tamdac-iframe-body::before {
+        display: none;
+    }
+    
+    .wordpress-header-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: white;
+        z-index: 1000;
+        pointer-events: none;
+        display: none; /* Ẩn mặc định trên desktop */
+    }
+    
     .tamdac-grid {
         grid-template-columns: 1fr;
         gap: 1rem;

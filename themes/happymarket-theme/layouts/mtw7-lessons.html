@@ -340,17 +340,9 @@
         position: relative;
     }
     
-    /* Overlay để ẩn header WordPress trên mobile */
+    /* Bỏ overlay che nội dung bài học */
     .mtw7-iframe-body::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 80px; /* Chiều cao header WordPress trên mobile */
-        background: white;
-        z-index: 1000;
-        pointer-events: none;
+        display: none;
     }
     
     /* Điều chỉnh iframe để bỏ phần header (thử với 0px nếu WordPress đã được làm sạch) */
@@ -359,7 +351,7 @@
         height: 100%;
     }
     
-    /* Overlay cho desktop cũng */
+    /* Bỏ overlay cho desktop cũng - tham khảo từ khainiem-lessons */
     .wordpress-header-overlay {
         position: absolute;
         top: 0;
@@ -369,6 +361,7 @@
         background: white;
         z-index: 1000;
         pointer-events: none;
+        display: none; /* Ẩn mặc định trên desktop */
     }
     
     /* CSS để điều chỉnh nội dung trong iframe */
@@ -383,13 +376,14 @@
             transform: translateY(0px);
         }
         
-        /* Chỉ che header WordPress, không che nội dung bài học */
+        /* Bỏ hoàn toàn overlay che nội dung bài học - tham khảo từ khainiem-lessons */
         .mtw7-iframe-body::before {
-            height: 0px;
+            height: 0;
         }
         
         .wordpress-header-overlay {
-            height: 0px;
+            height: 0;
+            display: none; /* Ẩn trên mobile khi không cần */
         }
     }
     
