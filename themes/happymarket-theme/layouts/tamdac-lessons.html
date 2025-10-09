@@ -99,56 +99,68 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Tamdac Card Container - hiển thị trực tiếp content */
-.tamdac-card-container {
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: all 0.2s ease;
-}
+    /* Tamdac Card Container - hiển thị trực tiếp content */
+    .tamdac-card-container {
+        background: #ffffff;
+        border: none; /* Bỏ viền */
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
 
-.tamdac-card-container:hover {
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
+    .tamdac-card-container:hover {
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        transform: translateY(-2px);
+    }
 
-.tamdac-header {
-    display: flex;
-    align-items: center;
-    background: #fef3c7; /* Light orange/amber color như trong hình */
-    padding: 1.5rem;
-    border-bottom: 1px solid #f59e0b;
-}
+    .tamdac-header {
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); /* Light orange/amber gradient */
+        padding: 1.5rem;
+        border-bottom: none;
+        position: relative;
+    }
 
-.tamdac-star-icon {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    flex-shrink: 0;
-    color: #92400e;
-}
+    .tamdac-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(251, 191, 36, 0.3) 50%, transparent 100%);
+    }
 
-.tamdac-title {
-    color: #92400e;
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0;
-    line-height: 1.3;
-}
+    .tamdac-star-icon {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        flex-shrink: 0;
+        color: #92400e;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    }
 
-.tamdac-content {
-    padding: 1.5rem;
-    background: #ffffff;
-}
+    .tamdac-title {
+        color: #92400e;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.3;
+    }
 
-.tamdac-content-text {
-    color: #374151;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin: 0;
-}
+    .tamdac-content {
+        padding: 1.5rem;
+        background: #ffffff;
+    }
+
+    .tamdac-content-text {
+        color: #374151;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0;
+    }
 
 .tamdac-error {
     text-align: center;
@@ -385,18 +397,20 @@
         gap: 1.5rem;
         margin-left: 1rem;
         margin-right: 1rem;
+        max-width: 100%;
     }
     
     .tamdac-card-container {
         margin-bottom: 1.5rem;
+        border-radius: 10px;
     }
     
     .tamdac-header {
-        padding: 1rem;
+        padding: 1.25rem;
     }
     
     .tamdac-content {
-        padding: 1rem;
+        padding: 1.25rem;
     }
     
     .tamdac-star-icon {
@@ -409,7 +423,7 @@
     }
     
     .tamdac-content-text {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         line-height: 1.5;
     }
     
@@ -420,6 +434,41 @@
     
     .tamdac-content-text {
         font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tamdac-grid {
+        gap: 1rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+    
+    .tamdac-card-container {
+        margin-bottom: 1rem;
+        border-radius: 8px;
+    }
+    
+    .tamdac-header {
+        padding: 1rem;
+    }
+    
+    .tamdac-content {
+        padding: 1rem;
+    }
+    
+    .tamdac-star-icon {
+        font-size: 1.1rem;
+        margin-right: 0.5rem;
+    }
+    
+    .tamdac-title {
+        font-size: 1rem;
+    }
+    
+    .tamdac-content-text {
+        font-size: 0.9rem;
+        line-height: 1.4;
     }
 }
 </style>

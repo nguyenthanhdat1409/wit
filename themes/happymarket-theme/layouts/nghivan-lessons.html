@@ -98,45 +98,65 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Nghi Van New Layout - 2 ô dính nhau như trong hình */
-.nghivan-card-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-}
+    /* Nghi Van New Layout - 2 ô dính nhau như trong hình */
+    .nghivan-card-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        border-radius: 12px;
+        overflow: hidden;
+        background: #ffffff;
+        transition: all 0.3s ease;
+    }
 
-.nghivan-question-box {
-    background: #fef3c7; /* Light orange/amber color như trong hình */
-    border: 1px solid #f59e0b;
-    border-bottom: none;
-    padding: 1.5rem;
-    min-height: 80px;
-}
+    .nghivan-card-container:hover {
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        transform: translateY(-2px);
+    }
 
-.nghivan-answer-box {
-    background: #fefefe; /* Light cream/white color như trong hình */
-    border: 1px solid #e5e7eb;
-    border-top: none;
-    padding: 1.5rem;
-    min-height: 80px;
-}
+    .nghivan-question-box {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); /* Light orange/amber gradient */
+        border: none; /* Bỏ viền cam đậm */
+        border-bottom: none;
+        padding: 1.5rem;
+        min-height: 80px;
+        position: relative;
+    }
 
-.nghivan-question-content {
-    color: #92400e;
-    font-size: 1rem;
-    line-height: 1.6;
-    font-weight: 500;
-}
+    .nghivan-question-box::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 0%, rgba(251, 191, 36, 0.3) 50%, transparent 100%);
+    }
 
-.nghivan-answer-content {
-    color: #374151;
-    font-size: 1rem;
-    line-height: 1.6;
-    font-weight: 500;
-}
+    .nghivan-answer-box {
+        background: #fefefe; /* Light cream/white color */
+        border: none; /* Bỏ viền */
+        border-top: none;
+        padding: 1.5rem;
+        min-height: 80px;
+    }
+
+    .nghivan-question-content {
+        color: #92400e;
+        font-size: 1rem;
+        line-height: 1.6;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    .nghivan-answer-content {
+        color: #374151;
+        font-size: 1rem;
+        line-height: 1.6;
+        font-weight: 400;
+        margin: 0;
+    }
 
 .nghivan-error {
     text-align: center;
@@ -373,10 +393,42 @@
         gap: 1.5rem;
         margin-left: 1rem;
         margin-right: 1rem;
+        max-width: 100%;
     }
     
     .nghivan-card-container {
         margin-bottom: 1.5rem;
+        border-radius: 10px;
+    }
+    
+    .nghivan-question-box,
+    .nghivan-answer-box {
+        padding: 1.25rem;
+        min-height: 70px;
+    }
+    
+    .nghivan-question-content,
+    .nghivan-answer-content {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .nghivan-card {
+        height: 240px;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nghivan-grid {
+        gap: 1rem;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+    
+    .nghivan-card-container {
+        margin-bottom: 1rem;
+        border-radius: 8px;
     }
     
     .nghivan-question-box,
@@ -388,12 +440,7 @@
     .nghivan-question-content,
     .nghivan-answer-content {
         font-size: 0.9rem;
-        line-height: 1.5;
-    }
-    
-    .nghivan-card {
-        height: 240px;
-        padding: 1rem;
+        line-height: 1.4;
     }
 }
 </style>
