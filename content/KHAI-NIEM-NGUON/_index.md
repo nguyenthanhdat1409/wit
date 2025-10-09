@@ -9,8 +9,6 @@ layout: "khainiem-lessons"
 
 # 💎 Khái Niệm Nguồn
 
-Danh sách các Khái Niệm Nguồn được tải từ WordPress API.
-
 <div id="khainiem-content">
     <div class="loading">
         <p>🔄 Đang tải dữ liệu từ WordPress...</p>
@@ -136,20 +134,21 @@ function hideWordPressHeader(iframe) {
     
     // Điều chỉnh height dựa trên màn hình
     const isMobile = window.innerWidth <= 480;
-    const overlayHeight = isMobile ? '10px' : '0px';
     
-    overlay.style.cssText = `
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: ${overlayHeight};
-        background: white;
-        z-index: 1000;
-        pointer-events: none;
-    `;
-    
-    iframeBody.appendChild(overlay);
+    // Chỉ tạo overlay trên mobile để tránh đường line trắng trên desktop
+    if (isMobile) {
+        overlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: white;
+            z-index: 1000;
+            pointer-events: none;
+        `;
+        iframeBody.appendChild(overlay);
+    }
     
     // Điều chỉnh iframe position để che header
     iframe.style.transform = 'translateY(0px)';
