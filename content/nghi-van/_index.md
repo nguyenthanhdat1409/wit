@@ -42,13 +42,9 @@ function displayNghiVanContent(data) {
     // Extract posts array from data object
     let posts = data;
     if (data && typeof data === 'object' && !Array.isArray(data)) {
-        // Try different possible keys - API trả về data.contents.nodes
-        posts = data.contents?.nodes || data.posts || data.data || data.items || data.results || Object.values(data)[0];
-        
-        // Nếu vẫn chưa phải array, thử extract từ data.contents.nodes
-        if (!Array.isArray(posts) && data.contents && data.contents.nodes) {
-            posts = data.contents.nodes;
-        }
+        // API trả về: {"data": {"contents": {"nodes": [...]}}}
+        // Try different possible keys in correct order
+        posts = data.data?.contents?.nodes || data.contents?.nodes || data.posts || data.data || data.items || data.results || Object.values(data)[0];
         
         console.log('🔍 Extracted posts:', posts);
         console.log('🔍 Posts type:', typeof posts);
