@@ -44,10 +44,15 @@ function displayTamDacContent(data) {
     if (data && typeof data === 'object' && !Array.isArray(data)) {
         // Try different possible keys - API trả về data.contents.nodes
         posts = data.contents?.nodes || data.posts || data.data || data.items || data.results || Object.values(data)[0];
+        console.log('🔍 Extracted posts:', posts);
+        console.log('🔍 Posts type:', typeof posts);
+        console.log('🔍 Is array:', Array.isArray(posts));
+        console.log('🔍 Posts length:', posts?.length);
     }
     
     if (!posts || !Array.isArray(posts) || posts.length === 0) {
-        contentDiv.innerHTML = '<div class="tamdac-error"><p>Không có dữ liệu câu tâm đắc nào.</p></div>';
+        console.log('❌ No valid posts found. Posts:', posts);
+        contentDiv.innerHTML = '<div class="tamdac-error"><p>Không có dữ liệu câu tâm đắc nào.</p><p>Debug: ' + JSON.stringify(data).substring(0, 200) + '...</p></div>';
         return;
     }
     
