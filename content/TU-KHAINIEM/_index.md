@@ -11,6 +11,26 @@ weight: 1
 h1 {
   display: none !important;
 }
+
+/* Tăng font-size toàn trang lên 22px */
+body {
+  font-size: 22px !important;
+}
+
+/* Điều chỉnh các element con */
+p, td, th, div, span, a {
+  font-size: 22px !important;
+}
+
+/* Điều chỉnh button */
+button {
+  font-size: 18px !important;
+}
+
+/* Điều chỉnh small text */
+small {
+  font-size: 16px !important;
+}
 </style>
 <div id="wordpress-content">
   <div class="loading" style="text-align: center; padding: 20px;">
