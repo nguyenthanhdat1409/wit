@@ -1,7 +1,7 @@
 enableGitInfo: false
 baseURL: 'https://wikiw.vn'
 languageCode: 'vi-VN'
-title: 'HappyMarketDocs - Phát triển Nội tâm & Huấn luyện'
+title: 'Wikiw - Phát triển Nội tâm & Huấn luyện'
 theme: 'happymarket-theme'
 defaultContentLanguage: 'vi'
 defaultContentLanguageInSubdir: false

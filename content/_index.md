@@ -8,9 +8,9 @@ tableOfContents: true
 ---
 
 <!-- 
-# Chào mừng đến với HappyMarketDocs
+# Chào mừng đến với Wikiw
 
-**HappyMarketDocs** là nguồn tài liệu toàn diện và đáng tin cậy về phát triển nội tâm, huấn luyện tư vấn và phát triển bản thân. Chúng tôi cung cấp kiến thức chuyên sâu từ A-Z để giúp bạn phát triển toàn diện và thành công trong cuộc sống.
+**Wikiw** là nguồn tài liệu toàn diện và đáng tin cậy về phát triển nội tâm, huấn luyện tư vấn và phát triển bản thân. Chúng tôi cung cấp kiến thức chuyên sâu từ A-Z để giúp bạn phát triển toàn diện và thành công trong cuộc sống.
 
 ## 🚀 Bắt đầu ngay hôm nay
 Dù bạn là người mới bắt đầu hành trình phát triển bản thân hay đã có kinh nghiệm, chúng tôi có tài liệu phù hợp cho mọi cấp độ:
@@ -33,7 +33,7 @@ Dù bạn là người mới bắt đầu hành trình phát triển bản thân
 
 - **[Hình ảnh](/hinh/)** - Tài liệu hình ảnh minh họa và trực quan
 
-## 💡 Tại sao chọn HappyMarketDocs?
+## 💡 Tại sao chọn Wikiw?
 ### ✅ Nội dung chuyên sâu
 Tài liệu được biên soạn bởi các chuyên gia có kinh nghiệm thực tế trong lĩnh vực tư vấn và huấn luyện nội tâm.
 
