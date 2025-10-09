@@ -44,6 +44,12 @@ function displayNghiVanContent(data) {
     if (data && typeof data === 'object' && !Array.isArray(data)) {
         // Try different possible keys - API trả về data.contents.nodes
         posts = data.contents?.nodes || data.posts || data.data || data.items || data.results || Object.values(data)[0];
+        
+        // Nếu vẫn chưa phải array, thử extract từ data.contents.nodes
+        if (!Array.isArray(posts) && data.contents && data.contents.nodes) {
+            posts = data.contents.nodes;
+        }
+        
         console.log('🔍 Extracted posts:', posts);
         console.log('🔍 Posts type:', typeof posts);
         console.log('🔍 Is array:', Array.isArray(posts));
