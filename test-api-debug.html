@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; max-height: 300px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test API Debug</h1>
+    
+    <div class="test-section info">
+        <h3>📋 Environment Info</h3>
+        <p><strong>Current URL:</strong> <span id="current-url"></span></p>
+        <p><strong>Is Localhost:</strong> <span id="is-localhost"></span></p>
+        <p><strong>API Endpoint:</strong> <span id="api-endpoint"></span></p>
+    </div>
+
+    <div class="test-section">
+        <h3>🔗 Test API Connection</h3>
+        <button onclick="testAPI()">Test API</button>
+        <div id="test-results"></div>
+    </div>
+
+    <script>
+        // Display environment info
+        document.getElementById('current-url').textContent = window.location.href;
+        
+        const isLocalhost = window.location.hostname === 'localhost' || 
+                           window.location.hostname === '127.0.0.1' ||
+                           window.location.hostname.includes('localhost');
+        
+        document.getElementById('is-localhost').textContent = isLocalhost;
+        
+        const apiUrl = isLocalhost 
+            ? '/.netlify/functions/khainiem-proxy'
+            : 'https://admin.wikiw.vn/wp-json/custom/v1/khainiem-contents';
+        
+        document.getElementById('api-endpoint').textContent = apiUrl;
+
+        async function testAPI() {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<div class="test-section info"><h4>🔄 Testing API...</h4></div>';
+            
+            try {
+                console.log('📡 Fetching from:', apiUrl);
+                const response = await fetch(apiUrl);
+                
+                console.log('📥 Response received:', response.status, response.statusText);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ Data received:', data);
+                
+                // Analyze data structure
+                let analysis = analyzeDataStructure(data);
+                
+                resultsDiv.innerHTML = `
+                    <div class="test-section success">
+                        <h4>✅ API Success</h4>
+                        <p><strong>Status:</strong> ${response.status}</p>
+                        <p><strong>Data Type:</strong> ${typeof data}</p>
+                        <h5>📊 Data Structure Analysis:</h5>
+                        <pre>${analysis}</pre>
+                        <h5>📋 Full Response:</h5>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('❌ API Error:', error);
+                resultsDiv.innerHTML = `
+                    <div class="test-section error">
+                        <h4>❌ API Failed</h4>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+            }
+        }
+
+        function analyzeDataStructure(data) {
+            let analysis = [];
+            
+            // Check root level
+            analysis.push(`Root level keys: ${Object.keys(data).join(', ')}`);
+            
+            // Check data.data
+            if (data.data) {
+                analysis.push(`data.data exists, type: ${typeof data.data}`);
+                if (typeof data.data === 'object') {
+                    analysis.push(`data.data keys: ${Object.keys(data.data).join(', ')}`);
+                    
+                    // Check data.data.contents
+                    if (data.data.contents) {
+                        analysis.push(`data.data.contents exists, type: ${typeof data.data.contents}`);
+                        if (typeof data.data.contents === 'object') {
+                            analysis.push(`data.data.contents keys: ${Object.keys(data.data.contents).join(', ')}`);
+                            
+                            // Check data.data.contents.nodes
+                            if (data.data.contents.nodes) {
+                                analysis.push(`data.data.contents.nodes exists, type: ${typeof data.data.contents.nodes}`);
+                                if (Array.isArray(data.data.contents.nodes)) {
+                                    analysis.push(`data.data.contents.nodes length: ${data.data.contents.nodes.length}`);
+                                    if (data.data.contents.nodes.length > 0) {
+                                        analysis.push(`First node keys: ${Object.keys(data.data.contents.nodes[0]).join(', ')}`);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return analysis.join('\n');
+        }
+    </script>
+</body>
+</html>
