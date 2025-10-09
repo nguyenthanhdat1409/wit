@@ -86,12 +86,9 @@ function displayTamDacContent(data) {
         const escapedLink = link.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         
         html += `
-            <div class="tamdac-card">
-                <h3 class="tamdac-title">${escapedTitle}</h3>
-                <div class="tamdac-excerpt">${escapedContent}</div>
-                <button onclick="openTamDacLesson('${escapedLink}', '${escapedTitle}')" class="tamdac-link">
-                    📖 Đọc thêm
-                </button>
+            <div class="tamdac-popup-rectangle" onclick="openTamDacLesson('${escapedLink}', '${escapedTitle}')">
+                <div class="tamdac-star-icon">⭐</div>
+                <div class="tamdac-content-text">${escapedTitle}</div>
             </div>
         `;
     });
