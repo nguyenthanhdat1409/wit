@@ -22,7 +22,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function loadKhaiNiemData() {
     console.log('🔄 Loading Khái Niệm Nguồn data...');
-    const apiUrl = 'https://admin.wikiw.vn/wp-json/custom/v1/khainiem-contents';
+    
+    // Detect environment and choose appropriate API endpoint
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' ||
+                       window.location.hostname.includes('localhost');
+    
+    const apiUrl = isLocalhost 
+        ? '/.netlify/functions/khainiem-proxy'  // Use proxy for local development
+        : 'https://admin.wikiw.vn/wp-json/custom/v1/khainiem-contents'; // Direct API for production
+    
+    console.log(`📡 Using API: ${apiUrl} (localhost: ${isLocalhost})`);
     const contentDiv = document.getElementById('khainiem-content');
     
     console.log('📡 Fetching from:', apiUrl);
@@ -227,12 +237,19 @@ document.addEventListener('keydown', function(event) {
 
 function displayKhaiNiemError(error) {
     const contentDiv = document.getElementById('khainiem-content');
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' ||
+                       window.location.hostname.includes('localhost');
+    const apiUrl = isLocalhost 
+        ? '/.netlify/functions/khainiem-proxy'
+        : 'https://admin.wikiw.vn/wp-json/custom/v1/khainiem-contents';
     
     contentDiv.innerHTML = `
         <div class="khainiem-error">
             <p>❌ Lỗi khi tải dữ liệu Khái Niệm Nguồn</p>
             <p><strong>Chi tiết:</strong> ${error.message}</p>
-            <p><strong>URL:</strong> https://admin.wikiw.vn/wp-json/custom/v1/khainiem-contents</p>
+            <p><strong>Environment:</strong> ${isLocalhost ? 'Local Development' : 'Production'}</p>
+            <p><strong>URL:</strong> ${apiUrl}</p>
         </div>
     `;
 }
