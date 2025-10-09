@@ -14,22 +14,22 @@ h1 {
 
 /* Tăng font-size toàn trang lên 22px */
 body {
-  font-size: 22px !important;
+  font-size: 23px !important;
 }
 
 /* Điều chỉnh các element con */
 p, td, th, div, span, a {
-  font-size: 22px !important;
+  font-size: 23px !important;
 }
 
 /* Điều chỉnh button */
 button {
-  font-size: 18px !important;
+  font-size: 19px !important;
 }
 
 /* Điều chỉnh small text */
 small {
-  font-size: 16px !important;
+  font-size: 17px !important;
 }
 </style>
 <div id="wordpress-content">
@@ -75,9 +75,9 @@ function displayWordPressContent(data) {
   
   let html = `
     <div class="wordpress-posts">
-      <p class="meta-info">Đã tải $
+      <!-- <p class="meta-info">Đã tải $
       {posts.length} bài viết từ 
-      WordPress API</p>
+      WordPress API</p> -->
       <table class="kv-table" aria-label="Bảng từ vựng - khái niệm từ WordPress">
         <thead>
           <tr>
