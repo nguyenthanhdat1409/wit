@@ -23,21 +23,84 @@ menu:
       url: /bai-hoc/
       weight: 15
       hasChildren: true
-    - identifier: bai-hoc-tvhl
-      name: 📚 Bài học TVHL
-      url: /bai-hoc/
-      parent: bai-hoc
-      weight: 15
     - identifier: bai-hoc-mtw7
-      name: 🎯 Bài học Mentor Wit K07
+      name: 🎯 Mentor Wit K07
       url: /bai-hoc-mtw7/
       parent: bai-hoc
       weight: 16
-    - identifier: bai-hoc-dao-tao-noi-tam
-      name: 🧘 Bài học đào tạo nội tâm
-      url: /bai-hoc-dao-tao-noi-tam/
+      hasChildren: true
+    - identifier: thau-hieu-tu-duy
+      name: 🧠 Thấu hiểu tư duy
+      url: /bai-hoc-mtw7/thau-hieu-tu-duy/
+      parent: bai-hoc-mtw7
+      weight: 161
+    - identifier: ba-qua-nhu-y
+      name: 🍎 3 Quả như ý
+      url: /bai-hoc-mtw7/ba-qua-nhu-y/
+      parent: bai-hoc-mtw7
+      weight: 162
+    - identifier: ba-he-quy-chieu
+      name: 🎯 3 Hệ quy chiếu
+      url: /bai-hoc-mtw7/ba-he-quy-chieu/
+      parent: bai-hoc-mtw7
+      weight: 163
+    - identifier: tri-tue-tam-thai
+      name: 🧘 Trí tuệ - Tâm thái
+      url: /bai-hoc-mtw7/tri-tue-tam-thai/
+      parent: bai-hoc-mtw7
+      weight: 164
+    - identifier: tu-van-van-luyen
+      name: 💬 Tư vấn vẫn luyện
+      url: /bai-hoc-mtw7/tu-van-van-luyen/
+      parent: bai-hoc-mtw7
+      weight: 165
+    - identifier: nhan-cach
+      name: 👤 Nhân cách
+      url: /bai-hoc-mtw7/nhan-cach/
+      parent: bai-hoc-mtw7
+      weight: 166
+    - identifier: pham-chat
+      name: ⭐ Phẩm chất
+      url: /bai-hoc-mtw7/pham-chat/
+      parent: bai-hoc-mtw7
+      weight: 167
+    - identifier: quy-luat-mtw7
+      name: ⚖️ Quy luật
+      url: /bai-hoc-mtw7/quy-luat/
+      parent: bai-hoc-mtw7
+      weight: 168
+    - identifier: bai-hoc-tvhl
+      name: 📚 Tư vấn huấn luyện
+      url: /bai-hoc/
       parent: bai-hoc
       weight: 17
+      hasChildren: true
+    - identifier: noi-tam
+      name: 🧘 Nội tâm
+      # url: /bai-hoc/noi-tam/
+      url: /bai-hoc-dao-tao-noi-tam/
+      parent: bai-hoc-tvhl
+      weight: 171
+    - identifier: suc-khoe
+      name: 💪 Sức khỏe
+      url: /bai-hoc/suc-khoe/
+      parent: bai-hoc-tvhl
+      weight: 172
+    - identifier: moi-quan-he
+      name: ❤️ Mối quan hệ
+      url: /bai-hoc/moi-quan-he/
+      parent: bai-hoc-tvhl
+      weight: 173
+    - identifier: tai-chinh
+      name: 💰 Tài chính
+      url: /bai-hoc/tai-chinh/
+      parent: bai-hoc-tvhl
+      weight: 174
+    - identifier: bai-hoc-dao-tao-noi-tam
+      name: 🧘 Ứng dụng
+      url: /
+      weight: 18
+      parent: bai-hoc
     # - identifier: khoa-hoc
     #   name: Khóa học
     #   url: /khoa-hoc/
@@ -52,21 +115,42 @@ menu:
       url: /khai-niem-nguon/
       parent: khai-niem
       weight: 31
-    # - identifier: thu-vien
-    #   name: 📖 Thư viện
-    #   url: /thu-vien/
-    #   parent: khai-niem
-    #   weight: 32
+      hasChildren: true
+    - identifier: cgtvhl-noi-tam
+      name: 🧘 CGTVHL Nội tâm
+      url: /khai-niem-nguon/cgtvhl-noi-tam/
+      parent: khai-niem-nguon
+      weight: 311
+    - identifier: cgtvhl-suc-khoe
+      name: 💪 CGTVHL Sức khỏe
+      url: /khai-niem-nguon/cgtvhl-suc-khoe/
+      parent: khai-niem-nguon
+      weight: 312
+    - identifier: cgtvhl-moi-quan-he
+      name: ❤️ CGTVHL Mối quan hệ
+      url: /khai-niem-nguon/cgtvhl-moi-quan-he/
+      parent: khai-niem-nguon
+      weight: 313
+    - identifier: cgtvhl-tai-chinh
+      name: 💰 CGTVHL Tài chính
+      url: /khai-niem-nguon/cgtvhl-tai-chinh/
+      parent: khai-niem-nguon
+      weight: 314
+    - identifier: cgtvhl-kinh-doanh
+      name: 🏢 CGTVHL Kinh doanh
+      url: /khai-niem-nguon/cgtvhl-kinh-doanh/
+      parent: khai-niem-nguon
+      weight: 315
+    - identifier: thu-vien
+      name: 📖 Thư viện khái niệm
+      url: /tu-khainiem/
+      parent: khai-niem
+      weight: 32
     - identifier: trang-do-hinh
-      name: 🎨 Trang đồ hình
+      name: 🎨 Thư viện đồ hình
       url: /hinh/
       parent: khai-niem
       weight: 33
-    - identifier: tu-khainiem
-      name: 📖 Từ vựng - Khái niệm
-      url: /tu-khainiem/
-      weight: 40
-      parent: khai-niem
     - identifier: thong-tin
       name: Thông tin
       url: /thong-tin/
@@ -75,22 +159,22 @@ menu:
     - identifier: cau-tam-dac
       name: Câu tâm đắc
       url: /cau-tam-dac/
-      weight: 60
+      weight: 61
       parent: thong-tin
     - identifier: nghi-van
       name: Nghi vấn
       url: /nghi-van/
-      weight: 60
+      weight: 62
       parent: thong-tin
     - identifier: chuyen-hien-thuc
       name: Chuyển hiện thực
       url: /chuyen-hien-thuc/
-      weight: 60
+      weight: 63
       parent: thong-tin
     - identifier: dong-gop
       name: 💝 Đóng góp
       url: /dong-gop/
-      weight: 60
+      weight: 64
       parent: thong-tin
     
 
