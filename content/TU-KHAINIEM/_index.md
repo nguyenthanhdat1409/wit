@@ -101,8 +101,6 @@ function displayWordPressContent(data) {
   
   let html = `
     <div class="wordpress-posts">
-      <h2>📚 Từ vựng - Khái niệm từ WordPress</h2>
-      <p class="meta-info">Đã tải ${posts.length} bài viết từ WordPress API</p>
       
       <table class="kv-table" aria-label="Bảng từ vựng - khái niệm từ WordPress">
         <thead>
