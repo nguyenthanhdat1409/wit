@@ -42,8 +42,8 @@ function displayNghiVanContent(data) {
     // Extract posts array from data object
     let posts = data;
     if (data && typeof data === 'object' && !Array.isArray(data)) {
-        // Try different possible keys
-        posts = data.posts || data.data || data.items || data.results || Object.values(data)[0];
+        // Try different possible keys - API trả về data.contents.nodes
+        posts = data.contents?.nodes || data.posts || data.data || data.items || data.results || Object.values(data)[0];
     }
     
     if (!posts || !Array.isArray(posts) || posts.length === 0) {
