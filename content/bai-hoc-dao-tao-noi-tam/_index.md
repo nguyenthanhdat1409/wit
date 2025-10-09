@@ -9,8 +9,6 @@ layout: "daotao-lessons"
 
 # 🧘 Bài học đào tạo nội tâm
 
-Danh sách các bài học đào tạo nội tâm được tải từ WordPress API.
-
 <div id="daotao-content">
     <div class="loading">
         <p>🔄 Đang tải dữ liệu từ WordPress...</p>
