@@ -9,8 +9,6 @@ layout: "khainiem-lessons"
 
 # 🎯 Khái Niệm Nguồn
 
-Danh sách các Khái Niệm Nguồn được tải từ WordPress API.
-
 <div id="khainiem-content">
     <div class="loading">
         <p>🔄 Đang tải dữ liệu từ WordPress...</p>

@@ -9,8 +9,6 @@ layout: "nghivan-lessons"
 
 # 🎯 Nghi vấn
 
-Danh sách các câu hỏi nghi vấn được tải từ WordPress API.
-
 <div id="nghivan-content">
     <div class="loading">
         <p>🔄 Đang tải dữ liệu từ WordPress...</p>

@@ -9,8 +9,6 @@ layout: "tamdac-lessons"
 
 # 🎯 Câu tâm đắc
 
-Danh sách các câu tâm đắc được tải từ WordPress API.
-
 <div id="tamdac-content">
     <div class="loading">
         <p>🔄 Đang tải dữ liệu từ WordPress...</p>
