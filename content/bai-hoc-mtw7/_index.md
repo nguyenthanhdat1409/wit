@@ -2,14 +2,12 @@
 title: "Bài học MTW7"
 date: 2024-10-04T09:00:00+07:00
 draft: false
-description: "Danh sách các bài học MTW7 từ WordPress"
+description: ""
 type: "page"
 layout: "mtw7-lessons"
 ---
 
-# 🎯 Bài học MTW7
-
-Danh sách các bài học MTW7 được tải từ WordPress API.
+# 🎯 Bài học Mentor WiT K07
 
 <div id="mtw7-content">
     <div class="loading">
