@@ -6,58 +6,12 @@ draft: false
 weight: 1
 ---
 
-<!-- 
-CODE CŨ - COMMENT LẠI
-<div>
-
-<table class="kv-table" aria-label="Bảng từ vựng - khái niệm">
-  <thead>
-    <tr>
-      <th class="kv-label">Từ vựng</th>
-      <th>Khái niệm</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-  <td class="kv-label">
-    <a class="title" href="https://admin.wikiw.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" target="_blank" rel="noopener noreferrer">
-      3 Câu hỏi quan trọng trong đời người
-    </a>
-  </td>
-  <td class="kv-content">
-    <iframe 
-      src="https://admin.wikiw.vn/index.php/content/tv-3-cau-hoi-quan-trong-trong-doi-nguoi/" 
-      width="100%" 
-      height="600" 
-      frameborder="0"
-      style="border:1px solid #ddd; border-radius:6px;">
-    </iframe>
-  </td>
-</tr>
-    <tr>
-      <td class="kv-label">
-      <a class="title" href="https://admin.wikiw.vn/index.php/content/4-dong-luc-sinh-ton/" target="_blank" rel="noopener noreferrer">
-          4 Động Lực Sinh Tồn
-        </a></td>
-      <td class="kv-content">
-        <p class="meta" style="color:#666; margin-top:6px;">1. Bản thân 2. Gia đình ...</p>
-      </td>
-    </tr>
-    <tr>
-      <td class="kv-label">
-      <a class="title" href="https://admin.wikiw.vn/index.php/content/4-dong-luc-sinh-ton/" target="_blank" rel="noopener noreferrer">
-          5 Sự so sánh
-        </a></td>
-      <td class="kv-content">
-        <p class="meta" style="color:#666; margin-top:6px;"></p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-</div>
--->
-
-<!-- CODE MỚI - LOAD DỮ LIỆU TỪ WORDPRESS API -->
+<style>
+/* Ẩn title của trang */
+h1 {
+  display: none !important;
+}
+</style>
 <div id="wordpress-content">
   <div class="loading" style="text-align: center; padding: 20px;">
     <p>🔄 Đang tải dữ liệu từ WordPress...</p>
@@ -101,7 +55,9 @@ function displayWordPressContent(data) {
   
   let html = `
     <div class="wordpress-posts">
-      
+      <p class="meta-info">Đã tải $
+      {posts.length} bài viết từ 
+      WordPress API</p>
       <table class="kv-table" aria-label="Bảng từ vựng - khái niệm từ WordPress">
         <thead>
           <tr>
