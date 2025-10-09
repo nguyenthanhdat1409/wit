@@ -1,51 +1,340 @@
 ---
 title: "Câu tâm đắc"
-description: "Tổng hợp những câu nói, trích dẫn và suy ngẫm sâu sắc về cuộc sống và phát triển nội tâm"
-date: 2025-01-10
+date: 2024-10-04T09:00:00+07:00
 draft: false
-weight: 41
-type: "section"
+description: "Danh sách các câu tâm đắc từ WordPress"
+type: "page"
+layout: "tamdac-lessons"
 ---
 
-# Câu tâm đắc
+# 🎯 Câu tâm đắc
 
-Những câu nói, trích dẫn và suy ngẫm sâu sắc được tổng hợp từ quá trình học tập, thực hành và chia sẻ về phát triển nội tâm.
+Danh sách các câu tâm đắc được tải từ WordPress API.
 
-## Giới thiệu
+<div id="tamdac-content">
+    <div class="loading">
+        <p>🔄 Đang tải dữ liệu từ WordPress...</p>
+    </div>
+</div>
 
-**Câu tâm đắc** là những câu nói, trích dẫn có sức mạnh truyền cảm hứng, giúp chúng ta:
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadTamDacData();
+});
 
-- 💡 **Khai sáng tâm trí** - Mở ra những góc nhìn mới về cuộc sống
-- 🌱 **Nuôi dưỡng tâm hồn** - Tạo nguồn năng lượng tích cực
-- 🎯 **Định hướng hành động** - Chỉ dẫn con đường phát triển
-- ✨ **Chuyển hoá nội tâm** - Thay đổi từ sâu bên trong
+function loadTamDacData() {
+    console.log('🔄 Loading Câu tâm đắc data...');
+    const apiUrl = 'https://admin.wikiw.vn/wp-json/custom/v1/tamdac-contents';
+    const contentDiv = document.getElementById('tamdac-content');
+    
+    console.log('📡 Fetching from:', apiUrl);
+    
+    fetch(apiUrl)
+        .then(response => {
+            console.log('📥 Response received:', response.status, response.statusText);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('✅ Câu tâm đắc data loaded:', data);
+            displayTamDacContent(data);
+        })
+        .catch(error => {
+            console.error('❌ Error loading Câu tâm đắc data:', error);
+            displayTamDacError(error);
+        });
+}
 
-## Các chủ đề chính
+function displayTamDacContent(data) {
+    const contentDiv = document.getElementById('tamdac-content');
+    
+    if (!data.data || !data.data.contents || !data.data.contents.nodes) {
+        contentDiv.innerHTML = '<p>❌ Không có dữ liệu từ WordPress</p>';
+        return;
+    }
+    
+    let posts = data.data.contents.nodes;
+    console.log(`📊 Found ${posts.length} Câu tâm đắc posts from WordPress`);
+    
+    let html = `
+        <div class="tamdac-posts">
+            <div class="tamdac-grid">
+    `;
+    
+    posts.forEach((post, index) => {
+        // Xử lý title
+        let title = post.title || 'Không có tiêu đề';
+        title = title.replace(/&#8211;/g, '–');
+        
+        const link = post.link || '#';
+        
+        // Lấy text thuần từ content, bỏ HTML tags
+        let content = 'Không có nội dung';
+        if (post.content) {
+            // Tạo một div tạm để parse HTML
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = post.content;
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+            content = textContent.trim().substring(0, 150) + (textContent.length > 150 ? '...' : '');
+        }
+        
+        // Escape HTML để tránh lỗi cấu trúc
+        const escapedTitle = title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const escapedContent = content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const escapedLink = link.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        
+        html += `
+            <div class="tamdac-card">
+                <h3 class="tamdac-title">${escapedTitle}</h3>
+                <div class="tamdac-excerpt">${escapedContent}</div>
+                <button onclick="openTamDacLesson('${escapedLink}', '${escapedTitle}')" class="tamdac-link">
+                    📖 Đọc thêm
+                </button>
+            </div>
+        `;
+    });
+    
+    html += `
+            </div>
+        </div>
+    `;
+    
+    contentDiv.innerHTML = html;
+}
 
-### 🌟 Về cuộc sống
-*"Cuộc sống không phải là những gì xảy ra với bạn, mà là cách bạn phản ứng với những gì xảy ra."*
+function openTamDacLesson(url, title) {
+    // Create modal for iframe
+    const modal = document.createElement('div');
+    modal.id = 'tamdac-iframe-modal';
+    modal.className = 'tamdac-iframe-overlay';
+    modal.innerHTML = `
+        <div class="tamdac-iframe-content">
+            <div class="tamdac-iframe-header">
+                <h3>${title}</h3>
+                <button class="tamdac-iframe-close" onclick="closeTamDacIframe()">&times;</button>
+            </div>
+            <div class="tamdac-iframe-body">
+                <iframe src="${url}" frameborder="0" class="tamdac-iframe" onload="hideWordPressHeader(this)"></iframe>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
 
-### 💪 Về phát triển bản thân
-*"Sự thay đổi bắt đầu từ khi bạn quyết định không còn là phiên bản cũ của chính mình."*
+function hideWordPressHeader(iframe) {
+    console.log('🔍 Attempting to hide WordPress header...');
+    
+    // Tạo overlay để che header WordPress
+    const iframeContainer = iframe.parentNode;
+    iframeContainer.style.position = 'relative';
+    
+    // Tạo overlay che header
+    const headerOverlay = document.createElement('div');
+    headerOverlay.className = 'wordpress-header-overlay';
+    
+    // Kiểm tra nếu là mobile để tăng chiều cao overlay
+    const isMobile = window.innerWidth <= 480;
+    const overlayHeight = isMobile ? '10px' : '0px';
+    
+    headerOverlay.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: ${overlayHeight};
+        background: white;
+        z-index: 1000;
+        pointer-events: none;
+    `;
+    
+    iframeContainer.appendChild(headerOverlay);
+    
+    // Điều chỉnh iframe để bỏ phần header
+    iframe.style.transform = 'translateY(0px)';
+    iframe.style.height = '100%';
+    
+    console.log('✅ WordPress header overlay created');
+    
+    // Thử inject CSS vào iframe (có thể bị CORS block)
+    try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        
+        const style = iframeDoc.createElement('style');
+        style.textContent = `
+            /* Ẩn header WordPress */
+            .gt-header,
+            .gt-mobile-header,
+            .gt-default,
+            .gt-header-main,
+            .gt-style-1,
+            .gt-light,
+            .gt-flex-container-full,
+            .gt-header-main-inner,
+            .gt-item-group,
+            .gt-item,
+            .gt-off-canvas-icon,
+            .gt-logo,
+            .gt-linked-item,
+            .gt-user-box,
+            .gt-search,
+            .gt-random-content,
+            header[class*="gt-"],
+            .site-header,
+            .wp-site-blocks > header,
+            .wp-block-template-part,
+            .wp-block-group:first-child,
+            .entry-header,
+            .page-header,
+            header[role="banner"],
+            .site-branding,
+            .main-navigation,
+            .site-navigation,
+            .menu-toggle,
+            .site-title,
+            .site-description,
+            .custom-logo-link,
+            .wp-block-navigation,
+            .wp-block-site-title,
+            .wp-block-site-tagline,
+            .wp-block-query-title,
+            .wp-block-post-title,
+            .wp-block-group__inner-container > header:first-child,
+            .wp-block-group:first-child header,
+            .wp-block-cover:first-child,
+            .wp-block-cover__inner-container > header:first-child {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                overflow: hidden !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            /* Ẩn mobile menu WordPress */
+            .mobile-menu,
+            .menu-toggle,
+            .hamburger,
+            .mobile-navigation,
+            .wp-block-navigation__responsive-container,
+            .wp-block-navigation__responsive-container-open {
+                display: none !important;
+            }
+            
+            /* Reset body và html trong iframe */
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow-x: hidden !important;
+            }
+            /* Ẩn admin bar nếu nó vẫn hiển thị */
+            #wpadminbar {
+                display: none !important;
+            }
+            /* Reset các container chính của nội dung WordPress */
+            .gt-main, .gt-page-wrapper, .gt-article {
+                margin-top: 0px !important;
+                padding-top: 0px !important;
+            }
+            /* Điều chỉnh tiêu đề bài học */
+            .gt-post-header {
+                margin-top: 0px !important;
+                padding-top: 20px !important;
+            }
+            .gt-post-header h1, h1.entry-title, .wp-block-post-title {
+                margin-top: 0px !important;
+                padding-top: 0px !important;
+                line-height: 1.2 !important;
+                font-size: 2.25rem !important;
+            }
+            /* Đảm bảo nội dung chính không bị che */
+            .gt-content-body {
+                margin-top: 20px !important;
+            }
+            
+            /* Ẩn các element có thể là header WordPress */
+            .site-header,
+            .header,
+            .main-header,
+            .page-header,
+            .entry-header,
+            .post-header,
+            .article-header {
+                display: none !important;
+            }
+            
+            /* Ẩn navigation WordPress */
+            nav,
+            .navigation,
+            .main-navigation,
+            .site-navigation,
+            .primary-navigation,
+            .secondary-navigation {
+                display: none !important;
+            }
+            
+            /* Thêm margin-top cho post header để đẩy nội dung xuống */
+            .gt-post-header {
+                margin-top: 20px !important;
+            }
+            
+            /* Responsive margin-top cho post header */
+            @media (max-width: 768px) {
+                .gt-post-header {
+                    margin-top: 15px !important;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .gt-post-header {
+                    margin-top: 29% !important;
+                }
+            }
+        `;
+        
+        iframeDoc.head.appendChild(style);
+        iframeDoc.body.classList.add('tamdac-iframe-content');
+        
+        console.log('✅ CSS injected successfully into iframe');
+        
+    } catch (error) {
+        console.log('⚠️ CORS restriction - using overlay method only');
+    }
+}
 
-### 🧠 Về tâm thức
-*"Tâm là nguồn gốc của mọi sự. Tâm thanh tịnh thì cuộc sống thanh tịnh."*
+function closeTamDacIframe() {
+    const modal = document.getElementById('tamdac-iframe-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
 
-### 🤝 Về quan hệ
-*"Mối quan hệ tốt đẹp không phải đến từ việc tìm được người hoàn hảo, mà từ việc nhìn thấy một người không hoàn hảo một cách hoàn hảo."*
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('tamdac-iframe-modal');
+    if (modal && event.target === modal) {
+        closeTamDacIframe();
+    }
+});
 
-### 💼 Về thành công
-*"Thành công không phải là chìa khoá của hạnh phúc. Hạnh phúc mới là chìa khoá của thành công."*
+// Close modal with Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeTamDacIframe();
+    }
+});
 
----
-
-## Cách sử dụng
-
-1. **Đọc và suy ngẫm** - Dành thời gian để hiểu sâu từng câu
-2. **Ghi chép** - Viết ra những câu nói cảm động với bạn
-3. **Áp dụng** - Tìm cách thực hành trong cuộc sống
-4. **Chia sẻ** - Truyền cảm hứng đến người khác
-
----
-
-*Một câu nói đúng thời điểm có thể thay đổi cả cuộc đời.*
+function displayTamDacError(error) {
+    const contentDiv = document.getElementById('tamdac-content');
+    
+    contentDiv.innerHTML = `
+        <div class="tamdac-error">
+            <p>❌ Lỗi khi tải dữ liệu Câu tâm đắc</p>
+            <p><strong>Chi tiết:</strong> ${error.message}</p>
+            <p><strong>URL:</strong> https://admin.wikiw.vn/wp-json/custom/v1/tamdac-contents</p>
+        </div>
+    `;
+}
+</script>
