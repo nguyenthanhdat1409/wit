@@ -1,7 +1,7 @@
 {{ define "main" }}
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
     <!-- Content Section -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {{ .Content }}
     </div>
 </div>
@@ -12,88 +12,121 @@
 }
 
 .khainiem-meta {
-    color: #6b7280;
-    font-size: 0.875rem;
-    margin-bottom: 1.5rem;
+    color: #64748b;
+    font-size: 0.9375rem;
+    margin-bottom: 2rem;
     text-align: center;
-    padding: 1rem;
-    background: #f9fafb;
-    border-radius: 8px;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(226, 232, 240, 0.5);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .khainiem-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1.5rem;
     margin-top: 1.5rem;
     width: 100%;
     align-items: start;
 }
 
+/* Responsive breakpoints */
+@media (max-width: 1200px) {
+    .khainiem-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .khainiem-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+    }
+}
+
 .khainiem-card {
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: all 0.2s ease;
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%);
+    border: 2px solid transparent;
+    border-radius: 16px;
+    padding: 1.75rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    height: 280px;
+    height: 300px;
     position: relative;
     overflow: hidden;
+    box-shadow: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+        0 4px 6px -2px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .khainiem-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px -1px rgba(236, 72, 153, 0.2);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 25px 50px -12px rgba(236, 72, 153, 0.25), 
+        0 0 0 1px rgba(236, 72, 153, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     border-color: #ec4899;
+    background: linear-gradient(145deg, #ffffff 0%, #fef7ff 50%, #ffffff 100%);
 }
 
 .khainiem-title {
-    font-size: 24px !important;
-    font-weight: 600;
-    color: #ec4899 !important;
-    margin: 0 0 1rem 0;
-    line-height: 1.4;
+    font-size: 1.375rem !important;
+    font-weight: 700;
+    color: #1e293b !important;
+    margin: 0 0 1.25rem 0;
+    line-height: 1.3;
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .khainiem-excerpt {
-    color: #6b7280;
-    font-size: 20px !important;
-    line-height: 1.5;
-    margin-bottom: 1rem;
+    color: #64748b;
+    font-size: 0.9375rem !important;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
     flex-grow: 1;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
-    max-height: 60px;
+    max-height: 80px;
+    font-weight: 400;
 }
 
 .khainiem-link {
     display: inline-flex;
     align-items: center;
-    background: #ec4899;
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
     color: white;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 19px !important;
+    font-weight: 600;
+    font-size: 0.8125rem !important;
     padding: 0.5rem 1rem;
-    border-radius: 6px;
+    border-radius: 8px;
     border: none;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
     margin-top: auto;
     align-self: flex-start;
     flex-shrink: 0;
+    box-shadow: 0 4px 6px -1px rgba(236, 72, 153, 0.3);
 }
 
 .khainiem-link:hover {
-    background: #db2777;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(236, 72, 153, 0.3);
+    background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 15px -3px rgba(236, 72, 153, 0.4);
 }
 
 .khainiem-error {
@@ -305,22 +338,37 @@
 
 @media (max-width: 768px) {
     .khainiem-grid {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1rem;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-top: 1.5rem;
     }
     
     .khainiem-card {
-        height: 260px;
-        padding: 1rem;
+        height: auto;
+        min-height: 280px;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.1);
     }
     
     .khainiem-title {
-        font-size: 1rem;
+        font-size: 1.25rem !important;
+        line-height: 1.3;
+        margin-bottom: 1rem;
     }
     
     .khainiem-excerpt {
-        -webkit-line-clamp: 2;
-        max-height: 40px;
+        font-size: 0.875rem !important;
+        -webkit-line-clamp: 4;
+        max-height: 70px;
+        line-height: 1.5;
+        margin-bottom: 1.25rem;
+    }
+    
+    .khainiem-link {
+        font-size: 0.8125rem !important;
+        padding: 0.5rem 1rem;
+        margin-top: auto;
     }
 }
 
@@ -389,11 +437,35 @@
     .khainiem-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
+        margin-top: 1.25rem;
     }
     
     .khainiem-card {
-        height: 240px;
-        padding: 1rem;
+        height: auto;
+        min-height: 260px;
+        padding: 1.25rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .khainiem-title {
+        font-size: 1.125rem !important;
+        margin-bottom: 0.875rem;
+        line-height: 1.3;
+    }
+    
+    .khainiem-excerpt {
+        font-size: 0.8125rem !important;
+        -webkit-line-clamp: 3;
+        max-height: 48px;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+    
+    .khainiem-link {
+        font-size: 0.75rem !important;
+        padding: 0.4375rem 0.875rem;
+        margin-top: auto;
     }
 }
 </style>
