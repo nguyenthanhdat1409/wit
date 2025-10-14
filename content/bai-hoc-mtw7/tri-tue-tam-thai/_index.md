@@ -9,7 +9,7 @@ weight: 1
 
 # 🧘 Trí tuệ - Tâm thái
 
-Đang trong quá trình xây dựng và phát triển!
+***Đang trong quá trình xây dựng và phát triển!***
 
 ## 🔗 Liên kết
 

@@ -9,7 +9,7 @@ weight: 1
 
 # 👤 Nhân cách
 
-Đang trong quá trình xây dựng và phát triển!
+***Đang trong quá trình xây dựng và phát triển!***
 
 ## 🔗 Liên kết
 
