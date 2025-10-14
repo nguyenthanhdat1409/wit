@@ -48,7 +48,7 @@ menu:
       name: 🎯 3 Hệ quy chiếu
       url: /bai-hoc-mtw7/ba-he-quy-chieu/
       parent: bai-hoc
-      weight: 16
+      weight: 17
     - identifier: tu-van-van-luyen
       name: 💬 Tư vấn vẫn luyện
       url: /bai-hoc-mtw7/tu-van-van-luyen/
@@ -73,7 +73,7 @@ menu:
       name: 📚 Tư vấn huấn luyện
       url: /bai-hoc/
       parent: bai-hoc
-      weight: 17
+      weight: 18
       hasChildren: true
     - identifier: noi-tam
       name: 🧘 Nội tâm
@@ -98,7 +98,7 @@ menu:
     - identifier: bai-hoc-dao-tao-noi-tam
       name: 🧘 Ứng dụng
       url: /
-      weight: 18
+      weight: 19
       parent: bai-hoc
     - identifier: khai-niem
       name: Khái niệm
