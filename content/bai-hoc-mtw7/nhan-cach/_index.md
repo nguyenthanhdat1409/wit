@@ -9,22 +9,7 @@ weight: 1
 
 # 👤 Nhân cách
 
-Chào mừng bạn đến với bài học **Nhân cách** thuộc chương trình **Mentor Wit K07**.
-
-## 📚 Giới thiệu
-
-Bài học này sẽ giúp bạn xây dựng và phát triển nhân cách...
-
-## 🎯 Nội dung chính
-
-### Định nghĩa nhân cách
-Hiểu rõ về nhân cách là gì...
-
-### Các yếu tố cấu thành
-Các yếu tố tạo nên nhân cách...
-
-### Phát triển nhân cách
-Cách phát triển nhân cách tích cực...
+Đang trong quá trình xây dựng và phát triển!
 
 ## 🔗 Liên kết
 

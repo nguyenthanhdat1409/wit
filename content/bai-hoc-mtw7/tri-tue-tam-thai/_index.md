@@ -9,22 +9,7 @@ weight: 1
 
 # 🧘 Trí tuệ - Tâm thái
 
-Chào mừng bạn đến với bài học **Trí tuệ - Tâm thái** thuộc chương trình **Mentor Wit K07**.
-
-## 📚 Giới thiệu
-
-Bài học này sẽ giúp bạn phát triển trí tuệ và tâm thái...
-
-## 🎯 Nội dung chính
-
-### Trí tuệ
-Nội dung về phát triển trí tuệ...
-
-### Tâm thái
-Nội dung về rèn luyện tâm thái...
-
-### Kết hợp trí tuệ và tâm thái
-Cách kết hợp hài hòa giữa trí tuệ và tâm thái...
+Đang trong quá trình xây dựng và phát triển!
 
 ## 🔗 Liên kết
 

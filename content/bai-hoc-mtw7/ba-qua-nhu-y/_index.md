@@ -9,22 +9,7 @@ weight: 1
 
 # 🍎 3 Quả như ý
 
-Chào mừng bạn đến với bài học **3 Quả như ý** thuộc chương trình **Mentor Wit K07**.
-
-## 📚 Giới thiệu
-
-Bài học này sẽ giúp bạn hiểu về 3 quả như ý trong cuộc sống...
-
-## 🎯 Nội dung chính
-
-### Quả thứ nhất
-Nội dung về quả như ý đầu tiên...
-
-### Quả thứ hai
-Nội dung về quả như ý thứ hai...
-
-### Quả thứ ba
-Nội dung về quả như ý thứ ba...
+Đang trong quá trình xây dựng và phát triển!
 
 ## 🔗 Liên kết
 

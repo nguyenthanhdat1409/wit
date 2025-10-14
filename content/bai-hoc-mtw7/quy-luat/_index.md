@@ -9,22 +9,7 @@ weight: 1
 
 # ⚖️ Quy luật
 
-Chào mừng bạn đến với bài học **Quy luật** thuộc chương trình **Mentor Wit K07**.
-
-## 📚 Giới thiệu
-
-Bài học này sẽ giúp bạn hiểu và áp dụng các quy luật trong cuộc sống...
-
-## 🎯 Nội dung chính
-
-### Các quy luật cơ bản
-Những quy luật cơ bản trong cuộc sống...
-
-### Hiểu và áp dụng
-Cách hiểu và áp dụng quy luật...
-
-### Ví dụ thực tế
-Các ví dụ minh họa quy luật...
+Đang trong quá trình xây dựng và phát triển!
 
 ## 🔗 Liên kết
 
