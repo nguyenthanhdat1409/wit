@@ -47,8 +47,8 @@ menu:
     - identifier: ba-he-quy-chieu
       name: 🎯 3 Hệ quy chiếu
       url: /bai-hoc-mtw7/ba-he-quy-chieu/
-      parent: bai-hoc-mtw7
-      weight: 163
+      parent: bai-hoc
+      weight: 16
     - identifier: tu-van-van-luyen
       name: 💬 Tư vấn vẫn luyện
       url: /bai-hoc-mtw7/tu-van-van-luyen/
