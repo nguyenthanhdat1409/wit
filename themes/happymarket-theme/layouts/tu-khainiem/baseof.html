@@ -93,7 +93,7 @@
         <div class="mobile-menu hidden md:hidden bg-white border-t border-gray-200">
             <div class="px-2 pt-2 pb-3 space-y-1">
                 {{ range .Site.Menus.main }}
-                <a href="{{ .URL | relURL }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                <a href="{{ .URL | relURL }}" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
                     {{ .Name }}
                 </a>
                 {{ end }}

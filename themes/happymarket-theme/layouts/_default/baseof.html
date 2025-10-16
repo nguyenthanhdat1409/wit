@@ -225,7 +225,7 @@
                     {{ if .HasChildren }}
                     <!-- Mobile dropdown for parent items -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-button w-full text-left px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 flex items-center justify-between">
+                        <button class="mobile-dropdown-button w-full text-left px-3 py-2 text-sm font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50 flex items-center justify-between">
                             {{ .Name }}
                             <svg class="h-4 w-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -264,7 +264,7 @@
                     </div>
                     {{ else if not .Parent }}
                     <!-- Regular menu item (not parent, not child) -->
-                    <a href="{{ .URL | relURL }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
+                    <a href="{{ .URL | relURL }}" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-orange-500 hover:bg-gray-50">
                         {{ .Name }}
                     </a>
                     {{ end }}
