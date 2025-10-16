@@ -18,25 +18,51 @@ function loadKhaiNiemData() {
     console.log('📡 Using API: ' + apiUrl + ' (localhost: ' + isLocalhost + ')');
     const contentDiv = document.getElementById('khainiem-content');
     
-    console.log('📡 Fetching from:', apiUrl);
-    
-    fetch(apiUrl)
-        .then(response => {
-            console.log('📥 Response received:', response.status, response.statusText);
-            if (!response.ok) {
-                throw new Error('HTTP ' + response.status + ': ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('✅ Khái Niệm Nguồn data loaded:', data);
-            console.log('🔍 Data structure:', JSON.stringify(data, null, 2));
-            displayKhaiNiemContent(data);
-        })
-        .catch(error => {
-            console.error('❌ Error loading Khái Niệm Nguồn data:', error);
-            displayKhaiNiemError(error);
-        });
+    // Kiểm tra xem CacheManager có sẵn không
+    if (typeof window.CacheManager !== 'undefined') {
+        console.log('📦 Using Cache Manager');
+        
+        // Sử dụng fetchWithCache thay vì fetch thông thường
+        window.CacheManager.fetchWithCache(apiUrl)
+            .then(result => {
+                const data = result.data;
+                const fromCache = result.fromCache;
+                
+                if (fromCache) {
+                    console.log('⚡ Data loaded from CACHE (fast!)');
+                } else {
+                    console.log('🌐 Data loaded from SERVER (slow, but cached for next time)');
+                }
+                
+                console.log('✅ Khái Niệm Nguồn data loaded:', data);
+                displayKhaiNiemContent(data);
+            })
+            .catch(error => {
+                console.error('❌ Error loading Khái Niệm Nguồn data:', error);
+                displayKhaiNiemError(error);
+            });
+    } else {
+        // Fallback: không có cache manager, dùng fetch thông thường
+        console.log('⚠️ Cache Manager not available, using regular fetch');
+        
+        fetch(apiUrl)
+            .then(response => {
+                console.log('📥 Response received:', response.status, response.statusText);
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status + ': ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('✅ Khái Niệm Nguồn data loaded:', data);
+                console.log('🔍 Data structure:', JSON.stringify(data, null, 2));
+                displayKhaiNiemContent(data);
+            })
+            .catch(error => {
+                console.error('❌ Error loading Khái Niệm Nguồn data:', error);
+                displayKhaiNiemError(error);
+            });
+    }
 }
 
 function displayKhaiNiemContent(data) {

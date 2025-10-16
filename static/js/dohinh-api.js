@@ -36,6 +36,10 @@ async function testAPIWithCORS() {
 async function loadDoHinhData() {
   try {
     console.log('Đang gọi API:', API_URL);
+    
+    // ✅ SỬ DỤNG CACHE MANAGER (Comment code cũ để backup)
+    /* 
+    // === CODE CŨ (KHÔNG DÙNG CACHE) ===
     const response = await fetch(API_URL);
     console.log('Response status:', response.status);
     console.log('Response headers:', response.headers);
@@ -58,6 +62,45 @@ async function loadDoHinhData() {
     const data = await response.json();
     console.log('Raw API response:', data);
     renderDoHinhCards(data);
+    === HẾT CODE CŨ ===
+    */
+    
+    // ✅ CODE MỚI (CÓ CACHE - 30 NGÀY)
+    if (typeof window.CacheManager !== 'undefined') {
+      console.log('📦 Using Cache Manager for Đồ hình API');
+      
+      const result = await window.CacheManager.fetchWithCache(API_URL);
+      const data = result.data;
+      
+      if (result.fromCache) {
+        console.log('⚡ Đồ hình data loaded from CACHE (fast!)');
+      } else {
+        console.log('🌐 Đồ hình data loaded from SERVER (cached for next 30 days)');
+      }
+      
+      console.log('Raw API response:', data);
+      renderDoHinhCards(data);
+    } else {
+      // Fallback: không có cache manager
+      console.log('⚠️ Cache Manager not available, using regular fetch');
+      
+      const response = await fetch(API_URL);
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        throw new Error(`API trả về ${contentType || 'unknown type'} thay vì JSON`);
+      }
+      
+      const data = await response.json();
+      console.log('Raw API response:', data);
+      renderDoHinhCards(data);
+    }
   } catch (error) {
     console.error('Lỗi khi tải dữ liệu đồ hình:', error);
     showErrorMessage();

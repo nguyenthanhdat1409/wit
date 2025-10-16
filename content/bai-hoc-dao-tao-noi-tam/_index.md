@@ -27,6 +27,8 @@ function loadDaoTaoData() {
     
     console.log('📡 Fetching from:', apiUrl);
     
+    // ✅ SỬ DỤNG CACHE MANAGER (Comment code cũ để backup)
+    /* === CODE CŨ (KHÔNG DÙNG CACHE) ===
     fetch(apiUrl)
         .then(response => {
             console.log('📥 Response received:', response.status, response.statusText);
@@ -43,6 +45,42 @@ function loadDaoTaoData() {
             console.error('❌ Error loading Đào tạo nội tâm data:', error);
             displayDaoTaoError(error);
         });
+    === HẾT CODE CŨ === */
+    
+    // ✅ CODE MỚI (CÓ CACHE - 30 NGÀY)
+    if (typeof window.CacheManager !== 'undefined') {
+        console.log('📦 Using Cache Manager for Đào tạo nội tâm');
+        
+        window.CacheManager.fetchWithCache(apiUrl)
+            .then(result => {
+                const data = result.data;
+                if (result.fromCache) {
+                    console.log('⚡ Đào tạo nội tâm loaded from CACHE (fast!)');
+                } else {
+                    console.log('🌐 Đào tạo nội tâm loaded from SERVER (cached for 30 days)');
+                }
+                console.log('✅ Đào tạo nội tâm data loaded:', data);
+                displayDaoTaoContent(data);
+            })
+            .catch(error => {
+                console.error('❌ Error loading Đào tạo nội tâm data:', error);
+                displayDaoTaoError(error);
+            });
+    } else {
+        // Fallback: không có cache manager
+        console.log('⚠️ Cache Manager not available, using regular fetch');
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                displayDaoTaoContent(data);
+            })
+            .catch(error => {
+                displayDaoTaoError(error);
+            });
+    }
 }
 
 function displayDaoTaoContent(data) {

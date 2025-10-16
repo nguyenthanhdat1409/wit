@@ -16,6 +16,8 @@ layout: "tamdac-lessons"
 </div>
 
 <script>
+// ✅ SỬ DỤNG CACHE MANAGER (Comment code cũ để backup)
+/* === CODE CŨ (KHÔNG DÙNG CACHE) ===
 // Fetch data from WordPress API
 fetch('https://admin.wikiw.vn/wp-json/custom/v1/tamdac-contents')
     .then(response => {
@@ -32,6 +34,44 @@ fetch('https://admin.wikiw.vn/wp-json/custom/v1/tamdac-contents')
         console.error('❌ Error fetching Tam dac data:', error);
         displayTamDacError(error);
     });
+=== HẾT CODE CŨ === */
+
+// ✅ CODE MỚI (CÓ CACHE - 30 NGÀY)
+const tamDacApiUrl = 'https://admin.wikiw.vn/wp-json/custom/v1/tamdac-contents';
+
+if (typeof window.CacheManager !== 'undefined') {
+    console.log('📦 Using Cache Manager for Câu tâm đắc');
+    
+    window.CacheManager.fetchWithCache(tamDacApiUrl)
+        .then(result => {
+            const data = result.data;
+            if (result.fromCache) {
+                console.log('⚡ Câu tâm đắc loaded from CACHE (fast!)');
+            } else {
+                console.log('🌐 Câu tâm đắc loaded from SERVER (cached for 30 days)');
+            }
+            console.log('📊 Tam dac data received:', data);
+            displayTamDacContent(data);
+        })
+        .catch(error => {
+            console.error('❌ Error fetching Tam dac data:', error);
+            displayTamDacError(error);
+        });
+} else {
+    // Fallback: không có cache manager
+    console.log('⚠️ Cache Manager not available, using regular fetch');
+    fetch(tamDacApiUrl)
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            displayTamDacContent(data);
+        })
+        .catch(error => {
+            displayTamDacError(error);
+        });
+}
 
 function displayTamDacContent(data) {
     const contentDiv = document.getElementById('tamdac-content');

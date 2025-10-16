@@ -27,6 +27,8 @@ function loadKhaiNiemData() {
     
     console.log('📡 Fetching from:', apiUrl);
     
+    // ✅ SỬ DỤNG CACHE MANAGER (Comment code cũ để backup)
+    /* === CODE CŨ (KHÔNG DÙNG CACHE) ===
     fetch(apiUrl)
         .then(response => {
             console.log('📥 Response received:', response.status, response.statusText);
@@ -43,6 +45,41 @@ function loadKhaiNiemData() {
             console.error('❌ Error loading Khái Niệm Nguồn data:', error);
             displayKhaiNiemError(error);
         });
+    === HẾT CODE CŨ === */
+    
+    // ✅ CODE MỚI (CÓ CACHE - 30 NGÀY)
+    if (typeof window.CacheManager !== 'undefined') {
+        console.log('📦 Using Cache Manager');
+        
+        window.CacheManager.fetchWithCache(apiUrl)
+            .then(result => {
+                const data = result.data;
+                if (result.fromCache) {
+                    console.log('⚡ Khái Niệm Nguồn loaded from CACHE (fast!)');
+                } else {
+                    console.log('🌐 Khái Niệm Nguồn loaded from SERVER (cached for 30 days)');
+                }
+                displayKhaiNiemContent(data);
+            })
+            .catch(error => {
+                console.error('❌ Error loading Khái Niệm Nguồn data:', error);
+                displayKhaiNiemError(error);
+            });
+    } else {
+        // Fallback: không có cache manager
+        console.log('⚠️ Cache Manager not available, using regular fetch');
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                displayKhaiNiemContent(data);
+            })
+            .catch(error => {
+                displayKhaiNiemError(error);
+            });
+    }
 }
 
 function displayKhaiNiemContent(data) {

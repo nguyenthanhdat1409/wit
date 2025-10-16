@@ -16,6 +16,8 @@ layout: "nghivan-lessons"
 </div>
 
 <script>
+// ✅ SỬ DỤNG CACHE MANAGER (Comment code cũ để backup)
+/* === CODE CŨ (KHÔNG DÙNG CACHE) ===
 // Fetch data from WordPress API
 fetch('https://admin.wikiw.vn/wp-json/custom/v1/nghivan-contents')
     .then(response => {
@@ -32,6 +34,44 @@ fetch('https://admin.wikiw.vn/wp-json/custom/v1/nghivan-contents')
         console.error('❌ Error fetching Nghi vấn data:', error);
         displayNghiVanError(error);
     });
+=== HẾT CODE CŨ === */
+
+// ✅ CODE MỚI (CÓ CACHE - 30 NGÀY)
+const nghiVanApiUrl = 'https://admin.wikiw.vn/wp-json/custom/v1/nghivan-contents';
+
+if (typeof window.CacheManager !== 'undefined') {
+    console.log('📦 Using Cache Manager for Nghi vấn');
+    
+    window.CacheManager.fetchWithCache(nghiVanApiUrl)
+        .then(result => {
+            const data = result.data;
+            if (result.fromCache) {
+                console.log('⚡ Nghi vấn loaded from CACHE (fast!)');
+            } else {
+                console.log('🌐 Nghi vấn loaded from SERVER (cached for 30 days)');
+            }
+            console.log('📊 Nghi vấn data received:', data);
+            displayNghiVanContent(data);
+        })
+        .catch(error => {
+            console.error('❌ Error fetching Nghi vấn data:', error);
+            displayNghiVanError(error);
+        });
+} else {
+    // Fallback: không có cache manager
+    console.log('⚠️ Cache Manager not available, using regular fetch');
+    fetch(nghiVanApiUrl)
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            displayNghiVanContent(data);
+        })
+        .catch(error => {
+            displayNghiVanError(error);
+        });
+}
 
 function displayNghiVanContent(data) {
     const contentDiv = document.getElementById('nghivan-content');
