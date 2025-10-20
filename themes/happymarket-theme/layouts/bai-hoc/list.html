@@ -15,15 +15,31 @@
   </div>
   {{ end }}
 
+  <!-- Filter out unwanted titles -->
+  {{ $excludedTitles := slice "Mối quan hệ" "Nội tâm" "Sức khỏe" "Tài chính" "Hello world!" }}
+  {{ $filteredPages := slice }}
+  {{ range .Pages }}
+    {{ $pageTitle := .Title }}
+    {{ $shouldExclude := false }}
+    {{ range $excludedTitles }}
+      {{ if eq $pageTitle . }}
+        {{ $shouldExclude = true }}
+      {{ end }}
+    {{ end }}
+    {{ if not $shouldExclude }}
+      {{ $filteredPages = $filteredPages | append . }}
+    {{ end }}
+  {{ end }}
+
   <!-- Debug: Show pages count -->
   <div class="mb-4 text-sm text-gray-500">
-    Số bài học: {{ len .Pages }}
+    Số bài học: {{ len $filteredPages }}
   </div>
 
   <!-- Lessons Grid -->
-  {{ if .Pages }}
+  {{ if $filteredPages }}
   <div class="bai-hoc-grid">
-    {{ range .Pages }}
+    {{ range $filteredPages }}
     <article class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow lesson-card">
       <div class="p-6">
         <h2 class="text-xl font-semibold text-gray-900 mb-3">
