@@ -136,11 +136,6 @@ menu:
       url: /khai-niem-nguon/cgtvhl-kinh-doanh/
       parent: khai-niem-nguon
       weight: 315
-    # - identifier: 3-he-quy-chieu
-    #   name: 🎯 3 Hệ quy chiếu
-    #   url: /3-he-quy-chieu/
-    #   parent: khai-niem
-    #   weight: 31.5
     - identifier: thu-vien
       name: 📖 Thư viện khái niệm
       url: /tu-khainiem/
