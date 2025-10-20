@@ -12,23 +12,28 @@ h1 {
   display: none !important;
 }
 
-/* Tăng font-size toàn trang lên 22px */
-body {
+/* Chỉ áp dụng font-size cho content area, không ảnh hưởng header */
+#wordpress-content {
   font-size: 23px !important;
 }
 
-/* Điều chỉnh các element con */
-p, td, th, div, span, a {
+/* Điều chỉnh các element con trong content area */
+#wordpress-content p, 
+#wordpress-content td, 
+#wordpress-content th, 
+#wordpress-content div, 
+#wordpress-content span, 
+#wordpress-content a {
   font-size: 23px !important;
 }
 
-/* Điều chỉnh button */
-button {
+/* Điều chỉnh button trong content area */
+#wordpress-content button {
   font-size: 19px !important;
 }
 
-/* Điều chỉnh small text */
-small {
+/* Điều chỉnh small text trong content area */
+#wordpress-content small {
   font-size: 17px !important;
 }
 
@@ -39,6 +44,7 @@ small {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-size: 16px !important; /* Reset font-size cho search container */
 }
 
 .search-wrapper {
