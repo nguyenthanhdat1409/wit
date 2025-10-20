@@ -96,7 +96,7 @@ menu:
       parent: bai-hoc-tvhl
       weight: 174
     - identifier: bai-hoc-dao-tao-noi-tam
-      name: 🧘 Ứng dụng
+      name: 🧘 Bài học ứng dụng
       url: /
       weight: 19
       parent: bai-hoc
