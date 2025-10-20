@@ -95,9 +95,9 @@ menu:
       url: /bai-hoc/tai-chinh/
       parent: bai-hoc-tvhl
       weight: 174
-    - identifier: bai-hoc-dao-tao-noi-tam
+    - identifier: bai-hoc-ung-dung
       name: 🧘 Bài học ứng dụng
-      url: /
+      url: /bai-hoc-ung-dung/
       weight: 19
       parent: bai-hoc
     - identifier: khai-niem

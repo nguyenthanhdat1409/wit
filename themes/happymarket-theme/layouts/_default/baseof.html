@@ -19,64 +19,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Global Font Size - Apply tu-khainiem font size to all pages -->
-    <style>
-        /* Global font size - Apply 23px like tu-khainiem */
-        body {
-            font-size: 23px !important;
-        }
-        
-        /* Menu and navigation font sizes */
-        nav a, nav button {
-            font-size: 23px !important;
-        }
-        
-        .dropdown-content a, .sub-dropdown a {
-            font-size: 20px !important;
-        }
-        
-        /* Content areas */
-        p, td, th, div, span, a, li {
-            font-size: 23px !important;
-        }
-        
-        /* Headings - scale appropriately */
-        h1 { font-size: 32px !important; }
-        h2 { font-size: 28px !important; }
-        h3 { font-size: 26px !important; }
-        h4 { font-size: 24px !important; }
-        h5 { font-size: 22px !important; }
-        h6 { font-size: 20px !important; }
-        
-        /* Small text */
-        small, .text-sm {
-            font-size: 17px !important;
-        }
-        
-        /* Buttons */
-        button, .btn {
-            font-size: 19px !important;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            body { font-size: 20px !important; }
-            nav a, nav button { font-size: 20px !important; }
-            .dropdown-content a, .sub-dropdown a { font-size: 18px !important; }
-            h1 { font-size: 28px !important; }
-            h2 { font-size: 24px !important; }
-            h3 { font-size: 22px !important; }
-        }
-        
-        @media (max-width: 480px) {
-            body { font-size: 18px !important; }
-            nav a, nav button { font-size: 18px !important; }
-            .dropdown-content a, .sub-dropdown a { font-size: 16px !important; }
-            h1 { font-size: 24px !important; }
-            h2 { font-size: 22px !important; }
-            h3 { font-size: 20px !important; }
-        }
-    </style>
+    <!-- Font size styles removed - now handled per page -->
     
     <!-- Meta tags -->
     <meta name="keywords" content="{{ if .Params.keywords }}{{ delimit .Params.keywords ", " }}{{ else }}{{ .Site.Params.keywords }}{{ end }}">
