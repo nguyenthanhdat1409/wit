@@ -68,19 +68,33 @@ small {
   color: #999;
 }
 
-.search-icon {
+.search-button {
   position: absolute;
   right: 20px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 20px;
-  color: #667eea;
-  pointer-events: none;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button:hover {
+  background: #5a6fd8;
+  transform: translateY(-50%) scale(1.1);
 }
 
 .clear-search {
   position: absolute;
-  right: 50px;
+  right: 70px;
   top: 50%;
   transform: translateY(-50%);
   background: #ff4444;
@@ -138,13 +152,15 @@ small {
     padding: 12px 45px 12px 15px;
   }
   
-  .search-icon {
-    font-size: 18px;
+  .search-button {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
     right: 15px;
   }
   
   .clear-search {
-    right: 45px;
+    right: 60px;
     width: 24px;
     height: 24px;
     font-size: 14px;
@@ -166,13 +182,15 @@ small {
     padding: 10px 40px 10px 12px;
   }
   
-  .search-icon {
-    font-size: 16px;
+  .search-button {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
     right: 12px;
   }
   
   .clear-search {
-    right: 40px;
+    right: 50px;
     width: 22px;
     height: 22px;
     font-size: 12px;
@@ -187,11 +205,11 @@ small {
       type="text" 
       id="searchInput" 
       class="search-input" 
-      placeholder="🔍 Tìm kiếm từ vựng - khái niệm..."
+      placeholder="Tìm kiếm từ vựng - khái niệm..."
       autocomplete="off"
     />
     <button id="clearSearch" class="clear-search" title="Xóa tìm kiếm">✕</button>
-    <span class="search-icon">🔍</span>
+    <button id="searchButton" class="search-button" title="Tìm kiếm">🔍</button>
   </div>
   <div id="searchResultsInfo" class="search-results-info"></div>
 </div>
@@ -239,6 +257,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function initializeSearch() {
   const searchInput = document.getElementById('searchInput');
   const clearSearchBtn = document.getElementById('clearSearch');
+  const searchButton = document.getElementById('searchButton');
   const searchResultsInfo = document.getElementById('searchResultsInfo');
   
   if (!searchInput) return;
@@ -259,6 +278,13 @@ function initializeSearch() {
     searchInput.value = '';
     clearSearchBtn.style.display = 'none';
     performSearch('');
+    searchInput.focus();
+  });
+  
+  // Search button click
+  searchButton.addEventListener('click', function() {
+    const searchTerm = searchInput.value.trim();
+    performSearch(searchTerm);
     searchInput.focus();
   });
   
