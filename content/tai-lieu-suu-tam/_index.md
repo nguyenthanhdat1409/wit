@@ -1,14 +1,12 @@
 ---
 title: "Tài liệu sưu tầm"
-description: "Danh sách tài liệu sưu tầm từ WikiNgon"
+description: ""
 date: 2025-10-20
 draft: false
 weight: 20
 type: "page"
 layout: "tailieu-lessons"
 ---
-
-# 📚 Tài liệu sưu tầm
 
 <div id="tailieu-content">
     <div class="loading">
