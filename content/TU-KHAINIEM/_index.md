@@ -107,6 +107,8 @@ small {
   font-size: 16px;
   display: none;
   transition: all 0.3s ease;
+  align-items: center;
+  justify-content: center;
 }
 
 .clear-search:hover {
@@ -164,6 +166,8 @@ small {
     width: 24px;
     height: 24px;
     font-size: 14px;
+    align-items: center;
+    justify-content: center;
   }
   
   .search-results-info {
@@ -194,6 +198,8 @@ small {
     width: 22px;
     height: 22px;
     font-size: 12px;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>
@@ -267,7 +273,7 @@ function initializeSearch() {
     const searchTerm = e.target.value.trim();
     
     // Show/hide clear button
-    clearSearchBtn.style.display = searchTerm ? 'block' : 'none';
+    clearSearchBtn.style.display = searchTerm ? 'flex' : 'none';
     
     // Perform search
     performSearch(searchTerm);
