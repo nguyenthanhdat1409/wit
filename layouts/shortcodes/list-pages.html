@@ -1,12 +1,29 @@
 {{ $section := .Get "section" }}
 {{ $pages := where .Site.RegularPages "Section" $section }}
 
+{{/* Filter out unwanted titles */}}
+{{ $excludedTitles := slice "Mối quan hệ" "Nội tâm" "Sức khỏe" "Tài chính" "Hello world!" }}
+{{ $filteredPages := slice }}
+{{ range $pages }}
+  {{ $pageTitle := .Title }}
+  {{ $shouldExclude := false }}
+  {{ range $excludedTitles }}
+    {{ if eq $pageTitle . }}
+      {{ $shouldExclude = true }}
+    {{ end }}
+  {{ end }}
+  {{ if not $shouldExclude }}
+    {{ $filteredPages = $filteredPages | append . }}
+  {{ end }}
+{{ end }}
+{{ $pages = $filteredPages }}
+
 {{ if $pages }}
-<!-- <div class="mb-6">
+<div class="mb-6">
   <p class="text-gray-600 text-sm">Số bài học: {{ len $pages }}</p>
-</div> -->
+</div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  <!-- {{ range $pages }}
+  {{ range $pages }}
   <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
     <div class="mb-4">
       <h3 class="text-xl font-semibold text-gray-900 mb-2">
@@ -27,7 +44,7 @@
       </a>
     </div>
   </div>
-  {{ end }} -->
+  {{ end }}
 </div>
 {{ else }}
 <div class="text-center py-12">
