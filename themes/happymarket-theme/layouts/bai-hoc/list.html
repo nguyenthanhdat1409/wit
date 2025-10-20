@@ -1,3 +1,16 @@
+{{/* 
+===========================================
+TEMPLATE CŨ - ĐÃ COMMENT
+===========================================
+
+Template này được comment lại để tránh hiển thị danh sách bài học
+khi trang đang trong quá trình xây dựng.
+
+Để sử dụng lại, bỏ comment và thay đổi layout trong _index.md từ "single" về "list"
+
+===========================================
+*/}}
+
 {{ define "main" }}
 <div class="container mx-auto px-4 py-8" style="max-width: 100%;">
   <!-- Header -->
@@ -15,6 +28,7 @@
   </div>
   {{ end }}
 
+  {{/* 
   <!-- Filter out unwanted titles -->
   {{ $excludedTitles := slice "Mối quan hệ" "Nội tâm" "Sức khỏe" "Tài chính" "Hello world!" }}
   {{ $filteredPages := slice }}
@@ -89,7 +103,7 @@
     </a>
   </div>
   {{ end }}
+  */}}
 </div>
-
 
 {{ end }}
