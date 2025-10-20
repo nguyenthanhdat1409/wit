@@ -31,7 +31,171 @@ button {
 small {
   font-size: 17px !important;
 }
+
+/* Search box styles */
+.search-container {
+  margin: 20px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.search-wrapper {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 50px 15px 20px;
+  font-size: 18px !important;
+  border: 2px solid #fff;
+  border-radius: 50px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus {
+  border-color: #ffd700;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.search-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #667eea;
+  pointer-events: none;
+}
+
+.clear-search {
+  position: absolute;
+  right: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 16px;
+  display: none;
+  transition: all 0.3s ease;
+}
+
+.clear-search:hover {
+  background: #cc0000;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.search-results-info {
+  text-align: center;
+  margin-top: 15px;
+  color: white;
+  font-size: 16px !important;
+  font-weight: 500;
+}
+
+.highlight {
+  background-color: #ffeb3b;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.no-results-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .search-container {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .search-input {
+    font-size: 16px !important;
+    padding: 12px 45px 12px 15px;
+  }
+  
+  .search-icon {
+    font-size: 18px;
+    right: 15px;
+  }
+  
+  .clear-search {
+    right: 45px;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+  }
+  
+  .search-results-info {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container {
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  .search-input {
+    font-size: 14px !important;
+    padding: 10px 40px 10px 12px;
+  }
+  
+  .search-icon {
+    font-size: 16px;
+    right: 12px;
+  }
+  
+  .clear-search {
+    right: 40px;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+  }
+}
 </style>
+
+<!-- Search Container -->
+<div class="search-container">
+  <div class="search-wrapper">
+    <input 
+      type="text" 
+      id="searchInput" 
+      class="search-input" 
+      placeholder="🔍 Tìm kiếm từ vựng - khái niệm..."
+      autocomplete="off"
+    />
+    <button id="clearSearch" class="clear-search" title="Xóa tìm kiếm">✕</button>
+    <span class="search-icon">🔍</span>
+  </div>
+  <div id="searchResultsInfo" class="search-results-info"></div>
+</div>
+
 <div id="wordpress-content">
   <div class="loading" style="text-align: center; padding: 20px;">
     <p>🔄 Đang tải dữ liệu từ WordPress...</p>
@@ -39,6 +203,10 @@ small {
 </div>
 
 <script>
+// Global variables
+let allPosts = [];
+let filteredPosts = [];
+
 document.addEventListener("DOMContentLoaded", function () {
   const wordpressUrl = 'https://admin.wikiw.vn';
   const apiUrl = `${wordpressUrl}/wp-json/custom/v1/contents`;
@@ -54,13 +222,94 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then(data => {
       console.log('✅ WordPress data loaded:', data);
+      if (data.data && data.data.contents && data.data.contents.nodes) {
+        allPosts = data.data.contents.nodes;
+        filteredPosts = allPosts;
+      }
       displayWordPressContent(data);
+      initializeSearch();
     })
     .catch(error => {
       console.error('❌ Error loading WordPress data:', error);
       displayError(error);
     });
 });
+
+// Initialize search functionality
+function initializeSearch() {
+  const searchInput = document.getElementById('searchInput');
+  const clearSearchBtn = document.getElementById('clearSearch');
+  const searchResultsInfo = document.getElementById('searchResultsInfo');
+  
+  if (!searchInput) return;
+  
+  // Search on input
+  searchInput.addEventListener('input', function(e) {
+    const searchTerm = e.target.value.trim();
+    
+    // Show/hide clear button
+    clearSearchBtn.style.display = searchTerm ? 'block' : 'none';
+    
+    // Perform search
+    performSearch(searchTerm);
+  });
+  
+  // Clear search
+  clearSearchBtn.addEventListener('click', function() {
+    searchInput.value = '';
+    clearSearchBtn.style.display = 'none';
+    performSearch('');
+    searchInput.focus();
+  });
+  
+  // Enter key to search
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      performSearch(searchInput.value.trim());
+    }
+  });
+  
+  // Initial info
+  updateSearchInfo(allPosts.length, allPosts.length);
+}
+
+// Perform search
+function performSearch(searchTerm) {
+  if (!searchTerm) {
+    filteredPosts = allPosts;
+    displayFilteredResults(filteredPosts);
+    updateSearchInfo(allPosts.length, allPosts.length);
+    return;
+  }
+  
+  const searchLower = searchTerm.toLowerCase();
+  
+  filteredPosts = allPosts.filter(post => {
+    const title = (post.title || '').toLowerCase();
+    const content = (post.content || '').replace(/<[^>]*>/g, '').toLowerCase();
+    
+    return title.includes(searchLower) || content.includes(searchLower);
+  });
+  
+  displayFilteredResults(filteredPosts, searchTerm);
+  updateSearchInfo(filteredPosts.length, allPosts.length);
+}
+
+// Update search results info
+function updateSearchInfo(found, total) {
+  const searchResultsInfo = document.getElementById('searchResultsInfo');
+  const searchInput = document.getElementById('searchInput');
+  const searchTerm = searchInput.value.trim();
+  
+  if (!searchTerm) {
+    searchResultsInfo.innerHTML = `📊 Hiển thị <strong>${total}</strong> từ vựng - khái niệm`;
+  } else if (found === 0) {
+    searchResultsInfo.innerHTML = `❌ Không tìm thấy kết quả cho "<strong>${searchTerm}</strong>"`;
+  } else {
+    searchResultsInfo.innerHTML = `✅ Tìm thấy <strong>${found}</strong> kết quả từ <strong>${total}</strong> từ vựng`;
+  }
+}
 
 function displayWordPressContent(data) {
   const container = document.getElementById('wordpress-content');
@@ -73,11 +322,26 @@ function displayWordPressContent(data) {
   const posts = data.data.contents.nodes;
   console.log(`📊 Found ${posts.length} posts from WordPress`);
   
+  displayFilteredResults(posts);
+}
+
+// Display filtered results with optional highlight
+function displayFilteredResults(posts, searchTerm = '') {
+  const container = document.getElementById('wordpress-content');
+  
+  if (posts.length === 0) {
+    container.innerHTML = `
+      <div class="no-results">
+        <div class="no-results-icon">🔍</div>
+        <h3>Không tìm thấy kết quả</h3>
+        <p>Hãy thử tìm kiếm với từ khóa khác</p>
+      </div>
+    `;
+    return;
+  }
+  
   let html = `
     <div class="wordpress-posts">
-      <!-- <p class="meta-info">Đã tải $
-      {posts.length} bài viết từ 
-      WordPress API</p> -->
       <table class="kv-table" aria-label="Bảng từ vựng - khái niệm từ WordPress">
         <thead>
           <tr>
@@ -89,18 +353,23 @@ function displayWordPressContent(data) {
   `;
   
   posts.forEach((post, index) => {
-    const title = post.title || 'Không có tiêu đề';
+    let title = post.title || 'Không có tiêu đề';
     const content = post.content || 'Đang trong quá trình bổ sung nội dung...';
     const link = post.link || '#';
     const postId = post.id || index;
     
     // Làm sạch HTML content và lấy preview
     let cleanContent = content.replace(/<[^>]*>/g, '').trim();
-    
-    // Loại bỏ chữ "Khái niệm" và "Khái Niệm" khỏi nội dung
     cleanContent = cleanContent.replace(/^Khái niệm\s*:?\s*/i, '').replace(/^Khái Niệm\s*:?\s*/i, '');
     
-    const preview = cleanContent.length > 200 ? cleanContent.substring(0, 200) + '...' : cleanContent;
+    let preview = cleanContent.length > 200 ? cleanContent.substring(0, 200) + '...' : cleanContent;
+    
+    // Highlight search term
+    if (searchTerm) {
+      const regex = new RegExp(`(${escapeRegex(searchTerm)})`, 'gi');
+      title = title.replace(regex, '<span class="highlight">$1</span>');
+      preview = preview.replace(regex, '<span class="highlight">$1</span>');
+    }
     
     html += `
       <tr>
@@ -135,12 +404,17 @@ function displayWordPressContent(data) {
   container.innerHTML = html;
 }
 
+// Escape special characters for regex
+function escapeRegex(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function displayError(error) {
   const container = document.getElementById('wordpress-content');
   container.innerHTML = `
     <div class="error">
       <h3>❌ Lỗi tải dữ liệu</h3>
-      <p>Không thể tải dữ liệu từ WordPress API</p>
+      <p>Không thể tải dữ liệu</p>
       <p><strong>Lỗi:</strong> ${error.message}</p>
       <p><strong>URL:</strong> https://admin.wikiw.vn/wp-json/custom/v1/contents</p>
       <button onclick="location.reload()" style="margin-top: 10px; padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
