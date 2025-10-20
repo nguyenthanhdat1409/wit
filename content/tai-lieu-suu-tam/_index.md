@@ -73,18 +73,11 @@ function displayTaiLieuContent(data) {
     let posts = data.data.contents.nodes;
     console.log(`📊 Found ${posts.length} Tài liệu sưu tầm posts from WordPress`);
     
-    // Sort posts by title (number if any)
+    // Sort posts by title alphabetically
     posts = posts.sort((a, b) => {
-        const getLessonNumber = (title) => {
-            // Tìm số trong tiêu đề
-            const match = title.match(/(\d+)/);
-            return match ? parseInt(match[1]) : 999;
-        };
-        
-        const numA = getLessonNumber(a.title || '');
-        const numB = getLessonNumber(b.title || '');
-        
-        return numA - numB;
+        const titleA = (a.title || '').toLowerCase();
+        const titleB = (b.title || '').toLowerCase();
+        return titleA.localeCompare(titleB, 'vi');
     });
     
     console.log('📚 Sorted documents:', posts.map(p => p.title));
