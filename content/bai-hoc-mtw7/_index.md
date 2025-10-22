@@ -9,6 +9,33 @@ layout: "mtw7-lessons"
 
 # 🎯 Bài học Mentor WiT K07
 
+<style>
+.mtw7-link {
+    display: inline-flex;
+    align-items: center;
+    background: #f59e0b;
+    color: #333 !important;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: auto;
+    align-self: flex-start;
+    flex-shrink: 0;
+}
+
+.mtw7-link:hover {
+    background: #d97706;
+    color: #000 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+</style>
+
 <div id="mtw7-content">
     <div class="loading">
         <p>🔄 Đang tải dữ liệu từ WordPress...</p>
