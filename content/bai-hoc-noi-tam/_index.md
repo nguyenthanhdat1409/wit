@@ -2,7 +2,7 @@
 title: "Bài học nội tâm"
 date: 2025-10-20T09:00:00+07:00
 draft: false
-description: "Danh sách các bài học nội tâm từ WordPress"
+description: "Danh sách các bài học nội tâm"
 type: "page"
 layout: "noi-tam-lessons"
 weight: 15
@@ -12,7 +12,7 @@ weight: 15
 
 <div id="noitam-content">
     <div class="loading">
-        <p>🔄 Đang tải dữ liệu từ WordPress...</p>
+        <p>🔄 Đang tải dữ liệu từ ...</p>
     </div>
 </div>
 
@@ -237,9 +237,80 @@ weight: 15
 </style>
 
 <script>
+// Global variable to store lessons data
+let allLessons = [];
+
 document.addEventListener('DOMContentLoaded', function() {
-    loadNoiTamData();
+    // Check if URL has lesson parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const lessonId = urlParams.get('id'); // Primary: WordPress ID
+    const lessonSlug = urlParams.get('lesson'); // Secondary: slug for SEO
+    
+    if (lessonId || lessonSlug) {
+        console.log('📖 Loading specific lesson:', { id: lessonId, slug: lessonSlug });
+        loadSpecificLesson(lessonId, lessonSlug);
+    } else {
+        console.log('📚 Loading lesson list');
+        loadNoiTamData();
+    }
 });
+
+// Decode ALL HTML entities (comprehensive)
+function decodeAllHtmlEntities(text) {
+    if (!text) return '';
+    
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    let decoded = textarea.value;
+    
+    // Additional manual replacements for common entities
+    const entities = {
+        '&#8211;': '–',   // en dash
+        '&#8212;': '—',   // em dash
+        '&#8216;': '\u2018',   // left single quote
+        '&#8217;': '\u2019',   // right single quote
+        '&#8220;': '\u201C',   // left double quote
+        '&#8221;': '\u201D',   // right double quote
+        '&#8230;': '…',   // ellipsis
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#39;': "'",
+        '&nbsp;': ' ',
+        '&#038;': '&',
+        '&#x2013;': '–',
+        '&#x2014;': '—',
+        '&hellip;': '…',
+        '&mdash;': '—',
+        '&ndash;': '–',
+        '&lsquo;': '\u2018',
+        '&rsquo;': '\u2019',
+        '&ldquo;': '\u201C',
+        '&rdquo;': '\u201D'
+    };
+    
+    for (const [entity, char] of Object.entries(entities)) {
+        decoded = decoded.replace(new RegExp(entity, 'g'), char);
+    }
+    
+    return decoded;
+}
+
+// Generate slug from title
+function generateSlug(title) {
+    // Decode HTML entities first
+    const decodedTitle = decodeAllHtmlEntities(title);
+    
+    return decodedTitle
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+        .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/-+/g, '-') // Replace multiple hyphens
+        .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+}
 
 function loadNoiTamData() {
     console.log('🔄 Loading Bài học nội tâm data...');
@@ -313,6 +384,10 @@ function displayNoiTamContent(data) {
     }
     
     let posts = data.data.contents.nodes;
+    
+    // Store data globally for later use
+    allLessons = posts;
+    
     console.log(`📊 Found ${posts.length} Bài học nội tâm posts from WordPress`);
     
     // Sort posts by lesson number (Chủ đề XX hoặc số thứ tự)
@@ -339,9 +414,16 @@ function displayNoiTamContent(data) {
     posts.forEach((post, index) => {
         // Bỏ chữ "TVHL" khỏi title nếu có
         let title = post.title || 'Không có tiêu đề';
-        title = title.replace(/TVHL\.?\s*/g, '').replace(/&#8211;/g, '–');
+        title = decodeAllHtmlEntities(title.replace(/TVHL\.?\s*/g, ''));
         
         const link = post.link || '#';
+        const postId = post.id || index; // Sử dụng WordPress ID (unique)
+        
+        // Generate slug for SEO-friendly URL (fallback)
+        const slug = generateSlug(title);
+        
+        // URL với cả ID và slug (ID là primary, slug là cho SEO)
+        const lessonUrl = `/bai-hoc-noi-tam/?id=${postId}&lesson=${slug}`;
         
         // Lấy text thuần từ content, bỏ HTML tags
         let content = 'Không có nội dung';
@@ -356,15 +438,14 @@ function displayNoiTamContent(data) {
         // Escape HTML để tránh lỗi cấu trúc
         const escapedTitle = title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         const escapedContent = content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        const escapedLink = link.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         
         html += `
             <div class="noitam-card">
                 <h3 class="noitam-title">${escapedTitle}</h3>
                 <div class="noitam-excerpt">${escapedContent}</div>
-                <button onclick="openNoiTamLesson('${escapedLink}', '${escapedTitle}')" class="noitam-link">
+                <a href="${lessonUrl}" class="noitam-link" style="display: inline-block; text-decoration: none; text-align: center;">
                     📖 Đọc thêm
-                </button>
+                </a>
             </div>
         `;
     });
@@ -375,6 +456,106 @@ function displayNoiTamContent(data) {
     `;
     
     contentDiv.innerHTML = html;
+}
+
+// Load specific lesson by ID or slug
+function loadSpecificLesson(lessonId, lessonSlug) {
+    console.log('🔍 Looking for lesson:', { id: lessonId, slug: lessonSlug });
+    const apiUrl = 'https://admin.wikiw.vn/wp-json/custom/v1/baihoc-contents';
+    const contentDiv = document.getElementById('noitam-content');
+    
+    contentDiv.innerHTML = '<div class="loading"><p>🔄 Đang tải bài học...</p></div>';
+    
+    // Force fresh fetch if coming from URL (bypass cache for navigation)
+    const shouldBypassCache = true;
+    
+    // Load data
+    const fetchPromise = (typeof window.CacheManager !== 'undefined' && !shouldBypassCache)
+        ? window.CacheManager.fetchWithCache(apiUrl)
+        : fetch(apiUrl).then(response => response.json()).then(data => ({ data }));
+    
+    fetchPromise
+        .then(result => {
+            const data = result.data;
+            if (!data.data || !data.data.contents || !data.data.contents.nodes) {
+                throw new Error('No data received');
+            }
+            
+            const posts = data.data.contents.nodes;
+            allLessons = posts;
+            
+            // Find lesson by ID first (most reliable), then by slug (fallback)
+            let lesson = null;
+            
+            if (lessonId) {
+                // Primary: Find by WordPress ID (100% unique)
+                lesson = posts.find(post => post.id && post.id.toString() === lessonId.toString());
+                console.log('🔍 Search by ID:', lessonId, '→', lesson ? 'Found' : 'Not found');
+            }
+            
+            if (!lesson && lessonSlug) {
+                // Fallback: Find by slug (for backward compatibility or SEO URLs)
+                lesson = posts.find(post => {
+                    const title = post.title || '';
+                    const cleanTitle = decodeAllHtmlEntities(title.replace(/TVHL\.?\s*/g, ''));
+                    const postSlug = generateSlug(cleanTitle);
+                    return postSlug === lessonSlug;
+                });
+                console.log('🔍 Search by slug:', lessonSlug, '→', lesson ? 'Found' : 'Not found');
+            }
+            
+            if (lesson) {
+                displaySpecificLesson(lesson);
+            } else {
+                displayLessonNotFound(lessonId || lessonSlug);
+            }
+        })
+        .catch(error => {
+            console.error('❌ Error loading lesson:', error);
+            displayNoiTamError(error);
+        });
+}
+
+// Display specific lesson in iframe
+function displaySpecificLesson(lesson) {
+    const contentDiv = document.getElementById('noitam-content');
+    const title = decodeAllHtmlEntities(lesson.title.replace(/TVHL\.?\s*/g, ''));
+    const url = lesson.link;
+    
+    // Update page title for SEO
+    document.title = `${title} - Bài học nội tâm - Wikiw`;
+    
+    contentDiv.innerHTML = `
+        <div style="margin-bottom: 1rem;">
+            <a href="/bai-hoc-noi-tam/" class="noitam-link" style="display: inline-block; text-decoration: none;">
+                ← Quay lại danh sách
+            </a>
+            <h2 style="margin: 1rem 0; color: #333;">${title}</h2>
+        </div>
+        <div class="noitam-iframe-wrapper" style="position: relative; width: 100%; height: 80vh; min-height: 600px;">
+            <iframe 
+                src="${url}" 
+                frameborder="0" 
+                class="noitam-iframe" 
+                style="width: 100%; height: 100%; border: 1px solid #ddd; border-radius: 8px;"
+                onload="hideWordPressHeaderNoiTam(this)">
+            </iframe>
+        </div>
+    `;
+}
+
+// Display lesson not found
+function displayLessonNotFound(slug) {
+    const contentDiv = document.getElementById('noitam-content');
+    contentDiv.innerHTML = `
+        <div style="text-align: center; padding: 3rem;">
+            <h2>❌ Không tìm thấy bài học</h2>
+            <p>Bài học với slug "<strong>${slug}</strong>" không tồn tại.</p>
+            <a href="/bai-hoc-noi-tam/" class="noitam-link" style="display: inline-block; text-decoration: none; margin-top: 1rem;">
+                ← Quay lại danh sách
+            </a>
+        </div>
+    `;
 }
 
 function openNoiTamLesson(url, title) {
