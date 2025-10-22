@@ -441,7 +441,12 @@ function displayNoiTamContent(data) {
         
         html += `
             <div class="noitam-card">
-                <h3 class="noitam-title">${escapedTitle}</h3>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                    <h3 class="noitam-title" style="margin: 0; flex: 1;">${escapedTitle}</h3>
+                    <span class="noitam-id" style="font-size: 0.7rem; color: #999; background: #f0f0f0; padding: 2px 6px; border-radius: 3px; margin-left: 8px; font-family: monospace; cursor: pointer;" title="WordPress ID: ${postId} (Click to copy)" onclick="copyLessonId(${postId}, event)">
+                        #${postId}
+                    </span>
+                </div>
                 <div class="noitam-excerpt">${escapedContent}</div>
                 <a href="${lessonUrl}" class="noitam-link" style="display: inline-block; text-decoration: none; text-align: center;">
                     📖 Đọc thêm
@@ -521,6 +526,7 @@ function displaySpecificLesson(lesson) {
     const contentDiv = document.getElementById('noitam-content');
     const title = decodeAllHtmlEntities(lesson.title.replace(/TVHL\.?\s*/g, ''));
     const url = lesson.link;
+    const postId = lesson.id;
     
     // Update page title for SEO
     document.title = `${title} - Bài học nội tâm - Wikiw`;
@@ -530,7 +536,12 @@ function displaySpecificLesson(lesson) {
             <a href="/bai-hoc-noi-tam/" class="noitam-link" style="display: inline-block; text-decoration: none;">
                 ← Quay lại danh sách
             </a>
-            <h2 style="margin: 1rem 0; color: #333;">${title}</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 1rem 0;">
+                <h2 style="margin: 0; color: #333; flex: 1;">${title}</h2>
+                <span class="noitam-id" style="font-size: 0.75rem; color: #999; background: #f0f0f0; padding: 4px 10px; border-radius: 4px; margin-left: 1rem; font-family: monospace; cursor: pointer; white-space: nowrap;" title="WordPress ID: ${postId} (Click to copy)" onclick="copyLessonId(${postId}, event)">
+                    ID: #${postId}
+                </span>
+            </div>
         </div>
         <div class="noitam-iframe-wrapper" style="position: relative; width: 100%; height: 80vh; min-height: 600px;">
             <iframe 
@@ -876,6 +887,61 @@ function displayNoiTamError(error) {
             <p><strong>URL:</strong> https://admin.wikiw.vn/wp-json/custom/v1/baihoc-contents</p>
         </div>
     `;
+}
+
+// Copy lesson ID to clipboard
+function copyLessonId(id, event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Copy to clipboard
+    const text = id.toString();
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                showCopyNotification(event.target, 'Đã copy ID!');
+            })
+            .catch(() => {
+                fallbackCopyTextToClipboard(text, event.target);
+            });
+    } else {
+        fallbackCopyTextToClipboard(text, event.target);
+    }
+}
+
+// Fallback copy method
+function fallbackCopyTextToClipboard(text, targetElement) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        document.execCommand('copy');
+        showCopyNotification(targetElement, 'Đã copy ID!');
+    } catch (err) {
+        showCopyNotification(targetElement, 'Copy failed');
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+// Show copy notification
+function showCopyNotification(element, message) {
+    const originalText = element.textContent;
+    element.textContent = message;
+    element.style.backgroundColor = '#4CAF50';
+    element.style.color = 'white';
+    
+    setTimeout(() => {
+        element.textContent = originalText;
+        element.style.backgroundColor = '#f0f0f0';
+        element.style.color = '#999';
+    }, 1500);
 }
 </script>
 
