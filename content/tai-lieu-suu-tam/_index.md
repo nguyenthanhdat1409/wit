@@ -15,9 +15,60 @@ layout: "tailieu-lessons"
 </div>
 
 <script>
+// Global variable to store lessons data
+let allTaiLieuLessons = [];
+
 document.addEventListener('DOMContentLoaded', function() {
-    loadTaiLieuData();
+    // Check if URL has lesson parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const lessonId = urlParams.get('id'); // Primary: WordPress ID
+    const lessonSlug = urlParams.get('lesson'); // Secondary: slug for SEO
+    
+    if (lessonId || lessonSlug) {
+        console.log('📖 Loading specific lesson:', { id: lessonId, slug: lessonSlug });
+        loadSpecificTaiLieuLesson(lessonId, lessonSlug);
+    } else {
+        console.log('📚 Loading lesson list');
+        loadTaiLieuData();
+    }
 });
+
+// Decode ALL HTML entities (comprehensive)
+function decodeAllHtmlEntitiesTaiLieu(text) {
+    if (!text) return '';
+    
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = text;
+    let decoded = textarea.value;
+    
+    const entities = {
+        '&#8211;': '–', '&#8212;': '—', '&#8216;': '\u2018', '&#8217;': '\u2019',
+        '&#8220;': '\u201C', '&#8221;': '\u201D', '&#8230;': '…',
+        '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'",
+        '&nbsp;': ' ', '&#038;': '&', '&#x2013;': '–', '&#x2014;': '—',
+        '&hellip;': '…', '&mdash;': '—', '&ndash;': '–',
+        '&lsquo;': '\u2018', '&rsquo;': '\u2019', '&ldquo;': '\u201C', '&rdquo;': '\u201D'
+    };
+    
+    for (const [entity, char] of Object.entries(entities)) {
+        decoded = decoded.replace(new RegExp(entity, 'g'), char);
+    }
+    
+    return decoded;
+}
+
+// Generate slug from title
+function generateSlugTaiLieu(title) {
+    const decodedTitle = decodeAllHtmlEntitiesTaiLieu(title);
+    return decodedTitle
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
 
 function loadTaiLieuData() {
     console.log('🔄 Loading Tài liệu sưu tầm data...');
@@ -71,6 +122,10 @@ function displayTaiLieuContent(data) {
     }
     
     let posts = data.data.contents.nodes;
+    
+    // Store data globally
+    allTaiLieuLessons = posts;
+    
     console.log(`📊 Found ${posts.length} Tài liệu sưu tầm posts from WordPress`);
     
     // Sort posts by title alphabetically
@@ -89,9 +144,14 @@ function displayTaiLieuContent(data) {
     
     posts.forEach((post, index) => {
         let title = post.title || 'Không có tiêu đề';
-        title = title.replace(/&#8211;/g, '–');
+        title = decodeAllHtmlEntitiesTaiLieu(title);
         
         const link = post.link || '#';
+        const postId = post.id || index;
+        
+        // Generate slug for SEO-friendly URL
+        const slug = generateSlugTaiLieu(title);
+        const lessonUrl = `/tai-lieu-suu-tam/?id=${postId}&lesson=${slug}`;
         
         // Lấy text thuần từ content
         let content = 'Không có nội dung';
@@ -105,15 +165,19 @@ function displayTaiLieuContent(data) {
         // Escape HTML
         const escapedTitle = title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         const escapedContent = content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        const escapedLink = link.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         
         html += `
             <div class="tailieu-card">
-                <h3 class="tailieu-title">${escapedTitle}</h3>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                    <h3 class="tailieu-title" style="margin: 0; flex: 1;">${escapedTitle}</h3>
+                    <span class="tailieu-id" style="font-size: 0.7rem; color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 3px; margin-left: 8px; font-family: monospace; cursor: pointer;" title="WordPress ID: ${postId} (Click to copy)" onclick="copyTaiLieuLessonId(${postId}, event)">
+                        #${postId}
+                    </span>
+                </div>
                 <div class="tailieu-excerpt">${escapedContent}</div>
-                <button onclick="openTaiLieuLesson('${escapedLink}', '${escapedTitle}')" class="tailieu-link">
+                <a href="${lessonUrl}" class="tailieu-link" style="display: inline-block; text-decoration: none; text-align: center;">
                     📖 Đọc thêm
-                </button>
+                </a>
             </div>
         `;
     });
@@ -253,6 +317,158 @@ document.addEventListener('keydown', function(event) {
         closeTaiLieuIframe();
     }
 });
+
+// Load specific lesson by ID or slug
+function loadSpecificTaiLieuLesson(lessonId, lessonSlug) {
+    console.log('🔍 Looking for lesson:', { id: lessonId, slug: lessonSlug });
+    const apiUrl = 'https://admin.wikiw.vn/wp-json/custom/v1/wikingon-tai-lieu';
+    const contentDiv = document.getElementById('tailieu-content');
+    
+    contentDiv.innerHTML = '<div class="loading"><p>🔄 Đang tải tài liệu...</p></div>';
+    
+    const shouldBypassCache = true;
+    const fetchPromise = (typeof window.CacheManager !== 'undefined' && !shouldBypassCache)
+        ? window.CacheManager.fetchWithCache(apiUrl)
+        : fetch(apiUrl).then(response => response.json()).then(data => ({ data }));
+    
+    fetchPromise
+        .then(result => {
+            const data = result.data;
+            if (!data.data || !data.data.contents || !data.data.contents.nodes) {
+                throw new Error('No data received');
+            }
+            
+            const posts = data.data.contents.nodes;
+            allTaiLieuLessons = posts;
+            
+            let lesson = null;
+            
+            if (lessonId) {
+                lesson = posts.find(post => post.id && post.id.toString() === lessonId.toString());
+                console.log('🔍 Search by ID:', lessonId, '→', lesson ? 'Found' : 'Not found');
+            }
+            
+            if (!lesson && lessonSlug) {
+                lesson = posts.find(post => {
+                    const title = post.title || '';
+                    const cleanTitle = decodeAllHtmlEntitiesTaiLieu(title);
+                    const postSlug = generateSlugTaiLieu(cleanTitle);
+                    return postSlug === lessonSlug;
+                });
+                console.log('🔍 Search by slug:', lessonSlug, '→', lesson ? 'Found' : 'Not found');
+            }
+            
+            if (lesson) {
+                displaySpecificTaiLieuLesson(lesson);
+            } else {
+                displayTaiLieuLessonNotFound(lessonId || lessonSlug);
+            }
+        })
+        .catch(error => {
+            console.error('❌ Error loading lesson:', error);
+            displayTaiLieuError(error);
+        });
+}
+
+// Display specific lesson in iframe
+function displaySpecificTaiLieuLesson(lesson) {
+    const contentDiv = document.getElementById('tailieu-content');
+    const title = decodeAllHtmlEntitiesTaiLieu(lesson.title);
+    const url = lesson.link;
+    const postId = lesson.id;
+    
+    document.title = `${title} - Tài liệu sưu tầm - Wikiw`;
+    
+    contentDiv.innerHTML = `
+        <div style="margin-bottom: 1rem;">
+            <a href="/tai-lieu-suu-tam/" class="tailieu-link" style="display: inline-block; text-decoration: none;">
+                ← Quay lại danh sách
+            </a>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 1rem 0;">
+                <h2 style="margin: 0; color: #333; flex: 1;">${title}</h2>
+                <span style="font-size: 0.75rem; color: #999; background: #f0f0f0; padding: 4px 10px; border-radius: 4px; margin-left: 1rem; font-family: monospace; cursor: pointer; white-space: nowrap;" title="WordPress ID: ${postId} (Click to copy)" onclick="copyTaiLieuLessonId(${postId}, event)">
+                    ID: #${postId}
+                </span>
+            </div>
+        </div>
+        <div style="position: relative; width: 100%; height: 80vh; min-height: 600px;">
+            <iframe 
+                src="${url}" 
+                frameborder="0" 
+                class="tailieu-iframe" 
+                style="width: 100%; height: 100%; border: 1px solid #ddd; border-radius: 8px;"
+                onload="hideWordPressHeaderTaiLieu(this)">
+            </iframe>
+        </div>
+    `;
+}
+
+// Display lesson not found
+function displayTaiLieuLessonNotFound(slug) {
+    const contentDiv = document.getElementById('tailieu-content');
+    contentDiv.innerHTML = `
+        <div style="text-align: center; padding: 3rem;">
+            <h2>❌ Không tìm thấy tài liệu</h2>
+            <p>Tài liệu với slug "<strong>${slug}</strong>" không tồn tại.</p>
+            <a href="/tai-lieu-suu-tam/" class="tailieu-link" style="display: inline-block; text-decoration: none; margin-top: 1rem;">
+                ← Quay lại danh sách
+            </a>
+        </div>
+    `;
+}
+
+// Copy lesson ID to clipboard
+function copyTaiLieuLessonId(id, event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const text = id.toString();
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+            .then(() => showCopyNotificationTaiLieu(event.target, 'Đã copy ID!'))
+            .catch(() => fallbackCopyTextToClipboardTaiLieu(text, event.target));
+    } else {
+        fallbackCopyTextToClipboardTaiLieu(text, event.target);
+    }
+}
+
+// Fallback copy method
+function fallbackCopyTextToClipboardTaiLieu(text, targetElement) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        document.execCommand('copy');
+        showCopyNotificationTaiLieu(targetElement, 'Đã copy ID!');
+    } catch (err) {
+        showCopyNotificationTaiLieu(targetElement, 'Copy failed');
+    }
+    
+    document.body.removeChild(textArea);
+}
+
+// Show copy notification
+function showCopyNotificationTaiLieu(element, message) {
+    const originalText = element.textContent;
+    const originalBg = element.style.backgroundColor;
+    const originalColor = element.style.color;
+    
+    element.textContent = message;
+    element.style.backgroundColor = '#4CAF50';
+    element.style.color = 'white';
+    
+    setTimeout(() => {
+        element.textContent = originalText;
+        element.style.backgroundColor = originalBg;
+        element.style.color = originalColor;
+    }, 1500);
+}
 
 function displayTaiLieuError(error) {
     const contentDiv = document.getElementById('tailieu-content');
