@@ -1,130 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bài học đào tạo nội tâm on Wikiw - Phát triển Nội tâm &amp; Huấn luyện</title><link>https://wikiw.vn/bai-hoc-dao-tao-noi-tam/</link><description>Recent content in Bài học đào tạo nội tâm on Wikiw - Phát triển Nội tâm &amp; Huấn luyện</description><generator>Hugo</generator><language>vi-VN</language><lastBuildDate>Thu, 19 Dec 2024 09:00:00 +0700</lastBuildDate><atom:link href="https://wikiw.vn/bai-hoc-dao-tao-noi-tam/index.xml" rel="self" type="application/rss+xml"/><item><title>Bài học đào tạo nội tâm</title><link>https://wikiw.vn/bai-hoc-dao-tao-noi-tam/_index-bulletproof/</link><pubDate>Thu, 19 Dec 2024 09:00:00 +0700</pubDate><guid>https://wikiw.vn/bai-hoc-dao-tao-noi-tam/_index-bulletproof/</guid><description>&lt;h1 id="-bài-học-đào-tạo-nội-tâm"&gt;🧘 Bài học đào tạo nội tâm&lt;/h1&gt;
-&lt;div id="daotao-content"&gt;
- &lt;div class="loading"&gt;
- &lt;p&gt;🔄 Đang tải dữ liệu từ WordPress...&lt;/p&gt;
- &lt;/div&gt;
-&lt;/div&gt;
-&lt;script&gt;
-// Global variable to store lessons data
-let allDaoTaoLessons = [];
-
-document.addEventListener('DOMContentLoaded', function() {
- // Check if URL has lesson parameter
- const urlParams = new URLSearchParams(window.location.search);
- const lessonId = urlParams.get('id'); // Primary: WordPress ID
- const lessonSlug = urlParams.get('lesson'); // Secondary: slug for SEO
- 
- if (lessonId || lessonSlug) {
- console.log('📖 Loading specific lesson:', { id: lessonId, slug: lessonSlug });
- loadSpecificDaoTaoLesson(lessonId, lessonSlug);
- } else {
- console.log('📚 Loading lesson list');
- loadDaoTaoData();
- }
-});
-
-// Decode ALL HTML entities (comprehensive)
-function decodeAllHtmlEntitiesDaoTao(text) {
- if (!text) return '';
- 
- const textarea = document.createElement('textarea');
- textarea.innerHTML = text;
- let decoded = textarea.value;
- 
- // Additional manual replacements for common entities
- const entities = {
- '&amp;#8211;': '–', // en dash
- '&amp;#8212;': '—', // em dash
- '&amp;#8216;': '\u2018', // left single quote
- '&amp;#8217;': '\u2019', // right single quote
- '&amp;#8220;': '\u201C', // left double quote
- '&amp;#8221;': '\u201D', // right double quote
- '&amp;#8230;': '…', // ellipsis
- '&amp;amp;': '&amp;',
- '&amp;lt;': '&lt;',
- '&amp;gt;': '&gt;',
- '&amp;quot;': '"',
- '&amp;#39;': "'",
- '&amp;nbsp;': ' ',
- '&amp;#038;': '&amp;',
- '&amp;#x2013;': '–',
- '&amp;#x2014;': '—',
- '&amp;hellip;': '…',
- '&amp;mdash;': '—',
- '&amp;ndash;': '–',
- '&amp;lsquo;': '\u2018',
- '&amp;rsquo;': '\u2019',
- '&amp;ldquo;': '\u201C',
- '&amp;rdquo;': '\u201D'
- };
- 
- for (const [entity, char] of Object.entries(entities)) {
- decoded = decoded.replace(new RegExp(entity, 'g'), char);
- }
- 
- return decoded;
-}
-
-// Generate slug from title
-function generateSlugDaoTao(title) {
- // Decode HTML entities first
- const decodedTitle = decodeAllHtmlEntitiesDaoTao(title);
- 
- return decodedTitle
- .toLowerCase()
- .normalize('NFD')
- .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
- .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
- .replace(/\s+/g, '-') // Replace spaces with hyphens
- .replace(/-+/g, '-') // Replace multiple hyphens
- .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
-}
-
-function loadDaoTaoData() {
- console.log('🔄 Loading Đào tạo nội tâm data...');
- const apiUrl = 'https://admin.wikiw.vn/wp-json/custom/v1/daotao-contents';
- const contentDiv = document.getElementById('daotao-content');
- 
- console.log('📡 Fetching from:', apiUrl);
- 
- // Load data with cache
- if (typeof window.CacheManager !== 'undefined') {
- console.log('📦 Using Cache Manager for Đào tạo nội tâm');
- 
- window.CacheManager.fetchWithCache(apiUrl)
- .then(result =&gt; {
- const data = result.data;
- if (result.fromCache) {
- console.log('⚡ Đào tạo nội tâm loaded from CACHE (fast!)');
- } else {
- console.log('🌐 Đào tạo nội tâm loaded from SERVER (cached for 30 days)');
- }
- console.log('✅ Đào tạo nội tâm data loaded:', data);
- displayDaoTaoContent(data);
- })
- .catch(error =&gt; {
- console.error('❌ Error loading Đào tạo nội tâm data:', error);
- displayDaoTaoError(error);
- });
- } else {
- // Fallback without cache
- console.log('⚠️ Cache Manager not available, using regular fetch');
- fetch(apiUrl)
- .then(response =&gt; {
- if (!response.ok) throw new Error(`HTTP ${response.status}`);
- return response.json();
- })
- .then(data =&gt; {
- displayDaoTaoContent(data);
- })
- .catch(error =&gt; {
- displayDaoTaoError(error);
- });
- }
-}
-
-function displayDaoTaoContent(data) {
- const contentDiv = document.getElementById('daotao-content');
- 
- if (!data.data || !data.data.contents || !data.data.contents.nodes) {
- contentDiv.innerHTML = '&lt;p&gt;❌ Không có dữ liệu từ WordPress&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bài học đào tạo nội tâm on Wikiw - Phát triển Nội tâm &amp; Huấn luyện</title>
+    <link>https://wikiw.vn/bai-hoc-dao-tao-noi-tam/</link>
+    <description>Recent content in Bài học đào tạo nội tâm on Wikiw - Phát triển Nội tâm &amp; Huấn luyện</description>
+    <generator>Hugo</generator>
+    <language>vi-VN</language>
+    <lastBuildDate>Thu, 19 Dec 2024 09:00:00 +0700</lastBuildDate>
+    <atom:link href="https://wikiw.vn/bai-hoc-dao-tao-noi-tam/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bài học đào tạo nội tâm</title>
+      <link>https://wikiw.vn/bai-hoc-dao-tao-noi-tam/_index-bulletproof/</link>
+      <pubDate>Thu, 19 Dec 2024 09:00:00 +0700</pubDate>
+      <guid>https://wikiw.vn/bai-hoc-dao-tao-noi-tam/_index-bulletproof/</guid>
+      <description>&lt;h1 id=&#34;-bài-học-đào-tạo-nội-tâm&#34;&gt;🧘 Bài học đào tạo nội tâm&lt;/h1&gt;&#xA;&lt;div id=&#34;daotao-content&#34;&gt;&#xD;&#xA;    &lt;div class=&#34;loading&#34;&gt;&#xD;&#xA;        &lt;p&gt;🔄 Đang tải dữ liệu từ WordPress...&lt;/p&gt;&#xD;&#xA;    &lt;/div&gt;&#xD;&#xA;&lt;/div&gt;&#xD;&#xA;&lt;script&gt;&#xD;&#xA;// Global variable to store lessons data&#xD;&#xA;let allDaoTaoLessons = [];&#xD;&#xA;&#xD;&#xA;document.addEventListener(&#39;DOMContentLoaded&#39;, function() {&#xD;&#xA;    // Check if URL has lesson parameter&#xD;&#xA;    const urlParams = new URLSearchParams(window.location.search);&#xD;&#xA;    const lessonId = urlParams.get(&#39;id&#39;); // Primary: WordPress ID&#xD;&#xA;    const lessonSlug = urlParams.get(&#39;lesson&#39;); // Secondary: slug for SEO&#xD;&#xA;    &#xD;&#xA;    if (lessonId || lessonSlug) {&#xD;&#xA;        console.log(&#39;📖 Loading specific lesson:&#39;, { id: lessonId, slug: lessonSlug });&#xD;&#xA;        loadSpecificDaoTaoLesson(lessonId, lessonSlug);&#xD;&#xA;    } else {&#xD;&#xA;        console.log(&#39;📚 Loading lesson list&#39;);&#xD;&#xA;        loadDaoTaoData();&#xD;&#xA;    }&#xD;&#xA;});&#xD;&#xA;&#xD;&#xA;// Decode ALL HTML entities (comprehensive)&#xD;&#xA;function decodeAllHtmlEntitiesDaoTao(text) {&#xD;&#xA;    if (!text) return &#39;&#39;;&#xD;&#xA;    &#xD;&#xA;    const textarea = document.createElement(&#39;textarea&#39;);&#xD;&#xA;    textarea.innerHTML = text;&#xD;&#xA;    let decoded = textarea.value;&#xD;&#xA;    &#xD;&#xA;    // Additional manual replacements for common entities&#xD;&#xA;    const entities = {&#xD;&#xA;        &#39;&amp;#8211;&#39;: &#39;–&#39;,   // en dash&#xD;&#xA;        &#39;&amp;#8212;&#39;: &#39;—&#39;,   // em dash&#xD;&#xA;        &#39;&amp;#8216;&#39;: &#39;\u2018&#39;,   // left single quote&#xD;&#xA;        &#39;&amp;#8217;&#39;: &#39;\u2019&#39;,   // right single quote&#xD;&#xA;        &#39;&amp;#8220;&#39;: &#39;\u201C&#39;,   // left double quote&#xD;&#xA;        &#39;&amp;#8221;&#39;: &#39;\u201D&#39;,   // right double quote&#xD;&#xA;        &#39;&amp;#8230;&#39;: &#39;…&#39;,   // ellipsis&#xD;&#xA;        &#39;&amp;amp;&#39;: &#39;&amp;&#39;,&#xD;&#xA;        &#39;&amp;lt;&#39;: &#39;&lt;&#39;,&#xD;&#xA;        &#39;&amp;gt;&#39;: &#39;&gt;&#39;,&#xD;&#xA;        &#39;&amp;quot;&#39;: &#39;&#34;&#39;,&#xD;&#xA;        &#39;&amp;#39;&#39;: &#34;&#39;&#34;,&#xD;&#xA;        &#39;&amp;nbsp;&#39;: &#39; &#39;,&#xD;&#xA;        &#39;&amp;#038;&#39;: &#39;&amp;&#39;,&#xD;&#xA;        &#39;&amp;#x2013;&#39;: &#39;–&#39;,&#xD;&#xA;        &#39;&amp;#x2014;&#39;: &#39;—&#39;,&#xD;&#xA;        &#39;&amp;hellip;&#39;: &#39;…&#39;,&#xD;&#xA;        &#39;&amp;mdash;&#39;: &#39;—&#39;,&#xD;&#xA;        &#39;&amp;ndash;&#39;: &#39;–&#39;,&#xD;&#xA;        &#39;&amp;lsquo;&#39;: &#39;\u2018&#39;,&#xD;&#xA;        &#39;&amp;rsquo;&#39;: &#39;\u2019&#39;,&#xD;&#xA;        &#39;&amp;ldquo;&#39;: &#39;\u201C&#39;,&#xD;&#xA;        &#39;&amp;rdquo;&#39;: &#39;\u201D&#39;&#xD;&#xA;    };&#xD;&#xA;    &#xD;&#xA;    for (const [entity, char] of Object.entries(entities)) {&#xD;&#xA;        decoded = decoded.replace(new RegExp(entity, &#39;g&#39;), char);&#xD;&#xA;    }&#xD;&#xA;    &#xD;&#xA;    return decoded;&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;// Generate slug from title&#xD;&#xA;function generateSlugDaoTao(title) {&#xD;&#xA;    // Decode HTML entities first&#xD;&#xA;    const decodedTitle = decodeAllHtmlEntitiesDaoTao(title);&#xD;&#xA;    &#xD;&#xA;    return decodedTitle&#xD;&#xA;        .toLowerCase()&#xD;&#xA;        .normalize(&#39;NFD&#39;)&#xD;&#xA;        .replace(/[\u0300-\u036f]/g, &#39;&#39;) // Remove diacritics&#xD;&#xA;        .replace(/[^a-z0-9\s-]/g, &#39;&#39;) // Remove special characters&#xD;&#xA;        .replace(/\s+/g, &#39;-&#39;) // Replace spaces with hyphens&#xD;&#xA;        .replace(/-+/g, &#39;-&#39;) // Replace multiple hyphens&#xD;&#xA;        .replace(/^-+|-+$/g, &#39;&#39;); // Remove leading/trailing hyphens&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;function loadDaoTaoData() {&#xD;&#xA;    console.log(&#39;🔄 Loading Đào tạo nội tâm data...&#39;);&#xD;&#xA;    const apiUrl = &#39;https://admin.wikiw.vn/wp-json/custom/v1/daotao-contents&#39;;&#xD;&#xA;    const contentDiv = document.getElementById(&#39;daotao-content&#39;);&#xD;&#xA;    &#xD;&#xA;    console.log(&#39;📡 Fetching from:&#39;, apiUrl);&#xD;&#xA;    &#xD;&#xA;    // Load data with cache&#xD;&#xA;    if (typeof window.CacheManager !== &#39;undefined&#39;) {&#xD;&#xA;        console.log(&#39;📦 Using Cache Manager for Đào tạo nội tâm&#39;);&#xD;&#xA;        &#xD;&#xA;        window.CacheManager.fetchWithCache(apiUrl)&#xD;&#xA;            .then(result =&gt; {&#xD;&#xA;                const data = result.data;&#xD;&#xA;                if (result.fromCache) {&#xD;&#xA;                    console.log(&#39;⚡ Đào tạo nội tâm loaded from CACHE (fast!)&#39;);&#xD;&#xA;                } else {&#xD;&#xA;                    console.log(&#39;🌐 Đào tạo nội tâm loaded from SERVER (cached for 30 days)&#39;);&#xD;&#xA;                }&#xD;&#xA;                console.log(&#39;✅ Đào tạo nội tâm data loaded:&#39;, data);&#xD;&#xA;                displayDaoTaoContent(data);&#xD;&#xA;            })&#xD;&#xA;            .catch(error =&gt; {&#xD;&#xA;                console.error(&#39;❌ Error loading Đào tạo nội tâm data:&#39;, error);&#xD;&#xA;                displayDaoTaoError(error);&#xD;&#xA;            });&#xD;&#xA;    } else {&#xD;&#xA;        // Fallback without cache&#xD;&#xA;        console.log(&#39;⚠️ Cache Manager not available, using regular fetch&#39;);&#xD;&#xA;        fetch(apiUrl)&#xD;&#xA;            .then(response =&gt; {&#xD;&#xA;                if (!response.ok) throw new Error(`HTTP ${response.status}`);&#xD;&#xA;                return response.json();&#xD;&#xA;            })&#xD;&#xA;            .then(data =&gt; {&#xD;&#xA;                displayDaoTaoContent(data);&#xD;&#xA;            })&#xD;&#xA;            .catch(error =&gt; {&#xD;&#xA;                displayDaoTaoError(error);&#xD;&#xA;            });&#xD;&#xA;    }&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;function displayDaoTaoContent(data) {&#xD;&#xA;    const contentDiv = document.getElementById(&#39;daotao-content&#39;);&#xD;&#xA;    &#xD;&#xA;    if (!data.data || !data.data.contents || !data.data.contents.nodes) {&#xD;&#xA;        contentDiv.innerHTML = &#39;&lt;p&gt;❌ Không có dữ liệu từ WordPress&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
