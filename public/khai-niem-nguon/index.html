@@ -679,7 +679,301 @@
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 id="-khái-niệm-nguồn">🎯 Khái Niệm Nguồn</h1>
+<!-- Search Container -->
+<div class="search-container">
+  <div class="search-wrapper">
+    <input 
+      type="text" 
+      id="searchInput" 
+      class="search-input" 
+      placeholder="Tìm kiếm khái niệm nguồn..."
+      autocomplete="off"
+    />
+    <button id="clearSearch" class="clear-search" title="Xóa tìm kiếm">✕</button>
+    <button id="searchButton" class="search-button" title="Tìm kiếm">🔍</button>
+  </div>
+  <div id="searchResultsInfo" class="search-results-info"></div>
+</div>
 <style>
+/* Search box styles */
+.search-container {
+  margin: 20px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-size: 16px !important;
+}
+
+.search-wrapper {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 50px 15px 20px;
+  font-size: 18px !important;
+  border: 2px solid #fff;
+  border-radius: 50px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus {
+  border-color: #ffd700;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.search-button {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button:hover {
+  background: #5a6fd8;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.clear-search {
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 16px;
+  display: none;
+  transition: all 0.3s ease;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-search:hover {
+  background: #cc0000;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.search-results-info {
+  text-align: center;
+  margin-top: 15px;
+  color: white;
+  font-size: 16px !important;
+  font-weight: 500;
+}
+
+.highlight {
+  background-color: #ffeb3b;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.no-results-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+/* Responsive styles for search */
+@media (max-width: 768px) {
+  .search-container {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .search-input {
+    font-size: 16px !important;
+    padding: 12px 45px 12px 15px;
+  }
+  
+  .search-button {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    right: 15px;
+  }
+  
+  .clear-search {
+    right: 60px;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+  }
+  
+  .search-results-info {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container {
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  .search-input {
+    font-size: 14px !important;
+    padding: 10px 40px 10px 12px;
+  }
+  
+  .search-button {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    right: 12px;
+  }
+  
+  .clear-search {
+    right: 50px;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+  }
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+/* Grid layout for posts */
+.khainiem-posts {
+    margin: 20px 0;
+}
+
+.khainiem-meta {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.khainiem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    padding: 20px 0;
+}
+
+/* Card styling */
+.khainiem-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #f59e0b;
+}
+
+.khainiem-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.khainiem-title {
+    color: #333;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+}
+
+.khainiem-excerpt {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Error styling */
+.khainiem-error {
+    background: #fee;
+    border: 2px solid #f88;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    color: #c00;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .khainiem-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+    
+    .khainiem-card {
+        padding: 20px;
+    }
+    
+    .khainiem-title {
+        font-size: 1.15rem;
+    }
+    
+    .khainiem-excerpt {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .khainiem-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px 0;
+    }
+    
+    .khainiem-card {
+        padding: 18px;
+    }
+    
+    .khainiem-title {
+        font-size: 1.1rem;
+    }
+    
+    .khainiem-excerpt {
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+    }
+}
+
 .khainiem-link {
     display: inline-flex;
     align-items: center;
@@ -711,8 +1005,9 @@
     </div>
 </div>
 <script>
-// Global variable to store lessons data
+// Global variables to store lessons data
 let allKhaiNiemLessons = [];
+let filteredKhaiNiemLessons = [];
 
 document.addEventListener('DOMContentLoaded', function() {
     // Check if URL has lesson parameter
@@ -827,6 +1122,95 @@ function loadKhaiNiemData() {
     }
 }
 
+// Initialize search functionality
+function initializeKhaiNiemSearch() {
+  const searchInput = document.getElementById('searchInput');
+  const clearSearchBtn = document.getElementById('clearSearch');
+  const searchButton = document.getElementById('searchButton');
+  const searchResultsInfo = document.getElementById('searchResultsInfo');
+  
+  if (!searchInput) return;
+  
+  // Search on input
+  searchInput.addEventListener('input', function(e) {
+    const searchTerm = e.target.value.trim();
+    
+    // Show/hide clear button
+    clearSearchBtn.style.display = searchTerm ? 'flex' : 'none';
+    
+    // Perform search
+    performKhaiNiemSearch(searchTerm);
+  });
+  
+  // Clear search
+  clearSearchBtn.addEventListener('click', function() {
+    searchInput.value = '';
+    clearSearchBtn.style.display = 'none';
+    performKhaiNiemSearch('');
+    searchInput.focus();
+  });
+  
+  // Search button click
+  searchButton.addEventListener('click', function() {
+    const searchTerm = searchInput.value.trim();
+    performKhaiNiemSearch(searchTerm);
+    searchInput.focus();
+  });
+  
+  // Enter key to search
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      performKhaiNiemSearch(searchInput.value.trim());
+    }
+  });
+  
+  // Initial info
+  updateKhaiNiemSearchInfo(allKhaiNiemLessons.length, allKhaiNiemLessons.length);
+}
+
+// Perform search
+function performKhaiNiemSearch(searchTerm) {
+  if (!searchTerm) {
+    filteredKhaiNiemLessons = allKhaiNiemLessons;
+    displayFilteredKhaiNiem(filteredKhaiNiemLessons);
+    updateKhaiNiemSearchInfo(allKhaiNiemLessons.length, allKhaiNiemLessons.length);
+    return;
+  }
+  
+  const searchLower = searchTerm.toLowerCase();
+  
+  filteredKhaiNiemLessons = allKhaiNiemLessons.filter(lesson => {
+    const title = (lesson.title || '').toLowerCase();
+    const content = (lesson.content || '').replace(/<[^>]*>/g, '').toLowerCase();
+    
+    return title.includes(searchLower) || content.includes(searchLower);
+  });
+  
+  displayFilteredKhaiNiem(filteredKhaiNiemLessons, searchTerm);
+  updateKhaiNiemSearchInfo(filteredKhaiNiemLessons.length, allKhaiNiemLessons.length);
+}
+
+// Update search results info
+function updateKhaiNiemSearchInfo(found, total) {
+  const searchResultsInfo = document.getElementById('searchResultsInfo');
+  const searchInput = document.getElementById('searchInput');
+  const searchTerm = searchInput.value.trim();
+  
+  if (!searchTerm) {
+    searchResultsInfo.innerHTML = `📊 Hiển thị <strong>${total}</strong> khái niệm nguồn`;
+  } else if (found === 0) {
+    searchResultsInfo.innerHTML = `❌ Không tìm thấy kết quả cho "<strong>${searchTerm}</strong>"`;
+  } else {
+    searchResultsInfo.innerHTML = `✅ Tìm thấy <strong>${found}</strong> kết quả từ <strong>${total}</strong> khái niệm`;
+  }
+}
+
+// Escape special characters for regex
+function escapeRegexKhaiNiem(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function displayKhaiNiemContent(data) {
     const contentDiv = document.getElementById('khainiem-content');
     
@@ -837,6 +1221,7 @@ function displayKhaiNiemContent(data) {
     
     let posts = data.data.contents.nodes;
     allKhaiNiemLessons = posts; // Store globally
+    filteredKhaiNiemLessons = posts;
     console.log(`📊 Found ${posts.length} Khái Niệm Nguồn posts from WordPress`);
     
     // Sort by title
@@ -848,11 +1233,27 @@ function displayKhaiNiemContent(data) {
     
     console.log('📚 Sorted lessons:', posts.map(p => decodeAllHtmlEntitiesKhaiNiem(p.title || '')));
     
+    displayFilteredKhaiNiem(posts);
+    initializeKhaiNiemSearch();
+}
+
+// Display filtered lessons with optional highlight
+function displayFilteredKhaiNiem(posts, searchTerm = '') {
+    const contentDiv = document.getElementById('khainiem-content');
+    
+    if (posts.length === 0) {
+      contentDiv.innerHTML = `
+        <div class="no-results">
+          <div class="no-results-icon">🔍</div>
+          <h3>Không tìm thấy kết quả</h3>
+          <p>Hãy thử tìm kiếm với từ khóa khác</p>
+        </div>
+      `;
+      return;
+    }
+    
     let html = `
         <div class="khainiem-posts">
-            <div class="khainiem-meta">
-                <p>📚 Tổng cộng: <strong>${posts.length}</strong> khái niệm nguồn</p>
-            </div>
             <div class="khainiem-grid">
     `;
     
@@ -861,6 +1262,13 @@ function displayKhaiNiemContent(data) {
         const title = decodeAllHtmlEntitiesKhaiNiem(post.title || 'Không có tiêu đề');
         const slug = generateSlugKhaiNiem(title);
         const lessonUrl = `/khai-niem-nguon/?id=${postId}&lesson=${slug}`;
+        
+        // Highlight search term if provided
+        let displayTitle = title;
+        if (searchTerm) {
+          const regex = new RegExp(`(${escapeRegexKhaiNiem(searchTerm)})`, 'gi');
+          displayTitle = displayTitle.replace(regex, '<span class="highlight">$1</span>');
+        }
         
         // Lấy text thuần từ content, bỏ HTML tags
         let content = 'Không có nội dung';
@@ -871,19 +1279,22 @@ function displayKhaiNiemContent(data) {
             content = textContent.trim().substring(0, 150) + (textContent.length > 150 ? '...' : '');
         }
         
-        // Escape HTML để tránh lỗi cấu trúc
-        const escapedTitle = title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        const escapedContent = content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        // Highlight search term in content if provided
+        let displayContent = content;
+        if (searchTerm) {
+          const regex = new RegExp(`(${escapeRegexKhaiNiem(searchTerm)})`, 'gi');
+          displayContent = displayContent.replace(regex, '<span class="highlight">$1</span>');
+        }
         
         html += `
             <div class="khainiem-card">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                    <h3 class="khainiem-title" style="margin: 0; flex: 1;">${escapedTitle}</h3>
+                    <h3 class="khainiem-title" style="margin: 0; flex: 1;">${displayTitle}</h3>
                     <span class="khainiem-id" style="font-size: 0.7rem; color: #999; background: #f0f0f0; padding: 2px 6px; border-radius: 3px; margin-left: 8px; font-family: monospace; cursor: pointer;" title="WordPress ID: ${postId} (Click to copy)" onclick="copyKhaiNiemLessonId(${postId}, event)">
                         #${postId}
                     </span>
                 </div>
-                <div class="khainiem-excerpt">${escapedContent}</div>
+                <div class="khainiem-excerpt">${displayContent}</div>
                 <a href="${lessonUrl}" class="khainiem-link" style="display: inline-block; text-decoration: none; text-align: center;">
                     📖 Đọc thêm
                 </a>
