@@ -1,12 +1,130 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Bài học đào tạo nội tâm on Wikiw - Phát triển Nội tâm &amp; Huấn luyện</title>
-    <link>https://wikiw.vn/bai-hoc-dao-tao-noi-tam/</link>
-    <description>Recent content in Bài học đào tạo nội tâm on Wikiw - Phát triển Nội tâm &amp; Huấn luyện</description>
-    <generator>Hugo</generator>
-    <language>vi-VN</language>
-    <lastBuildDate></lastBuildDate>
-    <atom:link href="https://wikiw.vn/bai-hoc-dao-tao-noi-tam/index.xml" rel="self" type="application/rss+xml" />
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bài học đào tạo nội tâm on Wikiw - Phát triển Nội tâm &amp; Huấn luyện</title><link>https://wikiw.vn/bai-hoc-dao-tao-noi-tam/</link><description>Recent content in Bài học đào tạo nội tâm on Wikiw - Phát triển Nội tâm &amp; Huấn luyện</description><generator>Hugo</generator><language>vi-VN</language><lastBuildDate>Thu, 19 Dec 2024 09:00:00 +0700</lastBuildDate><atom:link href="https://wikiw.vn/bai-hoc-dao-tao-noi-tam/index.xml" rel="self" type="application/rss+xml"/><item><title>Bài học đào tạo nội tâm</title><link>https://wikiw.vn/bai-hoc-dao-tao-noi-tam/_index-bulletproof/</link><pubDate>Thu, 19 Dec 2024 09:00:00 +0700</pubDate><guid>https://wikiw.vn/bai-hoc-dao-tao-noi-tam/_index-bulletproof/</guid><description>&lt;h1 id="-bài-học-đào-tạo-nội-tâm"&gt;🧘 Bài học đào tạo nội tâm&lt;/h1&gt;
+&lt;div id="daotao-content"&gt;
+ &lt;div class="loading"&gt;
+ &lt;p&gt;🔄 Đang tải dữ liệu từ WordPress...&lt;/p&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+// Global variable to store lessons data
+let allDaoTaoLessons = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+ // Check if URL has lesson parameter
+ const urlParams = new URLSearchParams(window.location.search);
+ const lessonId = urlParams.get('id'); // Primary: WordPress ID
+ const lessonSlug = urlParams.get('lesson'); // Secondary: slug for SEO
+ 
+ if (lessonId || lessonSlug) {
+ console.log('📖 Loading specific lesson:', { id: lessonId, slug: lessonSlug });
+ loadSpecificDaoTaoLesson(lessonId, lessonSlug);
+ } else {
+ console.log('📚 Loading lesson list');
+ loadDaoTaoData();
+ }
+});
+
+// Decode ALL HTML entities (comprehensive)
+function decodeAllHtmlEntitiesDaoTao(text) {
+ if (!text) return '';
+ 
+ const textarea = document.createElement('textarea');
+ textarea.innerHTML = text;
+ let decoded = textarea.value;
+ 
+ // Additional manual replacements for common entities
+ const entities = {
+ '&amp;#8211;': '–', // en dash
+ '&amp;#8212;': '—', // em dash
+ '&amp;#8216;': '\u2018', // left single quote
+ '&amp;#8217;': '\u2019', // right single quote
+ '&amp;#8220;': '\u201C', // left double quote
+ '&amp;#8221;': '\u201D', // right double quote
+ '&amp;#8230;': '…', // ellipsis
+ '&amp;amp;': '&amp;',
+ '&amp;lt;': '&lt;',
+ '&amp;gt;': '&gt;',
+ '&amp;quot;': '"',
+ '&amp;#39;': "'",
+ '&amp;nbsp;': ' ',
+ '&amp;#038;': '&amp;',
+ '&amp;#x2013;': '–',
+ '&amp;#x2014;': '—',
+ '&amp;hellip;': '…',
+ '&amp;mdash;': '—',
+ '&amp;ndash;': '–',
+ '&amp;lsquo;': '\u2018',
+ '&amp;rsquo;': '\u2019',
+ '&amp;ldquo;': '\u201C',
+ '&amp;rdquo;': '\u201D'
+ };
+ 
+ for (const [entity, char] of Object.entries(entities)) {
+ decoded = decoded.replace(new RegExp(entity, 'g'), char);
+ }
+ 
+ return decoded;
+}
+
+// Generate slug from title
+function generateSlugDaoTao(title) {
+ // Decode HTML entities first
+ const decodedTitle = decodeAllHtmlEntitiesDaoTao(title);
+ 
+ return decodedTitle
+ .toLowerCase()
+ .normalize('NFD')
+ .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+ .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+ .replace(/\s+/g, '-') // Replace spaces with hyphens
+ .replace(/-+/g, '-') // Replace multiple hyphens
+ .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+}
+
+function loadDaoTaoData() {
+ console.log('🔄 Loading Đào tạo nội tâm data...');
+ const apiUrl = 'https://admin.wikiw.vn/wp-json/custom/v1/daotao-contents';
+ const contentDiv = document.getElementById('daotao-content');
+ 
+ console.log('📡 Fetching from:', apiUrl);
+ 
+ // Load data with cache
+ if (typeof window.CacheManager !== 'undefined') {
+ console.log('📦 Using Cache Manager for Đào tạo nội tâm');
+ 
+ window.CacheManager.fetchWithCache(apiUrl)
+ .then(result =&gt; {
+ const data = result.data;
+ if (result.fromCache) {
+ console.log('⚡ Đào tạo nội tâm loaded from CACHE (fast!)');
+ } else {
+ console.log('🌐 Đào tạo nội tâm loaded from SERVER (cached for 30 days)');
+ }
+ console.log('✅ Đào tạo nội tâm data loaded:', data);
+ displayDaoTaoContent(data);
+ })
+ .catch(error =&gt; {
+ console.error('❌ Error loading Đào tạo nội tâm data:', error);
+ displayDaoTaoError(error);
+ });
+ } else {
+ // Fallback without cache
+ console.log('⚠️ Cache Manager not available, using regular fetch');
+ fetch(apiUrl)
+ .then(response =&gt; {
+ if (!response.ok) throw new Error(`HTTP ${response.status}`);
+ return response.json();
+ })
+ .then(data =&gt; {
+ displayDaoTaoContent(data);
+ })
+ .catch(error =&gt; {
+ displayDaoTaoError(error);
+ });
+ }
+}
+
+function displayDaoTaoContent(data) {
+ const contentDiv = document.getElementById('daotao-content');
+ 
+ if (!data.data || !data.data.contents || !data.data.contents.nodes) {
+ contentDiv.innerHTML = '&lt;p&gt;❌ Không có dữ liệu từ WordPress&lt;/p&gt;</description></item></channel></rss>

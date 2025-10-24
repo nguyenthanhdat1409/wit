@@ -558,7 +558,7 @@ function toggleContent(index) {
   }
   
   .kv-content::before {
-    content: "📖 Nội dung: ";
+    content: "📖 Khái niệm: ";
     font-weight: bold;
     color: #28a745;
     display: block;
