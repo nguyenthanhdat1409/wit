@@ -8,6 +8,22 @@ type: "page"
 layout: "tailieu-lessons"
 ---
 
+<!-- Search Container -->
+<div class="search-container">
+  <div class="search-wrapper">
+    <input 
+      type="text" 
+      id="searchInput" 
+      class="search-input" 
+      placeholder="Tìm kiếm tài liệu sưu tầm..."
+      autocomplete="off"
+    />
+    <button id="clearSearch" class="clear-search" title="Xóa tìm kiếm">✕</button>
+    <button id="searchButton" class="search-button" title="Tìm kiếm">🔍</button>
+  </div>
+  <div id="searchResultsInfo" class="search-results-info"></div>
+</div>
+
 <div id="tailieu-content">
     <div class="loading">
         <p>🔄 Đang tải dữ liệu từ WordPress...</p>
@@ -15,8 +31,9 @@ layout: "tailieu-lessons"
 </div>
 
 <script>
-// Global variable to store lessons data
+// Global variables to store lessons data
 let allTaiLieuLessons = [];
+let filteredTaiLieuLessons = [];
 
 document.addEventListener('DOMContentLoaded', function() {
     // Check if URL has lesson parameter
@@ -113,6 +130,95 @@ function loadTaiLieuData() {
     }
 }
 
+// Initialize search functionality
+function initializeTaiLieuSearch() {
+  const searchInput = document.getElementById('searchInput');
+  const clearSearchBtn = document.getElementById('clearSearch');
+  const searchButton = document.getElementById('searchButton');
+  const searchResultsInfo = document.getElementById('searchResultsInfo');
+  
+  if (!searchInput) return;
+  
+  // Search on input
+  searchInput.addEventListener('input', function(e) {
+    const searchTerm = e.target.value.trim();
+    
+    // Show/hide clear button
+    clearSearchBtn.style.display = searchTerm ? 'flex' : 'none';
+    
+    // Perform search
+    performTaiLieuSearch(searchTerm);
+  });
+  
+  // Clear search
+  clearSearchBtn.addEventListener('click', function() {
+    searchInput.value = '';
+    clearSearchBtn.style.display = 'none';
+    performTaiLieuSearch('');
+    searchInput.focus();
+  });
+  
+  // Search button click
+  searchButton.addEventListener('click', function() {
+    const searchTerm = searchInput.value.trim();
+    performTaiLieuSearch(searchTerm);
+    searchInput.focus();
+  });
+  
+  // Enter key to search
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      performTaiLieuSearch(searchInput.value.trim());
+    }
+  });
+  
+  // Initial info
+  updateTaiLieuSearchInfo(allTaiLieuLessons.length, allTaiLieuLessons.length);
+}
+
+// Perform search
+function performTaiLieuSearch(searchTerm) {
+  if (!searchTerm) {
+    filteredTaiLieuLessons = allTaiLieuLessons;
+    displayFilteredTaiLieu(filteredTaiLieuLessons);
+    updateTaiLieuSearchInfo(allTaiLieuLessons.length, allTaiLieuLessons.length);
+    return;
+  }
+  
+  const searchLower = searchTerm.toLowerCase();
+  
+  filteredTaiLieuLessons = allTaiLieuLessons.filter(doc => {
+    const title = (doc.title || '').toLowerCase();
+    const content = (doc.content || '').replace(/<[^>]*>/g, '').toLowerCase();
+    
+    return title.includes(searchLower) || content.includes(searchLower);
+  });
+  
+  displayFilteredTaiLieu(filteredTaiLieuLessons, searchTerm);
+  updateTaiLieuSearchInfo(filteredTaiLieuLessons.length, allTaiLieuLessons.length);
+}
+
+// Update search results info
+function updateTaiLieuSearchInfo(found, total) {
+  const searchResultsInfo = document.getElementById('searchResultsInfo');
+  const searchInput = document.getElementById('searchInput');
+  const searchTerm = searchInput.value.trim();
+  
+  if (!searchTerm) {
+    searchResultsInfo.innerHTML = `📊 Hiển thị <strong>${total}</strong> tài liệu sưu tầm`;
+  } else if (found === 0) {
+    searchResultsInfo.innerHTML = `❌ Không tìm thấy kết quả cho "<strong>${searchTerm}</strong>"`;
+  } else {
+    searchResultsInfo.innerHTML = `✅ Tìm thấy <strong>${found}</strong> kết quả từ <strong>${total}</strong> tài liệu`;
+  }
+}
+
+// Escape special characters for regex
+function escapeRegexTaiLieu(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function displayTaiLieuContent(data) {
     const contentDiv = document.getElementById('tailieu-content');
     
@@ -125,6 +231,7 @@ function displayTaiLieuContent(data) {
     
     // Store data globally
     allTaiLieuLessons = posts;
+    filteredTaiLieuLessons = posts;
     
     console.log(`📊 Found ${posts.length} Tài liệu sưu tầm posts from WordPress`);
     
@@ -137,6 +244,25 @@ function displayTaiLieuContent(data) {
     
     console.log('📚 Sorted documents:', posts.map(p => p.title));
     
+    displayFilteredTaiLieu(posts);
+    initializeTaiLieuSearch();
+}
+
+// Display filtered documents with optional highlight
+function displayFilteredTaiLieu(posts, searchTerm = '') {
+    const contentDiv = document.getElementById('tailieu-content');
+    
+    if (posts.length === 0) {
+      contentDiv.innerHTML = `
+        <div class="no-results">
+          <div class="no-results-icon">🔍</div>
+          <h3>Không tìm thấy kết quả</h3>
+          <p>Hãy thử tìm kiếm với từ khóa khác</p>
+        </div>
+      `;
+      return;
+    }
+    
     let html = `
         <div class="tailieu-posts">
             <div class="tailieu-grid">
@@ -148,6 +274,13 @@ function displayTaiLieuContent(data) {
         
         const link = post.link || '#';
         const postId = post.id || index;
+        
+        // Highlight search term if provided
+        let displayTitle = title;
+        if (searchTerm) {
+          const regex = new RegExp(`(${escapeRegexTaiLieu(searchTerm)})`, 'gi');
+          displayTitle = displayTitle.replace(regex, '<span class="highlight">$1</span>');
+        }
         
         // Generate slug for SEO-friendly URL
         const slug = generateSlugTaiLieu(title);
@@ -162,19 +295,22 @@ function displayTaiLieuContent(data) {
             content = textContent.trim().substring(0, 200) + (textContent.length > 200 ? '...' : '');
         }
         
-        // Escape HTML
-        const escapedTitle = title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        const escapedContent = content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        // Highlight search term in content if provided
+        let displayContent = content;
+        if (searchTerm) {
+          const regex = new RegExp(`(${escapeRegexTaiLieu(searchTerm)})`, 'gi');
+          displayContent = displayContent.replace(regex, '<span class="highlight">$1</span>');
+        }
         
         html += `
             <div class="tailieu-card">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                    <h3 class="tailieu-title" style="margin: 0; flex: 1;">${escapedTitle}</h3>
+                    <h3 class="tailieu-title" style="margin: 0; flex: 1;">${displayTitle}</h3>
                     <span class="tailieu-id" style="font-size: 0.7rem; color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 3px; margin-left: 8px; font-family: monospace; cursor: pointer;" title="WordPress ID: ${postId} (Click to copy)" onclick="copyTaiLieuLessonId(${postId}, event)">
                         #${postId}
                     </span>
                 </div>
-                <div class="tailieu-excerpt">${escapedContent}</div>
+                <div class="tailieu-excerpt">${displayContent}</div>
                 <a href="${lessonUrl}" class="tailieu-link" style="display: inline-block; text-decoration: none; text-align: center;">
                     📖 Đọc thêm
                 </a>
@@ -484,6 +620,175 @@ function displayTaiLieuError(error) {
 </script>
 
 <style>
+/* Search box styles */
+.search-container {
+  margin: 20px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  font-size: 16px !important;
+}
+
+.search-wrapper {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 50px 15px 20px;
+  font-size: 18px !important;
+  border: 2px solid #fff;
+  border-radius: 50px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus {
+  border-color: #ffd700;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.search-button {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button:hover {
+  background: #5a6fd8;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.clear-search {
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 16px;
+  display: none;
+  transition: all 0.3s ease;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-search:hover {
+  background: #cc0000;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.search-results-info {
+  text-align: center;
+  margin-top: 15px;
+  color: white;
+  font-size: 16px !important;
+  font-weight: 500;
+}
+
+.highlight {
+  background-color: #ffeb3b;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: bold;
+  color: #333;
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.no-results-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+/* Responsive styles for search */
+@media (max-width: 768px) {
+  .search-container {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .search-input {
+    font-size: 16px !important;
+    padding: 12px 45px 12px 15px;
+  }
+  
+  .search-button {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    right: 15px;
+  }
+  
+  .clear-search {
+    right: 60px;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+  }
+  
+  .search-results-info {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container {
+    padding: 12px;
+    border-radius: 8px;
+  }
+  
+  .search-input {
+    font-size: 14px !important;
+    padding: 10px 40px 10px 12px;
+  }
+  
+  .search-button {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    right: 12px;
+  }
+  
+  .clear-search {
+    right: 50px;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+  }
+}
+
 /* Loading spinner */
 .loading {
     text-align: center;
